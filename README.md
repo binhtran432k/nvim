@@ -11,7 +11,7 @@ My personal neovim config
 - [x] Add treesitter
 - [ ] Add cmp
 - [ ] Add autopairs
-- [ ] Add comment
+- [x] Add comment
 - [x] Add surround
 - [ ] Add repeat
 - [ ] Add core options

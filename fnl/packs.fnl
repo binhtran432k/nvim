@@ -52,6 +52,8 @@
                 (use! :gpanders/editorconfig.nvim)
                 (use! :kylechui/nvim-surround {:mod :util.surround
                       :config true})
+                (use! :numToStr/Comment.nvim {:mod :util.comment
+                      :config true})
 
                 ;; lsp
 

@@ -61,6 +61,7 @@
            :autopairs {:enable true
            :disable disable?}
            :context_commentstring {:enable true
+           :enable_autocmd false
            :disable disable?}
            :autotag {:enable true
            :disable disable?}
