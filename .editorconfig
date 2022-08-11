@@ -1,0 +1,18 @@
+root = true
+
+[*.lua]
+indent_style = space
+indent_size = 3
+trim_trailing_whitespace = true
+
+[*.fnl]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+
+
+[*.md]
+indent_style = space
+indent_size = 4
+max_line_length = 80
+trim_trailing_whitespace = false

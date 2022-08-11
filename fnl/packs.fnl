@@ -49,6 +49,7 @@
                                  (use! :nvim-treesitter/playground
                                        {:cmd :TSPlaygroundToggle})
                                  ]})
+                (use! :gpanders/editorconfig.nvim)
 
                 ;; lsp
 
