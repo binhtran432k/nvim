@@ -33,6 +33,7 @@
 	      (use! :rktjmp/hotpot.nvim)
 
 	      ;; ui
+	      (use! :Mofiqul/dracula.nvim {:mod :ui.dracula :config true})
 
 	      ;; util
 

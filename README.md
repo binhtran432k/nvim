@@ -5,6 +5,7 @@ My personal neovim config
 ## TODO
 
 - [x] Add Initial files (packer/hotpot)
+- [x] Add color scheme
 - [ ] Add editorconfig
 - [ ] Add treesitter
 - [ ] Add cmp
@@ -14,7 +15,6 @@ My personal neovim config
 - [ ] Add repeat
 - [ ] Add core options
 - [ ] Add conjure
-- [ ] Add color scheme
 - [ ] Add indent-blankline
 - [ ] Add transparent
 - [ ] Add colorizer
