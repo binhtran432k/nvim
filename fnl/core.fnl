@@ -58,9 +58,11 @@
                          (= bo.modifiable true)
                          (not= (vim.fn.bufname) "")
                          (not= bo.filetype :help))
-                   (cmd :mkview)))})
+                   (cmd :mkview)))
+    :group gid})
   (nvim_create_autocmd
     :BufWinEnter
     {:callback (fn []
                  (when (not= bo.filetype :help)
-                   (cmd "silent! loadview")))}))
+                   (cmd "silent! loadview")))
+    :group gid}))
