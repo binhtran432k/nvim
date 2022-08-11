@@ -18,34 +18,33 @@
         opts)
       [pack]))
 
-(fn packer-load [packs]
-  (let [{: float} (require :packer.util)]
-    (startup {1 (fn [use]
-                  (each [_ opts (ipairs packs)]
-                    (use opts)))
-             :config {:profile {:enable true}
-             :display {:open_fn float}
-             : compile_path}})))
+(let [{: float} (require :packer.util)
+         ts_name :nvim-treesitter
+         packs [
+                ;; bootstrap
+                (use! :wbthomason/packer.nvim)
+                (use! :rktjmp/hotpot.nvim)
 
-(packer-load [
-              ;; bootstrap
-              (use! :wbthomason/packer.nvim)
-              (use! :rktjmp/hotpot.nvim)
+                ;; ui
+                (use! :Mofiqul/dracula.nvim {:mod :ui.dracula :config true})
 
-              ;; ui
-              (use! :Mofiqul/dracula.nvim {:mod :ui.dracula :config true})
+                ;; util
 
-              ;; util
+                ;; lsp
 
-              ;; lsp
+                ;; completion
 
-              ;; completion
+                ;; tree-sitter
 
-              ;; tree-sitter
+                ;; lang
 
-              ;; lang
-
-              ])
+                ]]
+  (startup {1 (fn [use]
+                (each [_ opts (ipairs packs)]
+                  (use opts)))
+           :config {:profile {:enable true}
+           :display {:open_fn float}
+           : compile_path}}))
 
 ;; make sure packer is all ready to go
 (let [compiled? (= (vim.fn.filereadable compile_path) 1)]
