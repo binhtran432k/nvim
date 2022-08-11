@@ -14,7 +14,6 @@ My personal neovim config
 - [x] Add comment
 - [x] Add surround
 - [ ] Add repeat
-- [ ] Add core options
 - [ ] Add conjure
 - [ ] Add indent-blankline
 - [ ] Add transparent
