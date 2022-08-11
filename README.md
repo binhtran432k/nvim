@@ -37,5 +37,5 @@ My personal neovim config
 - [ ] Add toggleterm
 - [ ] Add wordmotion
 - [ ] Add hydra
-- [ ] Add startuptime
+- [x] Add startuptime
 - [ ] Add project
