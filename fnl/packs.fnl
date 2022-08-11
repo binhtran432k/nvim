@@ -19,9 +19,9 @@
       [pack]))
 
 (let [{: float} (require :packer.util)
-         ts_name :nvim-treesitter
-         comment_name :Comment.nvim
-         tag_fts [:html :xml :javascriptreact :typescriptreact]
+         ts-name :nvim-treesitter
+         comment-name :Comment.nvim
+         tag-fts [:html :xml :javascriptreact :typescriptreact]
          packs [
                 ;; bootstrap
                 (use! :wbthomason/packer.nvim)
@@ -57,17 +57,17 @@
                       :requires [
                                  (use!
                                    :nvim-treesitter/nvim-treesitter-textobjects
-                                   {:after ts_name})
+                                   {:after ts-name})
                                  (use!
                                    :nvim-treesitter/nvim-treesitter-refactor
-                                   {:after ts_name})
+                                   {:after ts-name})
                                  (use!
                                    :JoosepAlviste/nvim-ts-context-commentstring
-                                   {:after comment_name})
+                                   {:after comment-name})
                                  (use! :p00f/nvim-ts-rainbow
-                                       {:after ts_name})
+                                       {:after ts-name})
                                  (use! :windwp/nvim-ts-autotag
-                                       {:ft tag_fts})
+                                       {:ft tag-fts})
                                  (use! :nvim-treesitter/playground
                                        {:cmd :TSPlaygroundToggle})
                                  ]})
