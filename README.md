@@ -4,7 +4,7 @@ My personal neovim config
 
 ## TODO
 
-- [ ] Add Initial files (packer/hotpot)
+- [x] Add Initial files (packer/hotpot)
 - [ ] Add editorconfig
 - [ ] Add treesitter
 - [ ] Add cmp
