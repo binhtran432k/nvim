@@ -12,7 +12,7 @@ My personal neovim config
 - [ ] Add cmp
 - [ ] Add autopairs
 - [ ] Add comment
-- [ ] Add surround
+- [x] Add surround
 - [ ] Add repeat
 - [ ] Add core options
 - [ ] Add conjure

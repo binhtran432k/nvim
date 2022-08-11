@@ -50,6 +50,8 @@
                                        {:cmd :TSPlaygroundToggle})
                                  ]})
                 (use! :gpanders/editorconfig.nvim)
+                (use! :kylechui/nvim-surround {:mod :util.surround
+                      :config true})
 
                 ;; lsp
 
