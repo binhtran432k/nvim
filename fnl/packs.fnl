@@ -58,6 +58,9 @@
                 (use! :numToStr/Comment.nvim {:mod :util.comment
                       :keys [:gc :gb]
                       :config true})
+                (use! :windwp/nvim-autopairs {:mod :util.autopairs
+                      :event [:InsertEnter]
+                      :config true})
                 (use! :dstein64/vim-startuptime {:cmd :StartupTime})
 
                 ;; lsp

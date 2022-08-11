@@ -10,7 +10,7 @@ My personal neovim config
 - [x] Add editorconfig
 - [x] Add treesitter
 - [ ] Add cmp
-- [ ] Add autopairs
+- [x] Add autopairs
 - [x] Add comment
 - [x] Add surround
 - [ ] Add repeat
