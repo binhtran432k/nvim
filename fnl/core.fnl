@@ -1,6 +1,15 @@
-(local {: opt : cmd : bo :api {: nvim_create_augroup : nvim_create_autocmd}} vim)
+(local {: opt
+       : g
+       : cmd
+       : bo
+       :api {: nvim_create_augroup : nvim_create_autocmd}} vim)
 
-;; load common options
+;; Default key leader
+(tset g :mapleader ",")
+(tset g :maplocalleader ";")
+
+
+;; Load common options
 (let [options {:termguicolors true
               :background :dark
               :colorcolumn [80]
