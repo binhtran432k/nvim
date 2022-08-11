@@ -49,10 +49,12 @@
                                  (use! :nvim-treesitter/playground
                                        {:cmd :TSPlaygroundToggle})
                                  ]})
-                (use! :gpanders/editorconfig.nvim)
+                (use! :gpanders/editorconfig.nvim {:event :BufRead})
                 (use! :kylechui/nvim-surround {:mod :util.surround
+                      :keys [:ys :yS :S :gS :ds :cs]
                       :config true})
                 (use! :numToStr/Comment.nvim {:mod :util.comment
+                      :keys [:gc :gb]
                       :config true})
 
                 ;; lsp
