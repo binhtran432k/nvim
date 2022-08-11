@@ -31,6 +31,23 @@
                 (use! :Mofiqul/dracula.nvim {:mod :ui.dracula :config true})
 
                 ;; util
+                (use! :gpanders/editorconfig.nvim {:event :BufRead})
+                (use! :kylechui/nvim-surround {:mod :util.surround
+                      :keys [:ys :yS :S :gS :d :c]
+                      :config true})
+                (use! :numToStr/Comment.nvim {:mod :util.comment
+                      :keys [:gc :gb]
+                      :config true})
+                (use! :windwp/nvim-autopairs {:mod :util.autopairs
+                      :event [:InsertEnter]
+                      :config true})
+                (use! :dstein64/vim-startuptime {:cmd :StartupTime})
+
+                ;; lsp
+
+                ;; completion
+
+                ;; tree-sitter
                 (use! :nvim-treesitter/nvim-treesitter {:mod :util.treesitter
                       :run ":TSUpdate"
                       :config true
@@ -51,23 +68,6 @@
                                  (use! :nvim-treesitter/playground
                                        {:cmd :TSPlaygroundToggle})
                                  ]})
-                (use! :gpanders/editorconfig.nvim {:event :BufRead})
-                (use! :kylechui/nvim-surround {:mod :util.surround
-                      :keys [:ys :yS :S :gS :d :c]
-                      :config true})
-                (use! :numToStr/Comment.nvim {:mod :util.comment
-                      :keys [:gc :gb]
-                      :config true})
-                (use! :windwp/nvim-autopairs {:mod :util.autopairs
-                      :event [:InsertEnter]
-                      :config true})
-                (use! :dstein64/vim-startuptime {:cmd :StartupTime})
-
-                ;; lsp
-
-                ;; completion
-
-                ;; tree-sitter
 
                 ;; lang
 
