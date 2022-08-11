@@ -23,7 +23,7 @@ My personal neovim config
 - [ ] Add dashboard
 - [ ] Add lualine
 - [ ] Add ufo
-- [ ] Add matchup
+- [x] Add matchup
 - [ ] Add bufferline
 - [ ] Add dressing
 - [ ] Add fidget

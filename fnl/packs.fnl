@@ -47,6 +47,9 @@
                       :event [:InsertEnter]
                       :config true})
                 (use! :dstein64/vim-startuptime {:cmd :StartupTime})
+                (use! :andymass/vim-matchup {:mod :util.matchup
+                      :event [:BufRead]
+                      :setup true})
 
                 ;; lsp
 
