@@ -6,6 +6,7 @@ My personal neovim config
 
 - [x] Add Initial files (packer/hotpot)
 - [x] Add color scheme
+- [x] Setup core
 - [ ] Add editorconfig
 - [ ] Add treesitter
 - [ ] Add cmp
