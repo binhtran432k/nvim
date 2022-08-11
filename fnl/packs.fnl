@@ -29,6 +29,26 @@
                 (use! :Mofiqul/dracula.nvim {:mod :ui.dracula :config true})
 
                 ;; util
+                (use! :nvim-treesitter/nvim-treesitter {:mod :util.treesitter
+                      :run ":TSUpdate"
+                      :config true
+                      :requires [
+                                 (use!
+                                   :nvim-treesitter/nvim-treesitter-textobjects
+                                   {:after ts_name})
+                                 (use!
+                                   :nvim-treesitter/nvim-treesitter-refactor
+                                   {:after ts_name})
+                                 (use!
+                                   :JoosepAlviste/nvim-ts-context-commentstring
+                                   {:after ts_name})
+                                 (use! :p00f/nvim-ts-rainbow
+                                       {:after ts_name})
+                                 (use! :windwp/nvim-ts-autotag
+                                       {:after ts_name})
+                                 (use! :nvim-treesitter/playground
+                                       {:cmd :TSPlaygroundToggle})
+                                 ]})
 
                 ;; lsp
 

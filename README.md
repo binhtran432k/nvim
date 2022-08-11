@@ -8,7 +8,7 @@ My personal neovim config
 - [x] Add color scheme
 - [x] Setup core
 - [ ] Add editorconfig
-- [ ] Add treesitter
+- [x] Add treesitter
 - [ ] Add cmp
 - [ ] Add autopairs
 - [ ] Add comment
