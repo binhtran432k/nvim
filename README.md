@@ -9,7 +9,7 @@ My personal neovim config
 - [x] Setup core
 - [x] Add editorconfig
 - [x] Add treesitter
-- [ ] Add cmp
+- [x] Add cmp
 - [x] Add autopairs
 - [x] Add comment
 - [x] Add surround

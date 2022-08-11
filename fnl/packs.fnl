@@ -20,6 +20,8 @@
 
 (let [{: float} (require :packer.util)
          ts-name :nvim-treesitter
+         cmp-name :nvim-cmp
+         snip-name :LuaSnip
          comment-name :Comment.nvim
          tag-fts [:html :xml :javascriptreact :typescriptreact]
          packs [
@@ -49,6 +51,20 @@
                 ;; lsp
 
                 ;; completion
+                (use! :hrsh7th/nvim-cmp {:mod :util.cmp
+                      :config true
+                      :event [:InsertEnter :CmdlineEnter]
+                      :requires [
+                                 (use! :hrsh7th/cmp-buffer {:after cmp-name})
+                                 (use! :hrsh7th/cmp-path {:after cmp-name})
+                                 (use! :hrsh7th/cmp-cmdline {:after cmp-name})
+                                 (use! :hrsh7th/cmp-nvim-lsp {:after cmp-name})
+                                 (use! :onsails/lspkind-nvim {:module :lspkind})
+                                 (use! :L3MON4D3/LuaSnip {:module :luasnip})
+                                 (use! :saadparwaiz1/cmp_luasnip
+                                       {:after snip-name})
+                                 (use! :rafamadriz/friendly-snippets
+                                   {:after snip-name})]})
 
                 ;; tree-sitter
                 (use! :nvim-treesitter/nvim-treesitter {:mod :util.treesitter
@@ -69,8 +85,7 @@
                                  (use! :windwp/nvim-ts-autotag
                                        {:ft tag-fts})
                                  (use! :nvim-treesitter/playground
-                                       {:cmd :TSPlaygroundToggle})
-                                 ]})
+                                       {:cmd :TSPlaygroundToggle})]})
 
                 ;; lang
 
