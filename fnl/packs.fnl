@@ -29,6 +29,9 @@
 
                 ;; ui
                 (use! :Mofiqul/dracula.nvim {:mod :ui.dracula :config true})
+                (use! :norcalli/nvim-colorizer.lua {:mod :ui.colorizer
+                      :event [:BufRead]
+                      :config true})
 
                 ;; util
                 (use! :gpanders/editorconfig.nvim {:event :BufRead})
