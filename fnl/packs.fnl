@@ -20,6 +20,8 @@
 
 (let [{: float} (require :packer.util)
          ts_name :nvim-treesitter
+         comment_name :Comment.nvim
+         tag_fts [:html :xml :javascriptreact :typescriptreact]
          packs [
                 ;; bootstrap
                 (use! :wbthomason/packer.nvim)
@@ -41,17 +43,17 @@
                                    {:after ts_name})
                                  (use!
                                    :JoosepAlviste/nvim-ts-context-commentstring
-                                   {:after ts_name})
+                                   {:after comment_name})
                                  (use! :p00f/nvim-ts-rainbow
                                        {:after ts_name})
                                  (use! :windwp/nvim-ts-autotag
-                                       {:after ts_name})
+                                       {:ft tag_fts})
                                  (use! :nvim-treesitter/playground
                                        {:cmd :TSPlaygroundToggle})
                                  ]})
                 (use! :gpanders/editorconfig.nvim {:event :BufRead})
                 (use! :kylechui/nvim-surround {:mod :util.surround
-                      :keys [:ys :yS :S :gS :ds :cs]
+                      :keys [:ys :yS :S :gS :d :c]
                       :config true})
                 (use! :numToStr/Comment.nvim {:mod :util.comment
                       :keys [:gc :gb]
