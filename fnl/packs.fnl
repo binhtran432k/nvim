@@ -22,6 +22,7 @@
   (let [{: startup action action-fn} (require :packer)
         {: float} (require :packer.util)
            ts-name :nvim-treesitter
+           lspconfig-name :nvim-lspconfig
            cmp-name :nvim-cmp
            snip-name :LuaSnip
            comment-name :Comment.nvim
@@ -58,6 +59,7 @@
                   (use! :andymass/vim-matchup {:mod :util.matchup
                         :event [:BufRead]
                         :setup true})
+                  (use! :nvim-lua/plenary.nvim {:module :plenary})
 
                   ;; lsp
                   (use! :neovim/nvim-lspconfig {:mod :lsp.lspconfig
@@ -68,6 +70,9 @@
                     {:module :mason-lspconfig})
                   (use! :williamboman/mason.nvim {:mod :lsp.mason
                         :cmd [:Mason]
+                        :config true})
+                  (use! :jose-elias-alvarez/null-ls.nvim {:mod :lsp.null-ls
+                        :after lspconfig-name
                         :config true})
 
                   ;; completion
