@@ -33,7 +33,7 @@
 
                   ;; ui
                   (use! :Mofiqul/dracula.nvim {:mod :ui.dracula :config true})
-                  (use! :norcalli/nvim-colorizer.lua {:mod :ui.colorizer
+                  (use! :brenoprata10/nvim-highlight-colors {:mod :ui.colors
                         :event [:BufRead]
                         :config true})
 

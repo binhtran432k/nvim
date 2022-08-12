@@ -17,7 +17,7 @@ My personal neovim config
 - [ ] Add conjure
 - [ ] Add indent-blankline
 - [ ] Add transparent
-- [x] Add colorizer
+- [x] Add colors
 - [ ] Add tree
 - [ ] Add telescope
 - [ ] Add dashboard
