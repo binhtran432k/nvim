@@ -72,7 +72,7 @@
                                          {:after snip-name})]})
 
                   ;; tree-sitter
-                  (use! :nvim-treesitter/nvim-treesitter {:mod :util.treesitter
+                  (use! :nvim-treesitter/nvim-treesitter {:mod :ui.treesitter
                         :run ":TSUpdate"
                         :config true
                         :requires [
