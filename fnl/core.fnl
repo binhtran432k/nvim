@@ -43,6 +43,7 @@
               :colorcolumn [80]
               :ignorecase true
               :smartcase true
+              :cursorline true
               :mouse :a
               :tabstop 4
               :softtabstop 4
