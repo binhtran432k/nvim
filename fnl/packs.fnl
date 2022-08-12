@@ -63,6 +63,12 @@
                   (use! :neovim/nvim-lspconfig {:mod :lsp.lspconfig
                         :event [:BufRead]
                         :config true})
+                  (use!
+                    :williamboman/mason-lspconfig.nvim
+                    {:module :mason-lspconfig})
+                  (use! :williamboman/mason.nvim {:mod :lsp.mason
+                        :cmd [:Mason]
+                        :config true})
 
                   ;; completion
                   (use! :hrsh7th/nvim-cmp {:mod :util.cmp

@@ -16,6 +16,7 @@ My personal neovim config
 - [ ] Add repeat
 - [ ] Add conjure
 - [x] Add lspconfig
+- [x] Add mason
 - [ ] Add indent-blankline
 - [ ] Add transparent
 - [x] Add colors
