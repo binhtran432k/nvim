@@ -29,7 +29,7 @@
                                               (expand_or_jump)
                                               (fallback)))
            select-prev-cmp (fn [fallback] (if (visible)
-                                              (select_next_item)
+                                              (select_prev_item)
                                               (jumpable -1)
                                               (jump -1)
                                               (fallback)))]
