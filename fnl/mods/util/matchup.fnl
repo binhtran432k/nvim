@@ -4,6 +4,4 @@
     (set g.matchup_matchparen_offscreen {:method nil})
     (set g.matchup_matchpref {:html {:nolists 1}})))
 
-{
-: setup
-}
+{: setup}

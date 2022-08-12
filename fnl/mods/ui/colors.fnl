@@ -2,6 +2,4 @@
   (let [{: setup} (require :nvim-highlight-colors)]
     (setup)))
 
-{
-: config
-}
+{: config}

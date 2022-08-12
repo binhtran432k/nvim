@@ -2,6 +2,4 @@
   (let [{: setup} (require :nvim-surround)]
     (setup)))
 
-{
-: config
-}
+{: config}
