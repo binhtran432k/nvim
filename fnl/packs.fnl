@@ -60,6 +60,9 @@
                         :setup true})
 
                   ;; lsp
+                  (use! :neovim/nvim-lspconfig {:mod :lsp.lspconfig
+                        :event [:BufRead]
+                        :config true})
 
                   ;; completion
                   (use! :hrsh7th/nvim-cmp {:mod :util.cmp
