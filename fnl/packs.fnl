@@ -41,7 +41,7 @@
                   ;; util
                   (use! :gpanders/editorconfig.nvim {:event :BufRead})
                   (use! :kylechui/nvim-surround {:mod :util.surround
-                        :keys [:ys :yS :S :gS :d :c]
+                        :keys [:y :S :gS :d :c]
                         :config true})
                   (use! :numToStr/Comment.nvim {:mod :util.comment
                         :keys [:gc :gb]
