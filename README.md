@@ -31,7 +31,7 @@ My personal neovim config
 - [ ] Add dressing
 - [ ] Add fidget
 - [ ] Add gitsign
-- [ ] Add hop
+- [x] Add leap
 - [ ] Add iswap
 - [ ] Add markdownpreview
 - [ ] Add openbrowser

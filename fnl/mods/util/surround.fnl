@@ -1,5 +1,5 @@
 (fn config []
   (let [{: setup} (require :nvim-surround)]
-    (setup)))
+    (setup {:keymaps {:visual :z :visual_line :Z}})))
 
 {: config}

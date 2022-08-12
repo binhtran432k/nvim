@@ -42,7 +42,7 @@
                ;; util
                (use! :gpanders/editorconfig.nvim {:event :BufRead})
                (use! :kylechui/nvim-surround
-                     {:mod :util.surround :keys [:y :S :gS :d :c] :config true})
+                     {:mod :util.surround :keys [:y :z :Z :d :c] :config true})
                (use! :numToStr/Comment.nvim
                      {:mod :util.comment :keys [:gc :gb] :config true})
                (use! :windwp/nvim-autopairs
@@ -51,6 +51,8 @@
                (use! :andymass/vim-matchup
                      {:mod :util.matchup :event [:BufRead] :setup true})
                (use! :nvim-lua/plenary.nvim {:module :plenary})
+               (use! :ggandor/leap.nvim
+                     {:mod :util.leap :keys [:s :S :gs] :config true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig :event [:BufRead] :config true})
