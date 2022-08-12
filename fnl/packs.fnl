@@ -37,6 +37,11 @@
                   (use! :brenoprata10/nvim-highlight-colors {:mod :ui.colors
                         :event [:BufRead]
                         :config true})
+                  (use! :nvim-lualine/lualine.nvim {:mod :ui.lualine
+                        :event [:BufRead]
+                        :config true})
+                  (use! :kyazdani42/nvim-web-devicons
+                        {:module :nvim-web-devicons})
 
                   ;; util
                   (use! :gpanders/editorconfig.nvim {:event :BufRead})
