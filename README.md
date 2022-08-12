@@ -22,7 +22,7 @@ My personal neovim config
 - [ ] Add tree
 - [ ] Add telescope
 - [ ] Add dashboard
-- [ ] Add lualine
+- [x] Add lualine
 - [ ] Add ufo
 - [x] Add matchup
 - [ ] Add bufferline
