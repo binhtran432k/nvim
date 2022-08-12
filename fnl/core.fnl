@@ -94,3 +94,5 @@
                  (when (not= bo.filetype :help)
                    (cmd "silent! loadview")))
     :group gid}))
+
+{}
