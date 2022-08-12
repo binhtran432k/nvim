@@ -80,6 +80,7 @@
                   ;; tree-sitter
                   (use! :nvim-treesitter/nvim-treesitter {:mod :ui.treesitter
                         :run ":TSUpdate"
+                        :event [:BufRead]
                         :config true
                         :requires [
                                    (use!
