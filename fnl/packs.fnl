@@ -38,9 +38,7 @@
                      {:mod :ui.notify :event [:BufRead] :config true})
                (use! :kyazdani42/nvim-web-devicons {:module :nvim-web-devicons})
                (use! :xiyaowong/nvim-transparent
-                     {:mod :ui.transparent
-                      :event [:BufRead]
-                      :config true})
+                     {:mod :ui.transparent :event [:BufRead] :config true})
                ;; util
                (use! :gpanders/editorconfig.nvim {:event :BufRead})
                (use! :kylechui/nvim-surround
