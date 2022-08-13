@@ -20,6 +20,7 @@ My personal neovim config
 - [x] Add null-ls
 - [ ] Add indent-blankline
 - [x] Add transparent
+- [x] Add notify
 - [x] Add colors
 - [ ] Add tree
 - [ ] Add telescope
