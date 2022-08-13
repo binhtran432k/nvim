@@ -1,32 +1,44 @@
+(local {:fn {: sign_define}
+        :keymap {:set map}
+        :diagnostic {: open_float : goto_prev : goto_next :config diag-config}
+        :lsp {: protocol
+              : handlers
+              : with
+              :buf {: references
+                    : definition
+                    : declaration
+                    : implementation
+                    : hover
+                    : signature_help
+                    : rename
+                    : code_action
+                    : range_code_action
+                    : format
+                    : range_formatting}}
+        :api {: nvim_create_user_command}} vim)
+
 (fn mapping []
-  (let [{:keymap {:set map}
-         :diagnostic {: open_float : goto_prev : goto_next}
-         :lsp {:buf {: references
-                     : definition
-                     : declaration
-                     : implementation
-                     : hover
-                     : signature_help
-                     : rename
-                     : code_action
-                     : range_code_action
-                     : format
-                     : range_formatting}}
-         :api {: nvim_create_user_command}} vim]
-    (map :n :gl open_float)
-    (map :n "]d" goto_next)
-    (map :n "[d" goto_prev)
-    (map :n :gr references)
-    (map :n :gD declaration)
-    (map :n :gd definition)
-    (map :n :gI implementation)
-    (map :n :K hover)
-    (map :n :gK signature_help)
-    (map :n :gp format)
-    (map :v :gp range_formatting)
-    (map :n :<leader>rn rename)
-    (map :n :<leader>ca code_action)
-    (nvim_create_user_command :Format format {})))
+  (map :n :gl open_float)
+  (map :n "]d" goto_next)
+  (map :n "[d" goto_prev)
+  (map :n :gr references)
+  (map :n :gD declaration)
+  (map :n :gd definition)
+  (map :n :gI implementation)
+  (map :n :K hover)
+  (map :n :gK signature_help)
+  (map :n :gp format)
+  (map :v :gp range_formatting)
+  (map :n :<leader>rn rename)
+  (map :n :<leader>ca code_action)
+  (nvim_create_user_command :Format format {}))
+
+(fn capabilities []
+  (let [capabilities (protocol.make_client_capabilities)
+        {: update_capabilities} (require :cmp_nvim_lsp)]
+    (set capabilities.textDocument.completion.completionItem.snippetSupport
+         true)
+    (update_capabilities capabilities)))
 
 (fn call-servers []
   (let [servers [:cssls
@@ -39,14 +51,17 @@
                  :yamlls]
         lspconfig (require :lspconfig)]
     (set lspconfig.util.default_config
-         (vim.tbl_extend :force lspconfig.util.default_config {}))
+         (vim.tbl_extend :force lspconfig.util.default_config
+                         {:capabilities (capabilities)}))
     (each [_ sv-name (ipairs servers)]
-      (let [sv (. lspconfig sv-name)]
-        (sv.setup {})))))
+      (let [sv (. lspconfig sv-name)
+            {:setup lua-setup} (require :lua-dev)]
+        (if (= sv-name :sumneko_lua)
+            (sv.setup (lua-setup))
+            (sv.setup {}))))))
 
 (fn config []
-  (let [{: diagnostic :fn {: sign_define} :lsp {: handlers : with}} vim
-        signs {:Error "" :Warn "" :Hint "" :Info ""}
+  (let [signs {:Error "" :Warn "" :Hint "" :Info ""}
         config {:virtual_text true
                 :signs {:active signs}
                 :update_in_insert true
@@ -61,7 +76,7 @@
     (each [typ icon (pairs signs)]
       (let [hl (.. :DiagnosticSign typ)]
         (sign_define hl {:text icon :texthl hl :numhl hl})))
-    (diagnostic.config config)
+    (diag-config config)
     (tset handlers :textDocument/hover (with handlers.hover {:border :rounded}))
     (tset handlers :textDocument/signatureHelp
           (with handlers.signature_help {:border :rounded})))

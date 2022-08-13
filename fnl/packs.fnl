@@ -19,6 +19,7 @@
   (let [{: startup action action-fn} (require :packer)
         {: float} (require :packer.util)
         ts-name :nvim-treesitter
+        notify-name :nvim-notify
         lspconfig-name :nvim-lspconfig
         cmp-name :nvim-cmp
         snip-name :LuaSnip
@@ -94,7 +95,7 @@
                                  (use! :nvim-treesitter/playground
                                        {:cmd :TSPlaygroundToggle})]})
                ;; lang
-               nil]]
+               (use! :folke/lua-dev.nvim {:module :lua-dev})]]
     (startup {1 (fn [use]
                   (each [_ opts (ipairs packs)]
                     (use opts)))
