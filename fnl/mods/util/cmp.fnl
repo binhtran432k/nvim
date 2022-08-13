@@ -47,8 +47,8 @@
                                              :<Tab> select-next-cmp
                                              :<S-Tab> select-prev-cmp})
             :window {:completion border :documentation border}
-            :sources (sources [{:name :luasnip}
-                               {:name :nvim_lsp}
+            :sources (sources [{:name :nvim_lsp}
+                               {:name :luasnip}
                                {:name :path}
                                {:name :buffer}])})
     (setup.cmdline ":"
