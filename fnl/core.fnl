@@ -64,7 +64,7 @@
                :scrolloff 3
                :sidescrolloff 8
                :completeopt "menu,menuone,noinsert"
-               :cmdheight 2
+               :cmdheight 0
                :list true}]
   (each [key value (pairs options)]
     (tset opt key value)))
