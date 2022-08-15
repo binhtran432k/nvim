@@ -1,5 +1,5 @@
 (fn config []
   (let [{: setup} (require :nvim-highlight-colors)]
-    (setup)))
+    (setup {:render :background})))
 
 {: config}
