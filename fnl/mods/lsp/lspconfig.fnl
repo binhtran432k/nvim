@@ -49,15 +49,15 @@
                  :sqlls
                  :sumneko_lua
                  :yamlls]
+        sv-configs {:jsonls true :sumneko_lua true}
         lspconfig (require :lspconfig)]
     (set lspconfig.util.default_config
          (vim.tbl_extend :force lspconfig.util.default_config
                          {:capabilities (capabilities)}))
     (each [_ sv-name (ipairs servers)]
-      (let [sv (. lspconfig sv-name)
-            {:setup lua-setup} (require :lua-dev)]
-        (if (= sv-name :sumneko_lua)
-            (sv.setup (lua-setup))
+      (let [sv (. lspconfig sv-name)]
+        (if (. sv-configs sv-name)
+            (sv.setup (require (.. :mods.lsp.configs. sv-name)))
             (sv.setup {}))))))
 
 (fn config []
