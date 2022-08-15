@@ -13,6 +13,6 @@
                            :BufferLineIndicatorSelected
                            :BufferLineCloseButton
                            :BufferLineCloseButtonSelected]
-            :exclude {}})))
+            :exclude []})))
 
 {: config}
