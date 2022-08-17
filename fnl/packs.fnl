@@ -45,6 +45,8 @@
                       :config true})
                (use! :goolord/alpha-nvim
                      {:mod :ui.alpha :cond "vim.fn.argc() == 0" :config true})
+               (use! :stevearc/dressing.nvim
+                     {:mod :ui.dressing :event [:BufRead] :config true})
                ;; util
                (use! :gpanders/editorconfig.nvim {:event :BufRead})
                (use! :kylechui/nvim-surround
