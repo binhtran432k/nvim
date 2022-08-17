@@ -2,7 +2,8 @@
         : g
         : cmd
         : bo
-        :api {: nvim_create_augroup : nvim_create_autocmd}} vim)
+        :api {: nvim_create_augroup : nvim_create_autocmd}
+        :keymap {:set map}} vim)
 
 ;; Disable some built-in Neovim plugins and unneeded providers
 (let [built-ins [:gzip
@@ -79,7 +80,8 @@
 ;; Make file save position when leave
 (opt.viewoptions:remove :options)
 
-; remove options from mkview
+;; [[ Autocmd ]]
+;; remove options from mkview
 (let [gid (nvim_create_augroup :remember_last_jump {})]
   (nvim_create_autocmd [:BufWinLeave :BufWritePost]
                        {:callback (fn []
@@ -93,5 +95,12 @@
                                     (when (not= bo.filetype :help)
                                       (cmd "silent! loadview")))
                         :group gid}))
+
+;; [[ Mapping ]]
+(map :n :<c-l>
+     (fn []
+       (cmd :nohlsearch|diffupdate)
+       (let [(notify_ok {: dismiss}) (pcall require :notify)]
+         (if notify_ok (dismiss {:silent true :pending true})))))
 
 {}
