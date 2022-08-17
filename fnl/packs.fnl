@@ -20,6 +20,7 @@
         {: float} (require :packer.util)
         ts-name :nvim-treesitter
         notify-name :nvim-notify
+        colorscheme-name :dracula.nvim
         lspconfig-name :nvim-lspconfig
         cmp-name :nvim-cmp
         snip-name :LuaSnip
@@ -39,7 +40,9 @@
                      {:mod :ui.notify :event [:BufRead] :config true})
                (use! :kyazdani42/nvim-web-devicons {:module :nvim-web-devicons})
                (use! :xiyaowong/nvim-transparent
-                     {:mod :ui.transparent :event [:BufRead] :config true})
+                     {:mod :ui.transparent
+                      :after colorscheme-name
+                      :config true})
                (use! :goolord/alpha-nvim
                      {:mod :ui.alpha :cond "vim.fn.argc() == 0" :config true})
                ;; util
