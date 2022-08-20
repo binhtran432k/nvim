@@ -79,7 +79,9 @@
                       :keys [:<c-p> :<a-p>]
                       :requires [(use! :nvim-telescope/telescope-fzf-native.nvim
                                        {:run :make
-                                        :module :telescope._extensions.fzf})]
+                                        :module :telescope._extensions.fzf})
+                                 (use! :benfowler/telescope-luasnip.nvim
+                                       {:module :telescope._extensions.luasnip})]
                       :config true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
