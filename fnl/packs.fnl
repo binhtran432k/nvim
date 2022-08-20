@@ -1,3 +1,4 @@
+(local {: directory-or-nil?} (require :helpers))
 (local compile_path (.. (vim.fn.stdpath :config) :/lua/packer_compiled.lua))
 
 (macro use! [pack opts]
@@ -44,7 +45,7 @@
                       :after colorscheme-name
                       :config true})
                (use! :goolord/alpha-nvim
-                     {:mod :ui.alpha :cond "vim.fn.argc() == 0" :config true})
+                     {:mod :ui.alpha :cond directory-or-nil? :config true})
                (use! :stevearc/dressing.nvim
                      {:mod :ui.dressing :event [:BufRead] :config true})
                (use! :akinsho/bufferline.nvim
