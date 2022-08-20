@@ -7,14 +7,15 @@
     (map :n "[b" :<cmd>BufferLineCyclePrev<cr>)
     (map :n "]b" :<cmd>BufferLineCycleNext<cr>)
     (map :n "[B" :<cmd>BufferLineMovePrev<cr>)
-    (map :n "]B" :<cmd>BufferLineMoveNext<cr>)))
+    (map :n "]B" :<cmd>BufferLineMoveNext<cr>)
+    (map :n :gb :<cmd>BufferLinePick<cr>)))
 
 (fn config []
   (let [{: setup} (require :bufferline)]
-    (setup {:offsets [{:filetype :NvimTree
-                       :text "File Explorer"
-                       :highlight :Directory
-                       :text_align :left}]})
+    (setup {:options {:offsets [{:filetype :NvimTree
+                                 :text "File Explorer"
+                                 :highlight :Directory
+                                 :text_align :left}]}})
     (mappings)
     (commands)))
 
