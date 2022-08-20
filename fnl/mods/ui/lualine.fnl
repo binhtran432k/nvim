@@ -5,7 +5,7 @@
                       :theme :dracula-nvim
                       :component_separators {:left "" :right ""}
                       :section_separators {:left "" :right ""}
-                      :disabled_filetypes {:statusline {} :winbar {}}
+                      :disabled_filetypes {:statusline [:alpha] :winbar []}
                       :ignore_focus {}
                       :always_divide_middle true
                       :globalstatus false

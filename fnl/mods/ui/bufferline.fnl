@@ -1,3 +1,7 @@
+(fn disabled-filetype []
+  (when (= vim.bo.filetype :alpha)
+    (set vim.opt.showtabline 0)))
+
 (fn commands []
   (let [{: cmd :api {: nvim_create_user_command}} vim]
     (nvim_create_user_command :OnlyBuffer #(cmd "execute '%bd|e#|bd#'") {})))
@@ -15,8 +19,9 @@
     (setup {:options {:offsets [{:filetype :NvimTree
                                  :text "File Explorer"
                                  :highlight :Directory
-                                 :text_align :left}]}})
-    (mappings)
-    (commands)))
+                                 :text_align :left}]}}))
+  (mappings)
+  (commands)
+  (disabled-filetype))
 
 {: config}
