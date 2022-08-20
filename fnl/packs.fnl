@@ -102,7 +102,7 @@
                                  (use! :nvim-treesitter/nvim-treesitter-refactor
                                        {:after ts-name})
                                  (use! :JoosepAlviste/nvim-ts-context-commentstring
-                                       {:after comment-name})
+                                       {:module :ts_context_commentstring})
                                  (use! :p00f/nvim-ts-rainbow {:after ts-name})
                                  (use! :windwp/nvim-ts-autotag {:ft tag-fts})
                                  (use! :nvim-treesitter/playground
