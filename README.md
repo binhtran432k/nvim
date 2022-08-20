@@ -24,12 +24,12 @@ My personal neovim config
 - [x] Add colors
 - [ ] Add tree
 - [ ] Add telescope
-- [ ] Add dashboard
+- [x] Add alpha
 - [x] Add lualine
 - [ ] Add ufo
 - [x] Add matchup
-- [ ] Add bufferline
-- [ ] Add dressing
+- [x] Add bufferline
+- [x] Add dressing
 - [ ] Add fidget
 - [ ] Add gitsign
 - [x] Add leap
