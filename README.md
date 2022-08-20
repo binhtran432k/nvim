@@ -23,7 +23,7 @@ My personal neovim config
 - [x] Add notify
 - [x] Add colors
 - [x] Add tree
-- [ ] Add telescope
+- [x] Add telescope
 - [x] Add alpha
 - [x] Add lualine
 - [ ] Add ufo

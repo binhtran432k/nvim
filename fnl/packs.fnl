@@ -25,7 +25,7 @@
         lspconfig-name :nvim-lspconfig
         cmp-name :nvim-cmp
         snip-name :LuaSnip
-        comment-name :Comment.nvim
+        telescope-name :telescope.nvim
         tag-fts [:html :xml :javascriptreact :typescriptreact]
         packs [;; bootstrap
                (use! :wbthomason/packer.nvim {:opt true})
@@ -73,6 +73,14 @@
                       :cmd [:NvimTreeToggle :NvimTreeFindFileToggle]
                       :keys [:<c-n> :<a-n>]
                       :config true})
+               (use! :nvim-telescope/telescope.nvim
+                     {:mod :util.telescope
+                      :cmd [:Telescope]
+                      :keys [:<c-p> :<a-p>]
+                      :requires [(use! :nvim-telescope/telescope-fzf-native.nvim
+                                       {:run :make
+                                        :module :telescope._extensions.fzf})]
+                      :config true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig :event [:BufRead] :config true})
@@ -86,6 +94,7 @@
                (use! :hrsh7th/nvim-cmp
                      {:mod :util.cmp
                       :config true
+                      :commit :b1ebdb0a17daaad13606b802780313a32e59781b
                       :event [:InsertEnter :CmdlineEnter]
                       :requires [(use! :hrsh7th/cmp-buffer {:after cmp-name})
                                  (use! :hrsh7th/cmp-path {:after cmp-name})
