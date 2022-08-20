@@ -10,6 +10,7 @@
                  :fennel true
                  :go true
                  :haskell true
+                 :help true
                  :html true
                  :java true
                  :javascript true
@@ -22,7 +23,9 @@
                  :lua true
                  :make true
                  :markdown true
+                 :markdown_inline true
                  :php true
+                 :phpdoc true
                  :python true
                  :query true
                  :ruby true
