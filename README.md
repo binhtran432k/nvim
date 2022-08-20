@@ -22,7 +22,7 @@ My personal neovim config
 - [x] Add transparent
 - [x] Add notify
 - [x] Add colors
-- [ ] Add tree
+- [x] Add tree
 - [ ] Add telescope
 - [x] Add alpha
 - [x] Add lualine

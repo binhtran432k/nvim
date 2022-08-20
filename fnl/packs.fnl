@@ -67,6 +67,12 @@
                (use! :nvim-lua/plenary.nvim {:module :plenary})
                (use! :ggandor/leap.nvim
                      {:mod :util.leap :keys [:s :S :gs] :config true})
+               (use! :kyazdani42/nvim-tree.lua
+                     {:mod :util.tree
+                      :tag :nightly
+                      :cmd [:NvimTreeToggle :NvimTreeFindFileToggle]
+                      :keys [:<c-n> :<a-n>]
+                      :config true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig :event [:BufRead] :config true})
