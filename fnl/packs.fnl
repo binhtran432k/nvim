@@ -39,7 +39,10 @@
                      {:mod :ui.lualine :event [:BufRead] :config true})
                (use! :rcarriga/nvim-notify
                      {:mod :ui.notify :event [:BufRead] :config true})
-               (use! :kyazdani42/nvim-web-devicons {:module :nvim-web-devicons})
+               (use! :kyazdani42/nvim-web-devicons
+                     {:mod :ui.web-devicons
+                      :module :nvim-web-devicons
+                      :config true})
                (use! :xiyaowong/nvim-transparent
                      {:mod :ui.transparent
                       :after colorscheme-name
