@@ -26,6 +26,7 @@
         cmp-name :nvim-cmp
         snip-name :LuaSnip
         telescope-name :telescope.nvim
+        conjure-name :conjure
         tag-fts [:html :xml :javascriptreact :typescriptreact]
         packs [;; bootstrap
                (use! :wbthomason/packer.nvim {:opt true})
@@ -83,6 +84,8 @@
                                  (use! :benfowler/telescope-luasnip.nvim
                                        {:module :telescope._extensions.luasnip})]
                       :config true})
+               (use! :Olical/conjure
+                     {:mod :util.conjure :ft [:fennel :lua] :setup true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig :event [:BufRead] :config true})
@@ -102,6 +105,8 @@
                                  (use! :hrsh7th/cmp-path {:after cmp-name})
                                  (use! :hrsh7th/cmp-cmdline {:after cmp-name})
                                  (use! :hrsh7th/cmp-nvim-lsp {:after cmp-name})
+                                 (use! :PaterJason/cmp-conjure
+                                       {:after conjure-name})
                                  (use! :onsails/lspkind-nvim {:module :lspkind})
                                  (use! :L3MON4D3/LuaSnip {:module :luasnip})
                                  (use! :saadparwaiz1/cmp_luasnip

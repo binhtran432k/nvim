@@ -14,7 +14,7 @@ My personal neovim config
 - [x] Add comment
 - [x] Add surround
 - [ ] Add repeat
-- [ ] Add conjure
+- [x] Add conjure
 - [x] Add lspconfig
 - [x] Add mason
 - [x] Add null-ls

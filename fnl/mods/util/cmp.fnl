@@ -14,6 +14,7 @@
         menu {:luasnip "[Snip]"
               :nvim_lsp "[Lsp]"
               :buffer "[Buf]"
+              :conjure "[Conj]"
               :path "[Path]"
               :cmdline "[Cmd]"}
         border {:border :rounded}
@@ -49,12 +50,12 @@
             :window {:completion border :documentation border}
             :sources (sources [{:name :nvim_lsp}
                                {:name :luasnip}
+                               {:name :conjure}
                                {:name :path}
                                {:name :buffer}])})
     (setup.cmdline ":"
                    {:mapping (mapping.preset.cmdline)
-                    :sources (sources [{:name :path}] [{:name :cmdline}]
-                                      [{:name :buffer}])})
+                    :sources (sources [{:name :cmdline}] [{:name :buffer}])})
     (each [_ cmd-type (ipairs ["/" "?"])]
       (setup.cmdline cmd-type
                      {:mapping (mapping.preset.cmdline)
