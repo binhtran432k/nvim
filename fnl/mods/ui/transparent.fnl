@@ -13,6 +13,6 @@
                            :BufferLineIndicatorSelected
                            :BufferLineCloseButton
                            :BufferLineCloseButtonSelected]
-            :exclude []})))
+            :exclude (if vim.g.neovide [:Normal] [])})))
 
 {: config}

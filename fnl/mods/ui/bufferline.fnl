@@ -1,4 +1,5 @@
 (fn disabled-filetype []
+  "fix visiblity in alpha"
   (when (= vim.bo.filetype :alpha)
     (set vim.opt.showtabline 0)))
 
