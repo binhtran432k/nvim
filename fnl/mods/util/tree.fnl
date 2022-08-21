@@ -6,8 +6,7 @@
 (fn config []
   (let [{: setup} (require :nvim-tree)]
     (setup {:ignore_ft_on_setup [:startify :dashboard :alpha]
-            :renderer {:group_empty true :indent_markers {:enable true}}
-            :filters {:dotfiles true}}))
+            :renderer {:group_empty true :indent_markers {:enable true}}}))
   (mapping))
 
 {: config}
