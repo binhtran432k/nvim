@@ -28,7 +28,8 @@
 (fn config []
   (let [{: setup} (require :toggleterm)
         direction :horizontal] ; vertical horizontal tab float
-    (setup {:size (match direction
+    (setup {: direction
+            :size (match direction
                     :horizontal 15
                     :vertical (* vim.o.columns 0.4)
                     _ 20)

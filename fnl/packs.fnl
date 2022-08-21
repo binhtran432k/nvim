@@ -84,7 +84,11 @@
                                  (use! :benfowler/telescope-luasnip.nvim
                                        {:module :telescope._extensions.luasnip})]
                       :config true})
-               (use! :akinsho/toggleterm.nvim {:mod :util.toggleterm :tag :v2.* :config true})
+               (use! :akinsho/toggleterm.nvim
+                     {:mod :util.toggleterm
+                      :cmd [:ToggleTerm]
+                      :keys [:<a-1> :<a-2> :<a-3> :<a-4> :<a-5>]
+                      :config true})
                (use! :Olical/conjure
                      {:mod :util.conjure :ft [:fennel :lua] :setup true})
                ;; lsp

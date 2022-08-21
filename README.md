@@ -37,7 +37,7 @@ My personal neovim config
 - [ ] Add markdownpreview
 - [ ] Add openbrowser
 - [ ] Add todocomment
-- [ ] Add toggleterm
+- [x] Add toggleterm
 - [ ] Add wordmotion
 - [ ] Add hydra
 - [x] Add startuptime
