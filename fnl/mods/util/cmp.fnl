@@ -31,6 +31,7 @@
     (lazy_load)
     (setup {:snippet {:expand #(lsp_expand $1.body)}
             :formatting {:format (cmp_format {:maxwidth 50
+                                              :preset :codicons
                                               :before (fn [{:source {: name}}
                                                            item]
                                                         (tset item :menu
