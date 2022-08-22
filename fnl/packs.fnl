@@ -45,10 +45,10 @@
                      {:mod :ui.web-devicons
                       :module :nvim-web-devicons
                       :config true})
-               (use! :xiyaowong/nvim-transparent
-                     {:mod :ui.transparent
-                      :after colorscheme-name
-                      :config true})
+               ;; (use! :xiyaowong/nvim-transparent
+               ;;       {:mod :ui.transparent
+               ;;        :after colorscheme-name
+               ;;        :config true})
                (use! :goolord/alpha-nvim
                      {:mod :ui.alpha :cond directory-or-nil? :config true})
                (use! :stevearc/dressing.nvim

@@ -22,27 +22,17 @@
     grads))
 
 (fn config []
-  (set vim.g.dracula_italic_comment true)
-  (vim.cmd "syntax on | colorscheme dracula")
   (let [{: cmd :api {: nvim_create_augroup : nvim_create_autocmd}} vim
-        colors ((. (require :dracula) :colors))
-        rainbows-colors [colors.red
-                         colors.green
-                         colors.yellow
-                         colors.purple
-                         colors.pink
-                         colors.cyan
-                         colors.white]
+        {: setup : colors} (require :dracula)
+        colors (colors)
         logo-colors (gradients "#bd93f9" "#ff79c6" 8)
-        callback (fn []
-                   (each [i color (ipairs rainbows-colors)]
-                     (cmd (string.format "highlight! rainbowcol%d guifg=%s" i
-                                         color)))
-                   (each [i color (ipairs logo-colors)]
-                     (cmd (string.format "highlight! StartLogo%d guifg=%s" i
-                                         color))))
-        gid (nvim_create_augroup :custom_dracula_highlights {})]
-    (nvim_create_autocmd :ColorScheme {: callback :group gid})
-    (callback)))
+        overrides {:NonText {:fg colors.white}
+                   :NvimTreeIndentMarker :NonText}]
+    (each [i color (ipairs logo-colors)]
+      (tset overrides (.. :StartLogo i) {:fg color}))
+    (setup {:transparent_bg (not vim.g.neovide)
+            :italic_comment true
+            : overrides})
+    (cmd "colorscheme dracula")))
 
 {: config}
