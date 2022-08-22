@@ -31,7 +31,7 @@ My personal neovim config
 - [x] Add bufferline
 - [x] Add dressing
 - [ ] Add fidget
-- [ ] Add gitsign
+- [x] Add gitsigns
 - [x] Add leap
 - [ ] Add iswap
 - [ ] Add markdownpreview

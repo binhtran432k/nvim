@@ -54,6 +54,8 @@
                      {:mod :ui.dressing :event [:BufRead] :config true})
                (use! :akinsho/bufferline.nvim
                      {:mod :ui.bufferline :event [:BufRead] :config true})
+               (use! :lewis6991/gitsigns.nvim
+                     {:mod :ui.gitsigns :event [:BufRead] :config true})
                ;; util
                (use! :gpanders/editorconfig.nvim {:event :BufRead})
                (use! :kylechui/nvim-surround
