@@ -158,6 +158,7 @@
 (let [{:api {: nvim_create_user_command}} vim]
   (nvim_create_user_command :PackerSync #(setup :sync) {})
   (nvim_create_user_command :PackerStatus #(setup :status) {})
-  (nvim_create_user_command :PackerCompile #(setup :compile) {}))
+  (nvim_create_user_command :PackerCompile #(setup :compile) {})
+  (nvim_create_user_command :PackerProfile #(setup :profile_output) {}))
 
 {}
