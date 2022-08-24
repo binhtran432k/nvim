@@ -59,6 +59,8 @@
                      {:mod :ui.bufferline :event [:BufRead] :config true})
                (use! :lewis6991/gitsigns.nvim
                      {:mod :ui.gitsigns :event [:BufRead] :config true})
+               (use! :lukas-reineke/indent-blankline.nvim
+                     {:mod :ui.indent-blankline :event [:BufRead] :config true})
                ;; util
                (use! :gpanders/editorconfig.nvim {:event :BufRead})
                (use! :kylechui/nvim-surround
