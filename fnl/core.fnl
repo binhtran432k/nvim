@@ -2,7 +2,9 @@
         : g
         : cmd
         : bo
-        :api {: nvim_create_augroup : nvim_create_autocmd}
+        :api {: nvim_create_augroup
+              : nvim_create_autocmd
+              : nvim_create_user_command}
         :keymap {:set map}} vim)
 
 (local format string.format)
@@ -96,6 +98,13 @@
                                     (when (not= bo.filetype :help)
                                       (cmd "silent! loadview")))
                         :group gid}))
+
+(let [gid (nvim_create_augroup :smartindent {})
+      {: auto-indent} (require :helpers)]
+  (nvim_create_autocmd :User {:pattern :EditorConfigPost
+                              :callback auto-indent
+                              :group gid})
+  (nvim_create_user_command :AutoIndent auto-indent {}))
 
 ;; [[ Mapping ]]
 (map :n :<c-l>
