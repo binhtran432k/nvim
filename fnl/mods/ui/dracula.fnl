@@ -29,8 +29,8 @@
                    :NvimTreeIndentMarker {:link :NonText}}
         logo-colors (gradients "#bd93f9" "#ff79c6" 8)
         transparent {:Normal {:fg colors.fg}
-                     :SignColoumn {}
-                     :NvimTreeNormal {:fg colors.fg}
+                     :SignColumn {}
+                     :NvimTreeNormal {:link :Normal}
                      :NvimTreeVertSplit {:fg colors.black}
                      :Pmenu {:fg colors.white}
                      :BufferLineFill {}
