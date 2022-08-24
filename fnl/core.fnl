@@ -5,6 +5,8 @@
         :api {: nvim_create_augroup : nvim_create_autocmd}
         :keymap {:set map}} vim)
 
+(local format string.format)
+
 ;; Disable some built-in Neovim plugins and unneeded providers
 (let [built-ins [:gzip
                  :zip
@@ -101,5 +103,19 @@
        (cmd :nohlsearch|diffupdate)
        (let [(notify_ok {: dismiss}) (pcall require :notify)]
          (if notify_ok (dismiss {:silent true :pending true})))))
+
+(macro noresilent [mode lhs rhs opts]
+  (fn set! [k v]
+    (when (= (. opts k) nil)
+      (tset opts k v)))
+
+  (set! :noremap true)
+  (set! :silent true)
+  `(values ,mode ,lhs ,rhs ,opts))
+
+;; simple text objects
+(map (noresilent [:x :o] :ae ":<c-u>norm! mzggVG<cr>" {}))
+(map (noresilent [:x :o] :il ":<c-u>norm! _vg$h<cr>" {}))
+(map (noresilent [:x :o] :al ":<c-u>norm! 0vg$h<cr>" {}))
 
 {}
