@@ -111,16 +111,17 @@
       (local buf (nvim_get_current_buf))
       (when (directory?)
         (nvim_set_current_dir (nvim_buf_get_name buf)))
-      (vim.cmd :Alpha)
+      (let [{: start} (require :alpha)]
+        (start false))
       (nvim_buf_delete buf {}))
 
     (nvim_create_autocmd :VimEnter {:callback run-alpha})
     (nvim_create_autocmd :User
                          {:pattern :AlphaReady :callback #(set-status 0 0 0)})
-    (nvim_create_autocmd :BufUnload
-                         {:callback (fn []
-                                      (when (= vim.bo.filetype :alpha)
-                                        (set-status 2 2 1)))})))
+    (nvim_create_autocmd :User
+                         {:pattern :AlphaClosed
+                          :callback (fn []
+                                      (set-status 2 2 1))})))
 
 (fn config []
   (let [{: setup} (require :alpha)
