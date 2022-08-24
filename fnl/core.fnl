@@ -107,11 +107,13 @@
   (nvim_create_user_command :AutoIndent auto-indent {}))
 
 ;; [[ Mapping ]]
-(map :n :<c-l>
-     (fn []
-       (cmd :nohlsearch|diffupdate)
-       (let [(notify_ok {: dismiss}) (pcall require :notify)]
-         (if notify_ok (dismiss {:silent true :pending true})))))
+(map :n :<c-l> (fn []
+                 (cmd :nohlsearch|diffupdate)
+                 (cmd :AutoIndent)
+                 (match (pcall require :notify)
+                   (true {: dismiss}) (dismiss {:silent true :pending true}))
+                 (match (pcall require :indent_blankline)
+                   true (cmd :IndentBlanklineRefresh))))
 
 (macro noresilent [mode lhs rhs opts]
   (fn set! [k v]
