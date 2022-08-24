@@ -25,8 +25,8 @@
   (let [{: cmd :api {: nvim_create_augroup : nvim_create_autocmd}} vim
         {: setup : colors} (require :dracula)
         colors (colors)
-        overrides {:NonText {:fg colors.white}
-                   :NvimTreeIndentMarker {:link :NonText}}
+        overrides {:GitSignsCurrentLineBlame {:fg colors.white}
+                   :NvimTreeIndentMarker {:fg colors.white}}
         logo-colors (gradients "#bd93f9" "#ff79c6" 8)
         transparent {:Normal {:fg colors.fg}
                      :SignColumn {}
