@@ -25,10 +25,12 @@
   (let [{: cmd :api {: nvim_create_augroup : nvim_create_autocmd}} vim
         {: setup : colors} (require :dracula)
         colors (colors)
-        overrides {:GitSignsCurrentLineBlame {:fg colors.white}
+        overrides {:FoldColumn {:fg colors.white}
+                   :GitSignsCurrentLineBlame {:fg colors.white}
                    :NvimTreeIndentMarker {:fg colors.white}}
         logo-colors (gradients "#bd93f9" "#ff79c6" 8)
         transparent {:Normal {:fg colors.fg}
+                     :MoreMsg {:fg colors.purple}
                      :SignColumn {}
                      :NvimTreeNormal {:link :Normal}
                      :NvimTreeVertSplit {:fg colors.black}

@@ -25,7 +25,7 @@
   (map :n :gD declaration)
   (map :n :gd definition)
   (map :n :gI implementation)
-  (map :n :K hover)
+  ;; (map :n :K hover) ; ufo
   (map :n :gK signature_help)
   (map :n :gp format)
   (map :v :gp range_formatting)
@@ -38,6 +38,8 @@
         {: update_capabilities} (require :cmp_nvim_lsp)]
     (set capabilities.textDocument.completion.completionItem.snippetSupport
          true)
+    (set capabilities.textDocument.foldingRange
+         {:dynamicRegistration false :lineFoldingOnly true})
     (update_capabilities capabilities)))
 
 (fn call-servers []

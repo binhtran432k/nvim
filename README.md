@@ -26,7 +26,7 @@ My personal neovim config
 - [x] Add telescope
 - [x] Add alpha
 - [x] Add lualine
-- [ ] Add ufo
+- [x] Add ufo
 - [x] Add matchup
 - [x] Add bufferline
 - [x] Add dressing

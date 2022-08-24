@@ -69,7 +69,13 @@
                :scrolloff 3
                :sidescrolloff 8
                :completeopt "menu,menuone,noinsert"
-               :list true}]
+               :list true
+               :fillchars "eob: ,fold: ,foldopen:,foldsep: ,foldclose:"
+               :foldmethod :manual
+               :foldcolumn :1
+               :foldlevel 99
+               :foldlevelstart -1
+               :foldenable true}]
   (each [key value (pairs options)]
     (tset opt key value)))
 

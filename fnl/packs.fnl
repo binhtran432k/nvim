@@ -61,6 +61,12 @@
                      {:mod :ui.gitsigns :event [:BufRead] :config true})
                (use! :lukas-reineke/indent-blankline.nvim
                      {:mod :ui.indent-blankline :event [:BufRead] :config true})
+               (use! :kevinhwang91/nvim-ufo
+                     {:mod :ui.ufo
+                      :event [:BufRead]
+                      :requires [(use! :kevinhwang91/promise-async
+                                       {:module :promise})]
+                      :config true})
                ;; util
                (use! :gpanders/editorconfig.nvim {:event :BufRead})
                (use! :kylechui/nvim-surround
