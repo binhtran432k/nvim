@@ -1,6 +1,8 @@
 (local {: directory-or-nil?} (require :helpers))
-(local testplugins_path (.. (vim.fn.stdpath :config) :/testplugins/))
-(local compile_path (.. (vim.fn.stdpath :config) :/lua/packer_compiled.lua))
+(local compile-path (.. (vim.fn.stdpath :config) :/lua/packer_compiled.lua))
+
+(fn testplugins [path]
+  (.. (vim.fn.stdpath :config) :/testplugins/ path))
 
 (macro use! [pack opts]
   (if opts
@@ -144,11 +146,11 @@
                     (use opts)))
               :config {:profile {:enable true}
                        :display {:open_fn float}
-                       : compile_path}})
+                       :compile_path compile-path}})
     (action-fn)))
 
 ;; Make sure packer is all ready to go
-(let [compiled? (= (vim.fn.filereadable compile_path) 1)]
+(let [compiled? (= (vim.fn.filereadable compile-path) 1)]
   (if compiled?
       (require :packer_compiled)
       (setup :sync)))
