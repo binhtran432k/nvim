@@ -107,7 +107,6 @@
                (use! :hrsh7th/nvim-cmp
                      {:mod :util.cmp
                       :config true
-                      :commit :b1ebdb0a17daaad13606b802780313a32e59781b
                       :event [:InsertEnter :CmdlineEnter]
                       :requires [(use! :hrsh7th/cmp-buffer {:after cmp-name})
                                  (use! :hrsh7th/cmp-path {:after cmp-name})
