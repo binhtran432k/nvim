@@ -10,7 +10,8 @@
                                :override_file_sorter true
                                :case_mode :smart_case}}})
     (load_extension :fzf)
-    (load_extension :luasnip))
+    (load_extension :luasnip)
+    (load_extension :projects))
   (mapping))
 
 {: config}

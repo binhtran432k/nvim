@@ -41,4 +41,4 @@ My personal neovim config
 - [ ] Add wordmotion
 - [ ] Add hydra
 - [x] Add startuptime
-- [ ] Add project
+- [x] Add project

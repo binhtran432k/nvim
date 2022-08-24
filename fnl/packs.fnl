@@ -98,6 +98,11 @@
                       :config true})
                (use! :Olical/conjure
                      {:mod :util.conjure :ft [:fennel :lua] :setup true})
+               (use! :ahmedkhalf/project.nvim
+                     {:mod :util.project
+                      :event [:BufRead]
+                      :module :telescope._extensions.project
+                      :config true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig :event [:BufRead] :config true})
