@@ -27,7 +27,7 @@
         colors (colors)
         logo-colors (gradients "#bd93f9" "#ff79c6" 8)
         overrides {:NonText {:fg colors.white}
-                   :NvimTreeIndentMarker :NonText}]
+                   :NvimTreeIndentMarker {:link :NonText}}]
     (each [i color (ipairs logo-colors)]
       (tset overrides (.. :StartLogo i) {:fg color}))
     (setup {:transparent_bg (not vim.g.neovide)
