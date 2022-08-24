@@ -25,14 +25,22 @@
   (let [{: cmd :api {: nvim_create_augroup : nvim_create_autocmd}} vim
         {: setup : colors} (require :dracula)
         colors (colors)
-        logo-colors (gradients "#bd93f9" "#ff79c6" 8)
         overrides {:NonText {:fg colors.white}
-                   :NvimTreeIndentMarker {:link :NonText}}]
-    (each [i color (ipairs logo-colors)]
-      (tset overrides (.. :StartLogo i) {:fg color}))
-    (setup {:transparent_bg (not vim.g.neovide)
-            :italic_comment true
-            : overrides})
+                   :NvimTreeIndentMarker {:link :NonText}}
+        logo-colors (gradients "#bd93f9" "#ff79c6" 8)
+        transparent {:Normal {:fg colors.fg}
+                     :SignColoumn {}
+                     :NvimTreeNormal {:fg colors.fg}
+                     :NvimTreeVertSplit {:fg colors.black}
+                     :Pmenu {:fg colors.white}
+                     :BufferLineFill {}
+                     :NormalFloat {:link :Normal}
+                     :TelescopeNormal {:link :Normal}}]
+    (collect [i color (ipairs logo-colors) :into overrides]
+      (values (.. :StartLogo i) {:fg color}))
+    (collect [group settings (pairs transparent) :into overrides]
+      (values group settings))
+    (setup {:italic_comment true : overrides})
     (cmd "colorscheme dracula")))
 
 {: config}
