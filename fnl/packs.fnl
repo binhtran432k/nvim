@@ -111,6 +111,11 @@
                       :config true})
                (use! :chaoren/vim-wordmotion
                      {:mod :util.wordmotion :event [:BufRead] :setup true})
+               (use! :folke/todo-comments.nvim
+                     {:mod :util.todo-comments
+                      :event [:BufRead]
+                      :module :telescope._extensions.todo-comments
+                      :config true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig :event [:BufRead] :config true})
