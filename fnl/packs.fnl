@@ -116,6 +116,12 @@
                       :event [:BufRead]
                       :module :telescope._extensions.todo-comments
                       :config true})
+               (use! :tyru/open-browser.vim
+                     {:mod :util.open-browser
+                      :event [:BufRead]
+                      :requires [(use! :itchyny/vim-highlighturl
+                                       {:event [:BufRead]})]
+                      :setup true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig :event [:BufRead] :config true})

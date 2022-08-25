@@ -35,7 +35,7 @@ My personal neovim config
 - [x] Add leap
 - [ ] Add iswap
 - [x] Add markdownpreview
-- [ ] Add openbrowser
+- [x] Add openbrowser
 - [x] Add todocomment
 - [x] Add toggleterm
 - [x] Add wordmotion
