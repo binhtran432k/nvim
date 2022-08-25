@@ -160,7 +160,12 @@
                                        {:cmd :TSPlaygroundToggle})]})
                ;; lang
                (use! :folke/lua-dev.nvim {:module :lua-dev})
-               (use! :b0o/schemastore.nvim {:module :schemastore})]]
+               (use! :b0o/schemastore.nvim {:module :schemastore})
+               (use! :iamcco/markdown-preview.nvim
+                     {:mod :lang.markdown-preview
+                      :run "cd app && npm install"
+                      :setup true
+                      :ft [:markdown]})]]
     (startup {1 (fn [use]
                   (each [_ opts (ipairs packs)]
                     (use opts)))

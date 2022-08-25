@@ -34,7 +34,7 @@ My personal neovim config
 - [x] Add gitsigns
 - [x] Add leap
 - [ ] Add iswap
-- [ ] Add markdownpreview
+- [x] Add markdownpreview
 - [ ] Add openbrowser
 - [x] Add todocomment
 - [x] Add toggleterm
