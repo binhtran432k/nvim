@@ -48,6 +48,7 @@
                  :html
                  :jsonls
                  :marksman
+                 :pyright
                  :sqlls
                  :sumneko_lua
                  :yamlls]
