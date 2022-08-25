@@ -33,7 +33,7 @@ My personal neovim config
 - [ ] Add fidget
 - [x] Add gitsigns
 - [x] Add leap
-- [ ] Add iswap
+- [x] Add iswap
 - [x] Add markdownpreview
 - [x] Add openbrowser
 - [x] Add todocomment

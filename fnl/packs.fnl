@@ -122,6 +122,11 @@
                       :requires [(use! :itchyny/vim-highlighturl
                                        {:event [:BufRead]})]
                       :setup true})
+               (use! :mizlan/iswap.nvim
+                     {:mod :util.iswap
+                      :cmd [:ISwap :ISwapWith :ISwapNode :ISwapNodeWith]
+                      :keys ["[a" "]a" :<leader>a :<leader>A]
+                      :config true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig :event [:BufRead] :config true})
