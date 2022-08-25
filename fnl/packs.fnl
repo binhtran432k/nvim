@@ -109,6 +109,8 @@
                       :event [:BufRead]
                       :module :telescope._extensions.project
                       :config true})
+               (use! :chaoren/vim-wordmotion
+                     {:mod :util.wordmotion :event [:BufRead] :setup true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig :event [:BufRead] :config true})
