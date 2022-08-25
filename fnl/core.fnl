@@ -125,7 +125,7 @@
   `(values ,mode ,lhs ,rhs ,opts))
 
 ;; simple text objects
-(map (noresilent [:x :o] :ae ":<c-u>norm! mzggVG<cr>" {}))
+(map (noresilent [:x :o] :ae ":<c-u>norm! mzggV'zG<cr>" {}))
 (map (noresilent [:x :o] :il ":<c-u>norm! _vg$h<cr>" {}))
 (map (noresilent [:x :o] :al ":<c-u>norm! 0vg$h<cr>" {}))
 
