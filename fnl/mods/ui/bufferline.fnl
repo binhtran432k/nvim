@@ -5,7 +5,11 @@
 
 (fn commands []
   (let [{: cmd :api {: nvim_create_user_command}} vim]
-    (nvim_create_user_command :OnlyBuffer #(cmd "execute '%bd|e#|bd#'") {})))
+    (nvim_create_user_command :OnlyBuffer
+                              (fn []
+                                (cmd :BufferLineCloseRight)
+                                (cmd :BufferLineCloseLeft))
+                              {})))
 
 (fn mappings []
   (let [{:keymap {:set map}} vim]
