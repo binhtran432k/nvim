@@ -135,4 +135,9 @@
 (map (noresilent [:x :o] :il ":<c-u>norm! _vg$h<cr>" {}))
 (map (noresilent [:x :o] :al ":<c-u>norm! 0vg$h<cr>" {}))
 
+(map :n :<a-j> ":<c-u>resize -4<cr>" {})
+(map :n :<a-k> ":<c-u>resize +4<cr>" {})
+(map :n :<a-h> ":<c-u>vertical resize -4<cr>" {})
+(map :n :<a-l> ":<c-u>vertical resize +4<cr>" {})
+
 {}

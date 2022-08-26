@@ -15,6 +15,10 @@
   (let [{:keymap {:set map}} vim
         opts {:buffer 0}]
     (map :t :<c-w> "<c-\\><c-n><c-w>" opts)
+    (map :t :<a-j> "<c-\\><c-n><cmd>resize -4<cr>" {})
+    (map :t :<a-k> "<c-\\><c-n><cmd>resize +4<cr>" {})
+    (map :t :<a-h> "<c-\\><c-n><cmd>vertical resize -4<cr>" {})
+    (map :t :<a-l> "<c-\\><c-n><cmd>vertical resize +4<cr>" {})
     (mapterms map :t opts)))
 
 (fn autocmd-term []
