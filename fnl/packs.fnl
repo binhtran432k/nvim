@@ -42,7 +42,10 @@
                (use! :nvim-lualine/lualine.nvim
                      {:mod :ui.lualine :event [:BufRead] :config true})
                (use! :rcarriga/nvim-notify
-                     {:mod :ui.notify :event [:BufRead] :config true})
+                     {:mod :ui.notify
+                      :event [:BufRead]
+                      :module :telescope._extensions.notify
+                      :config true})
                (use! :kyazdani42/nvim-web-devicons
                      {:mod :ui.web-devicons
                       :module :nvim-web-devicons

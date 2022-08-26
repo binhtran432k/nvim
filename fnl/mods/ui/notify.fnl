@@ -77,7 +77,7 @@
                      :keep #(or (= lvl :ERROR) (= lvl :WARN))})))))
 
 (fn config []
-  (notify.setup {:background_colour "#000000"})
+  (notify.setup {:background_colour "#000000" :stages :static :level 0})
   (set vim.notify notify)
   (setup-lsp-status)
   (setup-lsp-message))

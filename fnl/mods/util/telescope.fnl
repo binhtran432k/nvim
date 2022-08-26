@@ -12,7 +12,8 @@
     (load_extension :fzf)
     (load_extension :luasnip)
     (load_extension :projects)
-    (load_extension :todo-comments))
+    (load_extension :todo-comments)
+    (load_extension :notify))
   (mapping))
 
 {: config}
