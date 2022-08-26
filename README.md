@@ -39,6 +39,6 @@ My personal neovim config
 - [x] Add todocomment
 - [x] Add toggleterm
 - [x] Add wordmotion
-- [ ] Add hydra
+- [x] Add which-key
 - [x] Add startuptime
 - [x] Add project

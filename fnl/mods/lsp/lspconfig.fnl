@@ -18,19 +18,19 @@
         :api {: nvim_create_user_command}} vim)
 
 (fn mapping []
-  (map :n :gl open_float)
-  (map :n "]d" goto_next)
-  (map :n "[d" goto_prev)
-  (map :n :gr references)
-  (map :n :gD declaration)
-  (map :n :gd definition)
-  (map :n :gI implementation)
-  ;; (map :n :K hover) ; ufo
-  (map :n :gK signature_help)
-  (map :n :gp format)
-  (map :v :gp range_formatting)
-  (map :n :<leader>rn rename)
-  (map :n :<leader>ca code_action)
+  (map :n :gl open_float {:desc "Float diagnostic"})
+  (map :n "]d" goto_next {:desc "Next diagnostic"})
+  (map :n "[d" goto_prev {:desc "Previous diagnostic"})
+  (map :n :gr references {:desc "Go to references"})
+  (map :n :gD declaration {:desc "Go to declaration"})
+  (map :n :gd definition {:desc "Go to definition"})
+  (map :n :gI implementation {:desc "Go to implementation"})
+  ;; (map :n :K hover {:desc "Hover"}) ; ufo
+  (map :n :gK signature_help {:desc "Signature help"})
+  (map :n :gp format {:desc "Format file"})
+  (map :v :gp range_formatting {:desc "Format range"})
+  (map :n :<leader>rn rename {:desc :Rename})
+  (map :n :<leader>ca code_action {:desc "Code action"})
   (nvim_create_user_command :Format format {}))
 
 (fn capabilities []

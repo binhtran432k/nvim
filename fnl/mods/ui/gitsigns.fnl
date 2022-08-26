@@ -22,26 +22,34 @@
                                     (do
                                       (vim.schedule next_hunk)
                                       :<ignore>)))
-                              {:expr true})
+                              {:expr true :desc "Next hunk"})
                          (map :n "[h"
                               (fn []
                                 (if vim.wo.diff "[h"
                                     (do
                                       (vim.schedule prev_hunk)
                                       :<ignore>)))
-                              {:expr true})
+                              {:expr true :desc "Previous hunk"})
                          (map [:n :v] :<localleader>hs
-                              ":Gitsigns stage_hunk<CR>")
+                              ":Gitsigns stage_hunk<CR>" {:desc "Stage hunk"})
                          (map [:n :v] :<localleader>hr
-                              ":Gitsigns reset_hunk<CR>")
-                         (map :n :<localleader>hS stage_buffer)
-                         (map :n :<localleader>hu undo_stage_hunk)
-                         (map :n :<localleader>hR reset_buffer)
-                         (map :n :<localleader>hp preview_hunk)
-                         (map :n :<localleader>hb #(blame_line {:full true}))
-                         (map :n :<localleader>tb toggle_current_line_blame)
-                         (map :n :<localleader>hd diffthis)
-                         (map :n :<localleader>hD #(diffthis "~"))
-                         (map :n :<localleader>td toggle_deleted))})))
+                              ":Gitsigns reset_hunk<CR>" {:desc "Reset hunk"})
+                         (map :n :<localleader>hS stage_buffer
+                              {:desc "Stage buffer"})
+                         (map :n :<localleader>hu undo_stage_hunk
+                              {:desc "Undo stage hunk"})
+                         (map :n :<localleader>hR reset_buffer
+                              {:desc "Reset buffer"})
+                         (map :n :<localleader>hp preview_hunk
+                              {:desc "Preview hunk"})
+                         (map :n :<localleader>hb #(blame_line {:full true})
+                              {:desc "Blame line"})
+                         (map :n :<localleader>tb toggle_current_line_blame
+                              {:desc "Toggle current line blame"})
+                         (map :n :<localleader>hd diffthis {:desc "Diff this"})
+                         (map :n :<localleader>hD #(diffthis "~")
+                              {:desc "Diff this(~)"})
+                         (map :n :<localleader>td toggle_deleted
+                              {:desc "Toggle hunk deleted"}))})))
 
 {: config}

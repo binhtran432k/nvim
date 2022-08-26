@@ -9,11 +9,11 @@
 
 (fn mappings []
   (let [{:keymap {:set map}} vim]
-    (map :n "[b" :<cmd>BufferLineCyclePrev<cr>)
-    (map :n "]b" :<cmd>BufferLineCycleNext<cr>)
-    (map :n "[B" :<cmd>BufferLineMovePrev<cr>)
-    (map :n "]B" :<cmd>BufferLineMoveNext<cr>)
-    (map :n :gb :<cmd>BufferLinePick<cr>)))
+    (map :n "[b" :<cmd>BufferLineCyclePrev<cr> {:desc "Previous buffer"})
+    (map :n "]b" :<cmd>BufferLineCycleNext<cr> {:desc "Next buffer"})
+    (map :n "[B" :<cmd>BufferLineMovePrev<cr> {:desc "Move buffer previous"})
+    (map :n "]B" :<cmd>BufferLineMoveNext<cr> {:desc "Move buffer next"})
+    (map :n :<space> :<cmd>BufferLinePick<cr> {:desc "Pick buffer"})))
 
 (fn config []
   (let [{: setup} (require :bufferline)]

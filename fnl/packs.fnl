@@ -73,7 +73,7 @@
                ;; util
                (use! :gpanders/editorconfig.nvim {:event :BufRead})
                (use! :kylechui/nvim-surround
-                     {:mod :util.surround :keys [:y :d :c :v] :config true})
+                     {:mod :util.surround :event [:BufRead] :config true})
                (use! :numToStr/Comment.nvim
                      {:mod :util.comment :keys [:gc :gb] :config true})
                (use! :windwp/nvim-autopairs
@@ -133,6 +133,11 @@
                      {:mod :util.iswap
                       :cmd [:ISwap :ISwapWith :ISwapNode :ISwapNodeWith]
                       :keys ["[a" "]a" :<leader>a :<leader>A]
+                      :config true})
+               (use! :folke/which-key.nvim
+                     {:mod :util.which-key
+                      :event [:BufRead]
+                      :setup true
                       :config true})
                ;; lsp
                (use! :neovim/nvim-lspconfig

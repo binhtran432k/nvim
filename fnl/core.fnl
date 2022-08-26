@@ -119,7 +119,8 @@
                  (match (pcall require :notify)
                    (true {: dismiss}) (dismiss {:silent true :pending true}))
                  (match (pcall require :indent_blankline)
-                   true (cmd :IndentBlanklineRefresh))))
+                   true (cmd :IndentBlanklineRefresh)))
+     {:desc "Clear screen"})
 
 (macro noresilent [mode lhs rhs opts]
   (fn set! [k v]
@@ -131,9 +132,11 @@
   `(values ,mode ,lhs ,rhs ,opts))
 
 ;; simple text objects
-(map (noresilent [:x :o] :ae ":<c-u>norm! mzggV'zG<cr>" {}))
-(map (noresilent [:x :o] :il ":<c-u>norm! _vg$h<cr>" {}))
-(map (noresilent [:x :o] :al ":<c-u>norm! 0vg$h<cr>" {}))
+(map (noresilent [:x :o] :ae ":<c-u>norm! mzggV'zG<cr>" {:desc "all file"}))
+(map (noresilent [:x :o] :il ":<c-u>norm! _vg$h<cr>"
+                 {:desc "line without indent"}))
+
+(map (noresilent [:x :o] :al ":<c-u>norm! 0vg$h<cr>" {:desc :line}))
 
 (map :n :<a-j> ":<c-u>resize -4<cr>" {})
 (map :n :<a-k> ":<c-u>resize +4<cr>" {})

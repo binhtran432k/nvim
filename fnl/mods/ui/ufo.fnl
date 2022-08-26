@@ -22,7 +22,8 @@
     (map :n :zm closeFoldsWith)
     (map :n :K (fn []
                  (when (not (peekFoldedLinesUnderCursor))
-                   (vim.lsp.buf.hover))))))
+                   (vim.lsp.buf.hover)))
+         {:desc "Expand or Hover"})))
 
 (fn command []
   (let [{:api {: nvim_create_user_command}} vim]
