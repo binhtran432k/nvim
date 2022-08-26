@@ -3,6 +3,12 @@
     (setup {:char_list ["┃" "║" "╬"]
             ; "┃" "║" "╬" "█"
             :show_trailing_blankline_indent false
-            :filetype_exclude [:NvimTree]})))
+            :filetype_exclude [:NvimTree
+                               :lspinfo
+                               :packer
+                               :checkhealth
+                               :help
+                               :man
+                               ""]})))
 
 {: config}
