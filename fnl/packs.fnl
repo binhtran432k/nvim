@@ -79,8 +79,12 @@
                (use! :andymass/vim-matchup
                      {:mod :util.matchup :event [:BufRead] :setup true})
                (use! :nvim-lua/plenary.nvim {:module :plenary})
-               (use! :ggandor/leap.nvim
-                     {:mod :util.leap :keys [:s :S :gs] :config true})
+               ;; (use! :ggandor/leap.nvim
+               ;;       {:mod :util.leap :keys [:s :S :gs] :config true})
+               (use! :phaazon/hop.nvim
+                     {:mod :util.hop :keys [:s] :module :hop :config true})
+               (use! :mfussenegger/nvim-treehopper
+                     {:mod :util.treehopper :keys [:S :m] :config true})
                (use! :kyazdani42/nvim-tree.lua
                      {:mod :util.tree
                       :tag :nightly
