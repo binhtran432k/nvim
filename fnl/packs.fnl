@@ -139,6 +139,9 @@
                       :event [:BufRead]
                       :setup true
                       :config true})
+               (use! :nathom/filetype.nvim
+                     {:mod :util.filetype :event [:BufRead] :config true})
+               (use! :antoinemadec/FixCursorHold.nvim {:event [:BufRead]})
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig :event [:BufRead] :config true})
