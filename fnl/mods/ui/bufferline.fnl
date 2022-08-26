@@ -13,7 +13,8 @@
     (map :n "]b" :<cmd>BufferLineCycleNext<cr> {:desc "Next buffer"})
     (map :n "[B" :<cmd>BufferLineMovePrev<cr> {:desc "Move buffer previous"})
     (map :n "]B" :<cmd>BufferLineMoveNext<cr> {:desc "Move buffer next"})
-    (map :n :<space> :<cmd>BufferLinePick<cr> {:desc "Pick buffer"})))
+    (map :n :<space> :<cmd>BufferLinePick<cr> {:desc "Pick buffer"})
+    (map :n :<leader><space> :<cmd>OnlyBuffer<cr> {:desc "Leave Only buffer"})))
 
 (fn config []
   (let [{: setup} (require :bufferline)]
