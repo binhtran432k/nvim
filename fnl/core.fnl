@@ -107,9 +107,6 @@
 
 (let [gid (nvim_create_augroup :smartindent {})
       {: auto-indent} (require :helpers)]
-  (nvim_create_autocmd :User {:pattern :EditorConfigPost
-                              :callback auto-indent
-                              :group gid})
   (nvim_create_user_command :AutoIndent auto-indent {}))
 
 ;; [[ Mapping ]]
