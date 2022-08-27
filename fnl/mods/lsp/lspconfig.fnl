@@ -86,4 +86,4 @@
   (mapping)
   (call-servers))
 
-{: config}
+{: config : capabilities}

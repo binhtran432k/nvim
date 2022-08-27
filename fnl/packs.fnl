@@ -191,7 +191,16 @@
                      {:mod :lang.markdown-preview
                       :run "cd app && npm install"
                       :setup true
-                      :ft [:markdown]})]]
+                      :ft [:markdown]})
+               (use! :jose-elias-alvarez/typescript.nvim
+                     {:mod :lang.typescript
+                      :ft [:javascript
+                           :typescript
+                           :javascriptreact
+                           :typescriptreact]
+                      :config true})
+               (use! :mfussenegger/nvim-jdtls
+                     {:mod :lang.jdtls :ft [:java] :config true})]]
     (startup {1 (fn [use]
                   (each [_ opts (ipairs packs)]
                     (use opts)))
