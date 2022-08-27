@@ -112,7 +112,9 @@
                      :Pmenu {:fg colors.white}
                      :BufferLineFill {}
                      :NormalFloat {:link :Normal}
-                     :TelescopeNormal {:link :Normal}}]
+                     :TelescopeNormal {:link :Normal}
+                     :CmpItemAbbrDeprecated {:fg colors.white}
+                     :CmpItemAbbrMatch {:fg colors.cyan}}]
     (collect [i color (ipairs logo-colors) :into overrides]
       (values (.. :StartLogo i) {:fg color}))
     (collect [group settings (pairs transparent) :into overrides]
