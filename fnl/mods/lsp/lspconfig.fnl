@@ -29,11 +29,11 @@
   (map :n :gK signature_help {:desc "Signature help"})
   (map :n :gp format {:desc "Format file"})
   (map :v :gp range_formatting {:desc "Format range"})
+  (nvim_create_user_command :Format format {})
   (map :n :<leader>rn rename {:desc :Rename})
-  (map :n :<leader>ca code_action {:desc "Code action"})
-  (nvim_create_user_command :Format format {}))
+  (map :n :<leader>ca code_action {:desc "Code action"}))
 
-(fn capabilities []
+(fn get-capabilities []
   (let [capabilities (protocol.make_client_capabilities)
         {: update_capabilities} (require :cmp_nvim_lsp)]
     (set capabilities.textDocument.completion.completionItem.snippetSupport
@@ -41,6 +41,11 @@
     (set capabilities.textDocument.foldingRange
          {:dynamicRegistration false :lineFoldingOnly true})
     (update_capabilities capabilities)))
+
+(fn on-attach [client bufnr]
+  (match (pcall require :lsp_signature)
+    (true {: on_attach})
+    (on_attach {:floating_window false :hint_prefix "💪 "} bufnr)))
 
 (fn call-servers []
   (let [servers [:cssls
@@ -56,7 +61,8 @@
         lspconfig (require :lspconfig)]
     (set lspconfig.util.default_config
          (vim.tbl_extend :force lspconfig.util.default_config
-                         {:capabilities (capabilities)}))
+                         {:on_attach on-attach
+                          :capabilities (get-capabilities)}))
     (each [_ sv-name (ipairs servers)]
       (let [sv (. lspconfig sv-name)]
         (if (. sv-configs sv-name)
@@ -86,4 +92,4 @@
   (mapping)
   (call-servers))
 
-{: config : capabilities}
+{: config : on-attach : get-capabilities}

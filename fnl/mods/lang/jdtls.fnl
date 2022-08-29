@@ -1,16 +1,16 @@
 (fn config []
-  (let [{:api {: nvim_create_autocmd}} vim
+  (let [{:bo {: filetype} :api {: nvim_create_autocmd}} vim
         {: start_or_attach} (require :jdtls)
         {: find_root : add_commands} (require :jdtls.setup)
         jdtls-lspconfig (. (require :lspconfig.server_configurations.jdtls)
                            :default_config)
-        {: capabilities} (require :mods.lsp.lspconfig)
+        {: on-attach : get-capabilities} (require :mods.lsp.lspconfig)
         filetypes [:java]
         conf {:cmd jdtls-lspconfig.cmd
               :filetypes [:java]
               :init_options jdtls-lspconfig.init_options
-              :on_attach (add_commands)
-              :capabilities (capabilities)
+              :on_attach #((add_commands) (on-attach))
+              :capabilities (get-capabilities)
               :settings {:java {:configuration {:runtimes [{:name :JavaSE-1.8
                                                             :path :/usr/lib/jvm/java-8-openjdk}
                                                            {:name :JavaSE-11
@@ -27,7 +27,9 @@
                                     :build.gradle
                                     :build.gradle.kts])
               :handlers jdtls-lspconfig.handlers}]
-    (nvim_create_autocmd :FileType
-                         {:pattern [:java] :callback #(start_or_attach conf)})))
+    (nvim_create_autocmd :BufRead
+                         {:callback (fn []
+                                      (if (= filetype :java)
+                                          (start_or_attach conf)))})))
 
 {: config}

@@ -151,6 +151,7 @@
                      {:mod :lsp.mason :after lspconfig-name :config true})
                (use! :jose-elias-alvarez/null-ls.nvim
                      {:mod :lsp.null-ls :after lspconfig-name :config true})
+               (use! :ray-x/lsp_signature.nvim {:module :lsp_signature})
                ;; completion
                (use! :hrsh7th/nvim-cmp
                      {:mod :util.cmp
