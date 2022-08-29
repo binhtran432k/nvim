@@ -73,8 +73,7 @@
                :list true
                :fillchars "eob: ,fold: ,foldopen:,foldsep: ,foldclose:"
                :foldmethod :manual
-               :foldcolumn :1
-               :foldenable true}]
+               :foldcolumn :1}]
   (each [key value (pairs options)]
     (tset opt key value)))
 

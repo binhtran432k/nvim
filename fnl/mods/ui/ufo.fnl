@@ -2,12 +2,9 @@
 
 (fn reset-fold []
   (let [o vim.o]
-    (set o.fillchars "eob: ,fold: ,foldopen:,foldsep: ,foldclose:")
     (set o.foldmethod :manual)
-    (set o.foldcolumn :1)
     (set o.foldlevel 99)
-    (set o.foldlevelstart -1)
-    (set o.foldenable true)))
+    (set o.foldlevelstart -1)))
 
 (fn mapping []
   (let [{:keymap {:set map}} vim
@@ -48,7 +45,6 @@
   (let [{: setup} ufo
         ft-map {:vim :indent :python :indent :git ""}]
     (setup {:preview {:win_config {:border ["" "─" "" "" "" "─" "" ""]
-                                   :winhighlight "Normal:Folded"
                                    :winblend 0}
                       :mappings {:scrollU :<c-u> :scrollD :<c-d>}}
             :fold_virt_text_handler fold-virt-text
