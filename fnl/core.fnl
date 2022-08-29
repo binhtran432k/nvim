@@ -1,4 +1,5 @@
 (local {: opt
+        : opt_global
         : g
         : cmd
         : bo
@@ -73,11 +74,13 @@
                :fillchars "eob: ,fold: ,foldopen:,foldsep: ,foldclose:"
                :foldmethod :manual
                :foldcolumn :1
-               :foldlevel 99
-               :foldlevelstart -1
                :foldenable true}]
   (each [key value (pairs options)]
     (tset opt key value)))
+
+;; Change global foldmethod
+(tset opt_global :foldlevel 99)
+(tset opt_global :foldlevelstart -1)
 
 ;; Make tab, trail more visible
 (opt.listchars:append "tab:▸▸")
