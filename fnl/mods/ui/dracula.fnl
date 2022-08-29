@@ -86,6 +86,7 @@
         {: setup : colors} (require :dracula)
         colors (colors)
         overrides {:FoldColumn {:fg colors.white}
+                   :Visual {:fg colors.black :bg colors.white}
                    :GitSignsCurrentLineBlame {:fg colors.white}
                    :NvimTreeIndentMarker {:fg colors.white}
                    ;; Notify
