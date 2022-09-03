@@ -89,6 +89,18 @@
                    :Visual {:fg colors.black :bg colors.white}
                    :GitSignsCurrentLineBlame {:fg colors.white}
                    :NvimTreeIndentMarker {:fg colors.white}
+                   :TSProperty {:fg colors.green}
+                   ;; Script12
+                   :TSKeyword {:fg colors.pink :bold true :italic true}
+                   :TSKeywordOperator {:fg colors.pink :bold true :italic true}
+                   :TSKeywordFunction {:fg colors.cyan :bold true :italic true}
+                   :TSRepeat {:fg colors.pink :bold true :italic true}
+                   :TSConditional {:fg colors.pink :bold true :italic true}
+                   :TSInclude {:fg colors.pink :bold true :italic true}
+                   :TSFuncBuiltin {:fg colors.cyan :bold true :italic true}
+                   :TSTypeBuiltin {:fg colors.cyan :bold true :italic true}
+                   :TSTagAttribute {:fg colors.green :bold true :italic true}
+                   :cssTSProperty {:fg colors.green :bold true :italic true}
                    ;; Notify
                    :NotifyERRORBorder {:fg dark-colors.red}
                    :NotifyWARNBorder {:fg dark-colors.yellow}
