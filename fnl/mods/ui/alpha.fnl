@@ -141,16 +141,14 @@
                         :val "Quick links"
                         :opts {:hl :SpecialComment :position :center}}
                        {:type :padding :val 1}
-                       (dashboard-button :p "  Project"
+                       (dashboard-button :p "  Find Project"
                                          ":Telescope projects<cr>")
                        (dashboard-button :f "  Find file"
-                                         ":Telescope find_files<cr>")
+                                         ":Telescope find_files hidden=true<cr>")
                        (dashboard-button :F "  Find text"
                                          ":Telescope live_grep<cr>")
                        (dashboard-button :n "  New file"
                                          ":ene<cr>")
-                       (dashboard-button :c "  Configuration"
-                                         ":e ~/.config/nvim/fnl/startup.fnl<cr>")
                        (dashboard-button :u "  Update plugins"
                                          ":PackerSync<CR>")
                        (dashboard-button :q "  Quit" ":qa<CR>")]
