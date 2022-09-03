@@ -1,6 +1,6 @@
 (fn mapping []
   (let [{:keymap {:set map}} vim]
-    (map :n :<c-p> "<cmd>Telescope find_files<cr>")
+    (map :n :<c-p> "<cmd>Telescope find_files hidden=true<cr>")
     (map :n :<a-p> "<cmd>Telescope builtin include_extensions=true<cr>")))
 
 (fn config []

@@ -102,7 +102,9 @@
                                        {:run :make
                                         :module :telescope._extensions.fzf})
                                  (use! :benfowler/telescope-luasnip.nvim
-                                       {:module :telescope._extensions.luasnip})]
+                                       {:module :telescope._extensions.luasnip})
+                                 (use! :nvim-telescope/telescope-symbols.nvim
+                                       {:after telescope-name})]
                       :config true})
                (use! :akinsho/toggleterm.nvim
                      {:mod :util.toggleterm
