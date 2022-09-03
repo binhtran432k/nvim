@@ -73,13 +73,11 @@
                :list true
                :fillchars "eob: ,fold: ,foldopen:,foldsep: ,foldclose:"
                :foldmethod :manual
+               :foldlevel 99
+               :foldlevelstart -1
                :foldcolumn :1}]
   (each [key value (pairs options)]
     (tset opt key value)))
-
-;; Change global foldmethod
-(tset opt_global :foldlevel 99)
-(tset opt_global :foldlevelstart -1)
 
 ;; Make tab, trail more visible
 (opt.listchars:append "tab:▸▸")

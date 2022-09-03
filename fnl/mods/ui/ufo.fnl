@@ -6,6 +6,11 @@
     (set o.foldlevel 99)
     (set o.foldlevelstart -1)))
 
+(fn autocmd []
+  (vim.api.nvim_create_autocmd [:BufNewFile]
+                               {:callback (fn []
+                                            (set vim.o.foldlevel 99))}))
+
 (fn mapping []
   (let [{:keymap {:set map}} vim
         {: openAllFolds
@@ -50,6 +55,7 @@
             :fold_virt_text_handler fold-virt-text
             :open_fold_hl_timeout 0
             :provider_selector #(or (. ft-map $2) [:lsp :indent])}))
+  (autocmd)
   (mapping)
   (command))
 
