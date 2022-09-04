@@ -20,14 +20,16 @@
     (map :n :<space> :<cmd>BufferLinePick<cr> {:desc "Pick buffer"})
     (map :n :<leader><space> :<cmd>OnlyBuffer<cr> {:desc "Leave Only buffer"})))
 
+(fn setup []
+  (mappings)
+  (commands))
+
 (fn config []
   (let [{: setup} (require :bufferline)]
     (setup {:options {:offsets [{:filetype :NvimTree
                                  :text "File Explorer"
                                  :highlight :Directory
                                  :text_align :left}]}}))
-  (mappings)
-  (commands)
   (disabled-filetype))
 
-{: config}
+{: config : setup}

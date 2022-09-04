@@ -101,6 +101,18 @@
                    :TSTypeBuiltin {:fg colors.cyan :bold true :italic true}
                    :TSTagAttribute {:fg colors.green :bold true :italic true}
                    :cssTSProperty {:fg colors.green :bold true :italic true}
+                   ;; Hop
+                   :HopNextKey {:fg colors.red :bold true}
+                   :HopNextKey1 {:fg colors.green :bold true}
+                   :HopNextKey2 {:fg dark-colors.green}
+                   :HopUnmatched {:fg colors.comment
+                                  :bg colors.bg
+                                  :sp colors.comment}
+                   :HopPreview {:fg colors.yellow :bold true}
+                   :HopCursor {:link :Cursor}
+                   ;; TreeHopper
+                   :TSNodeUnmatched {:link :HopUnmatched}
+                   :TSNodeKey {:link :HopNextKey}
                    ;; Notify
                    :NotifyERRORBorder {:fg dark-colors.red}
                    :NotifyWARNBorder {:fg dark-colors.yellow}

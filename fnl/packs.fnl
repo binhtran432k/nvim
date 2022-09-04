@@ -59,7 +59,10 @@
                (use! :stevearc/dressing.nvim
                      {:mod :ui.dressing :event [:BufRead] :config true})
                (use! :akinsho/bufferline.nvim
-                     {:mod :ui.bufferline :event [:BufRead] :config true})
+                     {:mod :ui.bufferline
+                      :event [:BufRead]
+                      :setup true
+                      :config true})
                (use! :lewis6991/gitsigns.nvim
                      {:mod :ui.gitsigns :event [:BufRead] :config true})
                (use! :lukas-reineke/indent-blankline.nvim
@@ -85,19 +88,22 @@
                ;; (use! :ggandor/leap.nvim
                ;;       {:mod :util.leap :keys [:s :S :gs] :config true})
                (use! :phaazon/hop.nvim
-                     {:mod :util.hop :keys [:s] :module :hop :config true})
+                     {:mod :util.hop
+                      :cmd [:HopChar1 :HopWord]
+                      :module :hop
+                      :setup true
+                      :config true})
                (use! :mfussenegger/nvim-treehopper
-                     {:mod :util.treehopper :keys [:S :m] :config true})
+                     {:mod :util.treehopper :module :tsht :setup true})
                (use! :kyazdani42/nvim-tree.lua
                      {:mod :util.tree
                       :tag :nightly
                       :cmd [:NvimTreeToggle :NvimTreeFindFileToggle]
-                      :keys [:<c-n> :<a-n>]
+                      :setup true
                       :config true})
                (use! :nvim-telescope/telescope.nvim
                      {:mod :util.telescope
                       :cmd [:Telescope]
-                      :keys [:<c-p> :<a-p>]
                       :requires [(use! :nvim-telescope/telescope-fzf-native.nvim
                                        {:run :make
                                         :module :telescope._extensions.fzf})
@@ -105,11 +111,12 @@
                                        {:module :telescope._extensions.luasnip})
                                  (use! :nvim-telescope/telescope-symbols.nvim
                                        {:after telescope-name})]
+                      :setup true
                       :config true})
                (use! :akinsho/toggleterm.nvim
                      {:mod :util.toggleterm
                       :cmd [:ToggleTerm]
-                      :keys [:<a-1> :<a-2> :<a-3> :<a-4> :<a-5>]
+                      :setup true
                       :config true})
                (use! :Olical/conjure
                      {:mod :util.conjure :ft [:fennel :lua] :setup true})
@@ -134,7 +141,7 @@
                (use! :mizlan/iswap.nvim
                      {:mod :util.iswap
                       :cmd [:ISwap :ISwapWith :ISwapNode :ISwapNodeWith]
-                      :keys ["[a" "]a" :<leader>a :<leader>A]
+                      :setup true
                       :config true})
                (use! :folke/which-key.nvim
                      {:mod :util.which-key

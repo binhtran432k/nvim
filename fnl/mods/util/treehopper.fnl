@@ -1,15 +1,11 @@
-(local tsht (require :tsht))
-
 (fn mapping []
-  (let [{:keymap {:set map}} vim
-        {: move} tsht]
-    (map :o :m ":<c-u>lua require('tsht').nodes()<cr>"
-         {:silent true :desc "Select nodes"})
-    (map :x :m ":lua require('tsht').nodes()<cr>"
-         {:silent true :desc "Select nodes"})
-    (map :n :S move {:silent true})))
+  (let [{:keymap {:set map}} vim]
+    (map [:x :o] :m ":<c-u>lua require('tsht').nodes()<cr>"
+         {:silent true :desc "Treehopper nodes"})
+    (map :n :<leader>s ":lua require('tsht').move()<cr>"
+         {:silent true :desc "Treehopper move"})))
 
-(fn config []
+(fn setup []
   (mapping))
 
-{: config}
+{: setup}

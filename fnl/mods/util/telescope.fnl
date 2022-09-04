@@ -1,7 +1,12 @@
 (fn mapping []
   (let [{:keymap {:set map}} vim]
-    (map :n :<c-p> "<cmd>Telescope find_files hidden=true<cr>")
-    (map :n :<a-p> "<cmd>Telescope builtin include_extensions=true<cr>")))
+    (map :n :<c-p> "<cmd>Telescope find_files hidden=true<cr>"
+         {:desc "Telescope find files"})
+    (map :n :<a-p> "<cmd>Telescope builtin include_extensions=true<cr>"
+         {:desc :Telescope})))
+
+(fn setup []
+  (mapping))
 
 (fn config []
   (let [{: setup : load_extension} (require :telescope)]
@@ -13,7 +18,6 @@
     (load_extension :luasnip)
     (load_extension :projects)
     (load_extension :todo-comments)
-    (load_extension :notify))
-  (mapping))
+    (load_extension :notify)))
 
-{: config}
+{: config : setup}
