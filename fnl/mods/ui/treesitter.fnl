@@ -1,3 +1,17 @@
+(fn mapping []
+  (let [{:keymap {:set map}} vim]
+    (map :n :<localleader>tp :<cmd>TSPlaygroundToggle<cr>
+         {:desc "Toggle TS Playground"})
+    (map :n :<localleader>sc :<cmd>TSCaptureUnderCursor<cr>
+         {:desc "View TS Capture"})
+    (map :n :<localleader>sh :<cmd>TSHighlightCapturesUnderCursor<cr>
+         {:desc "View TS Highlight Capture"})
+    (map :n :<localleader>sn :<cmd>TSNodeUnderCursor<cr>
+         {:desc "View TS Node"})))
+
+(fn setup []
+  (mapping))
+
 (fn config []
   (let [parsers {:bibtex true
                  :bash true
@@ -91,4 +105,4 @@
                                       :disable disable?
                                       :keymaps {:smart_rename :<leader>rr}}}})))
 
-{: config}
+{: config : setup}

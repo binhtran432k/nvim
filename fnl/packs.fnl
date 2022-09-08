@@ -115,7 +115,7 @@
                       :config true})
                (use! :akinsho/toggleterm.nvim
                      {:mod :util.toggleterm
-                      :cmd [:ToggleTerm]
+                      :cmd [:ToggleTerm :ToggleTermLazygit :ToggleTermRanger]
                       :setup true
                       :config true})
                (use! :Olical/conjure
@@ -170,6 +170,7 @@
                      {:mod :util.cmp
                       :config true
                       :event [:InsertEnter :CmdlineEnter]
+                      :module :cmp
                       :requires [(use! :hrsh7th/cmp-buffer {:after cmp-name})
                                  (use! :hrsh7th/cmp-path {:after cmp-name})
                                  (use! :hrsh7th/cmp-cmdline {:after cmp-name})
@@ -187,6 +188,7 @@
                      {:mod :ui.treesitter
                       :run ":TSUpdate"
                       :event [:BufRead]
+                      :setup true
                       :config true
                       :requires [(use! :nvim-treesitter/nvim-treesitter-textobjects
                                        {:after ts-name})
@@ -197,7 +199,10 @@
                                  (use! :p00f/nvim-ts-rainbow {:after ts-name})
                                  (use! :windwp/nvim-ts-autotag {:ft tag-fts})
                                  (use! :nvim-treesitter/playground
-                                       {:cmd :TSPlaygroundToggle})]})
+                                       {:cmd [:TSPlaygroundToggle
+                                              :TSCaptureUnderCursor
+                                              :TSHighlightCapturesUnderCursor
+                                              :TSNodeUnderCursor]})]})
                ;; lang
                (use! :folke/lua-dev.nvim {:module :lua-dev})
                (use! :b0o/schemastore.nvim {:module :schemastore})

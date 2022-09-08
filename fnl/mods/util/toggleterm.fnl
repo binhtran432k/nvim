@@ -1,11 +1,16 @@
+(fn command []
+  (let [nvim_create_user_command vim.api.nvim_create_user_command
+        {: Terminal} (require :toggleterm.terminal)
+        lazygit (Terminal:new {:cmd :lazygit :direction :float :id 1000})
+        ranger (Terminal:new {:cmd :ranger :direction :float :id 1001})]
+    (nvim_create_user_command :ToggleTermLazygit #(lazygit:toggle) {})
+    (nvim_create_user_command :ToggleTermRanger #(ranger:toggle) {})))
+
 (fn custom-mapterms [map mode opts]
-  (let [{: Terminal} (require :toggleterm.terminal)
-        lazygit (: Terminal :new {:cmd :lazygit :direction :float :id 1000})
-        ranger (: Terminal :new {:cmd :ranger :direction :float :id 1001})]
     (set opts.desc "Toggle Lazygit")
-    (map mode :<a-4> #(: lazygit :toggle) opts)
+    (map mode :<a-4> "<cmd>ToggleTermLazygit<cr>" opts)
     (set opts.desc "Toggle Ranger")
-    (map mode :<a-5> #(: ranger :toggle) opts)))
+    (map mode :<a-5> "<cmd>ToggleTermRanger<cr>" opts))
 
 (fn mapterms [map mode opts]
   (for [i 1 3]
@@ -44,6 +49,7 @@
                     :horizontal 15
                     :vertical (* vim.o.columns 0.4)
                     _ 20)
-            :open_mapping "<c-\\>"})))
+            :open_mapping "<c-\\>"}))
+  (command))
 
 {: config : setup}
