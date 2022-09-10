@@ -43,9 +43,10 @@
     (update_capabilities capabilities)))
 
 (fn on-attach [client bufnr]
-  (match (pcall require :lsp_signature)
-    (true {: on_attach})
-    (on_attach {:floating_window false :hint_prefix "💪 "} bufnr)))
+  (let [signature (require :lsp_signature)
+        navic (require :nvim-navic)]
+    (signature.on_attach {:floating_window false :hint_prefix "💪 "} bufnr)
+    (navic.attach client bufnr)))
 
 (fn call-servers []
   (let [servers [:cssls

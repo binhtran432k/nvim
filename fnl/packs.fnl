@@ -165,6 +165,8 @@
                       :event [:CursorHold :CursorHoldI]
                       :config true})
                (use! :ray-x/lsp_signature.nvim {:module :lsp_signature})
+               (use! :SmiteshP/nvim-navic
+                     {:mod :lsp.navic :module :nvim-navic :config true})
                ;; completion
                (use! :hrsh7th/nvim-cmp
                      {:mod :util.cmp
