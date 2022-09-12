@@ -71,6 +71,7 @@
             (sv.setup {}))))))
 
 (fn config []
+  (set vim.opt_local.formatexpr " ")
   (let [signs {:Error "" :Warn "" :Hint "" :Info ""}
         config {:virtual_text true
                 :signs {:active signs}
@@ -82,10 +83,12 @@
                         :border :rounded
                         :source :always
                         :header ""
-                        :prefix ""}}]
+                        :prefix ""}}
+        windows (require :lspconfig.ui.windows)]
     (each [typ icon (pairs signs)]
       (let [hl (.. :DiagnosticSign typ)]
         (sign_define hl {:text icon :texthl hl :numhl hl})))
+    (set windows.default_options.border :rounded)
     (diag-config config)
     (tset handlers :textDocument/hover (with handlers.hover {:border :rounded}))
     (tset handlers :textDocument/signatureHelp
