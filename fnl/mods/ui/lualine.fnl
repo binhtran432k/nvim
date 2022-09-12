@@ -1,3 +1,15 @@
+(fn lsp []
+  (var msg "No Active Lsp")
+  (local buf-ft (vim.api.nvim_buf_get_option 0 :filetype))
+  (local clients (vim.lsp.get_active_clients))
+  (each [_ client (ipairs clients)]
+    (local filetypes client.config.filetypes)
+    (when (and filetypes (not= (vim.fn.index filetypes buf-ft) (- 1)))
+      (if (= client.name :null-ls) (set msg client.name)
+          (let [___client_name___ client.name]
+            (lua "return ___client_name___")))))
+  msg)
+
 (fn diff-source []
   (let [gitsigns vim.b.gitsigns_status_dict]
     (when gitsigns
@@ -33,7 +45,8 @@
                                 :lualine_z []}
             :tabline {}
             :winbar {:lualine_a [#" "]
-                     :lualine_c [{1 :diagnostics
+                     :lualine_c [{1 lsp :icon " "}
+                                 {1 :diagnostics
                                   :symbols {:hint " "
                                             :info " "
                                             :warn " "
