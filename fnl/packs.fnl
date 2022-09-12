@@ -104,6 +104,7 @@
                (use! :nvim-telescope/telescope.nvim
                      {:mod :util.telescope
                       :cmd [:Telescope]
+                      :module [:telescope]
                       :requires [(use! :nvim-telescope/telescope-fzf-native.nvim
                                        {:run :make
                                         :module :telescope._extensions.fzf})
@@ -174,7 +175,7 @@
                       :requires [(use! :hrsh7th/cmp-buffer {:after cmp-name})
                                  (use! :hrsh7th/cmp-path {:after cmp-name})
                                  (use! :hrsh7th/cmp-cmdline {:after cmp-name})
-                                 (use! :hrsh7th/cmp-nvim-lsp {:after cmp-name})
+                                 (use! :hrsh7th/cmp-nvim-lsp {:after lspconfig-name})
                                  (use! :PaterJason/cmp-conjure
                                        {:after conjure-name})
                                  (use! :onsails/lspkind-nvim {:module :lspkind})
