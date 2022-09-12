@@ -35,8 +35,7 @@
                     :f "Previous function start"
                     :F "Previous function end"}
                ;; lazy load fix label
-               :gb "Comment toggle blockwise"
-               :gc "Comment toggle linewise"}))
+               :g {:b "Comment toggle blockwise" :c "Comment toggle linewise"}}))
   (autocmd))
 
 {: config : setup}
