@@ -42,6 +42,7 @@
                  :phpdoc true
                  :python true
                  :query true
+                 :regex true
                  :ruby true
                  :rust true
                  :scss true
