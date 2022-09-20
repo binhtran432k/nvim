@@ -26,6 +26,7 @@
         notify-name :nvim-notify
         colorscheme-name :dracula.nvim
         lspconfig-name :nvim-lspconfig
+        mason-lspconfig-name :mason-lspconfig.nvim
         cmp-name :nvim-cmp
         snip-name :LuaSnip
         telescope-name :telescope.nvim
@@ -174,7 +175,8 @@
                       :requires [(use! :hrsh7th/cmp-buffer {:after cmp-name})
                                  (use! :hrsh7th/cmp-path {:after cmp-name})
                                  (use! :hrsh7th/cmp-cmdline {:after cmp-name})
-                                 (use! :hrsh7th/cmp-nvim-lsp {:after lspconfig-name})
+                                 (use! :hrsh7th/cmp-nvim-lsp
+                                       {:after lspconfig-name})
                                  (use! :PaterJason/cmp-conjure
                                        {:after conjure-name})
                                  (use! :onsails/lspkind-nvim {:module :lspkind})
@@ -213,13 +215,12 @@
                       :ft [:markdown]})
                (use! :jose-elias-alvarez/typescript.nvim
                      {:mod :lang.typescript
-                      :ft [:javascript
-                           :typescript
-                           :javascriptreact
-                           :typescriptreact]
+                      :after mason-lspconfig-name
                       :config true})
                (use! :mfussenegger/nvim-jdtls
-                     {:mod :lang.jdtls :ft [:java] :config true})]]
+                     {:mod :lang.jdtls
+                      :after mason-lspconfig-name
+                      :config true})]]
     (startup {1 (fn [use]
                   (each [_ opts (ipairs packs)]
                     (use opts)))
