@@ -26,7 +26,8 @@
 
 (fn config []
   (let [{: setup} (require :bufferline)]
-    (setup {:options {:offsets [{:filetype :NvimTree
+    (setup {:options {:indicator {:style :underline}
+                      :offsets [{:filetype :NvimTree
                                  :text "File Explorer"
                                  :highlight :Directory
                                  :text_align :left}]}}))
