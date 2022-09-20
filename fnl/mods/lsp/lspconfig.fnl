@@ -49,7 +49,8 @@
     (navic.attach client bufnr)))
 
 (fn call-servers []
-  (let [servers [:cssls
+  (let [servers [:clangd
+                 :cssls
                  :emmet_ls
                  :html
                  :jsonls
