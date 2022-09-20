@@ -1,3 +1,6 @@
+;; load filetype
+(require :filetype)
+
 ;; load common options and autoload
 (require :core)
 
