@@ -58,33 +58,43 @@
                (use! :goolord/alpha-nvim
                      {:mod :ui.alpha :cond directory-or-nil? :config true})
                (use! :stevearc/dressing.nvim
-                     {:mod :ui.dressing :event [:BufRead] :config true})
+                     {:mod :ui.dressing
+                      :event [:CursorHold :CursorHoldI]
+                      :config true})
                (use! :akinsho/bufferline.nvim
                      {:mod :ui.bufferline
                       :event [:BufRead]
                       :setup true
                       :config true})
                (use! :lewis6991/gitsigns.nvim
-                     {:mod :ui.gitsigns :event [:BufRead] :config true})
+                     {:mod :ui.gitsigns
+                      :event [:CursorHold :CursorHoldI]
+                      :config true})
                (use! :lukas-reineke/indent-blankline.nvim
-                     {:mod :ui.indent-blankline :event [:BufRead] :config true})
+                     {:mod :ui.indent-blankline
+                      :event [:CursorHold :CursorHoldI]
+                      :config true})
                (use! :kevinhwang91/nvim-ufo
                      {:mod :ui.ufo
-                      :event [:BufRead]
+                      :event [:CursorHold :CursorHoldI]
                       :requires [(use! :kevinhwang91/promise-async
                                        {:module :promise})]
                       :config true})
                ;; util
                (use! :gpanders/editorconfig.nvim {:event :BufRead})
                (use! :kylechui/nvim-surround
-                     {:mod :util.surround :event [:BufRead] :config true})
+                     {:mod :util.surround
+                      :event [:CursorHold :CursorHoldI]
+                      :config true})
                (use! :numToStr/Comment.nvim
                      {:mod :util.comment :keys [:gc :gb] :config true})
                (use! :windwp/nvim-autopairs
                      {:mod :util.autopairs :event [:InsertEnter] :config true})
                (use! :dstein64/vim-startuptime {:cmd :StartupTime})
                (use! :andymass/vim-matchup
-                     {:mod :util.matchup :event [:BufRead] :setup true})
+                     {:mod :util.matchup
+                      :event [:CursorHold :CursorHoldI]
+                      :setup true})
                (use! :nvim-lua/plenary.nvim {:module :plenary})
                ;; (use! :ggandor/leap.nvim
                ;;       {:mod :util.leap :keys [:s :S :gs] :config true})
@@ -124,19 +134,19 @@
                      {:mod :util.conjure :ft [:fennel :lua] :setup true})
                (use! :ahmedkhalf/project.nvim
                      {:mod :util.project
-                      :event [:BufRead]
+                      :event [:CursorHold :CursorHoldI]
                       :module :telescope._extensions.project
                       :config true})
                (use! :chaoren/vim-wordmotion
                      {:mod :util.wordmotion :event [:BufRead] :setup true})
                (use! :folke/todo-comments.nvim
                      {:mod :util.todo-comments
-                      :event [:BufRead]
+                      :event [:CursorHold :CursorHoldI]
                       :module :telescope._extensions.todo-comments
                       :config true})
                (use! :tyru/open-browser.vim
                      {:mod :util.open-browser
-                      :event [:BufRead]
+                      :event [:CursorHold :CursorHoldI]
                       :requires [(use! :itchyny/vim-highlighturl
                                        {:event [:BufRead]})]
                       :setup true})
@@ -147,18 +157,22 @@
                       :config true})
                (use! :folke/which-key.nvim
                      {:mod :util.which-key
-                      :event [:BufRead]
+                      :event [:CursorHold :CursorHoldI]
                       :setup true
                       :config true})
                ;; lsp
                (use! :neovim/nvim-lspconfig
-                     {:mod :lsp.lspconfig :event [:BufRead] :config true})
+                     {:mod :lsp.lspconfig
+                      :event [:CursorHold :CursorHoldI]
+                      :config true})
                (use! :williamboman/mason-lspconfig.nvim
                      {:module :mason-lspconfig})
                (use! :williamboman/mason.nvim
                      {:mod :lsp.mason :after lspconfig-name :config true})
                (use! :jose-elias-alvarez/null-ls.nvim
-                     {:mod :lsp.null-ls :after lspconfig-name :config true})
+                     {:mod :lsp.null-ls
+                      :after lspconfig-name
+                      :config true})
                (use! :kosayoda/nvim-lightbulb
                      {:mod :lsp.lightbulb
                       :event [:CursorHold :CursorHoldI]

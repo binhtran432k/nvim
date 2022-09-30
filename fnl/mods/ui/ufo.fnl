@@ -48,10 +48,14 @@
 
 (fn config []
   (let [{: setup} ufo
+        ts-ufo [:treesitter :indent]
         ft-map {:vim :indent
                 :python :indent
                 :git ""
-                :markdown [:treesitter :indent]}]
+                :c ts-ufo
+                :cpp ts-ufo
+                :lua ts-ufo
+                :markdown ts-ufo}]
     (setup {:preview {:win_config {:border ["" "─" "" "" "" "─" "" ""]
                                    :winblend 0}
                       :mappings {:scrollU :<c-u> :scrollD :<c-d>}}

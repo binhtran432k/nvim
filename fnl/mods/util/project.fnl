@@ -1,5 +1,5 @@
 (fn config []
   (let [{: setup} (require :project_nvim)]
-    (setup)))
+    (setup {:detection_methods [:pattern :lsp]})))
 
 {: config}

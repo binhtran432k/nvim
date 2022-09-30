@@ -46,7 +46,8 @@
   (let [signature (require :lsp_signature)
         navic (require :nvim-navic)]
     (signature.on_attach {:floating_window false :hint_prefix "💪 "} bufnr)
-    (navic.attach client bufnr)))
+    (if client.server_capabilities.documentSymbolProvider
+        (navic.attach client bufnr))))
 
 (fn call-servers []
   (let [servers [:clangd

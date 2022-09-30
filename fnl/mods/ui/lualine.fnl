@@ -5,7 +5,7 @@
   (each [_ client (ipairs clients)]
     (local filetypes client.config.filetypes)
     (when (and filetypes (not= (vim.fn.index filetypes buf-ft) (- 1)))
-      (if (= client.name :null-ls) (set msg client.name)
+      (if (or (= client.name :null-ls) (= client.name :emmet-ls)) (set msg client.name)
           (let [___client_name___ client.name]
             (lua "return ___client_name___")))))
   msg)
@@ -25,14 +25,19 @@
                       :theme :dracula-nvim
                       :component_separators {:left "" :right ""}
                       :section_separators {:left "" :right ""}
-                      :disabled_filetypes {:statusline [:alpha] :winbar []}
+                      :disabled_filetypes {:statusline [:alpha] :winbar [:alpha]}
                       :ignore_focus {}
                       :always_divide_middle true
                       :globalstatus false
                       :refresh {:statusline 1000 :tabline 1000 :winbar 1000}}
             :sections {:lualine_a [:mode]
                        :lualine_b [{1 "b:gitsigns_head" :icon ""}
-                                   {1 :diff :source diff-source}]
+                                   {1 :diff :source diff-source}
+                                   {1 :diagnostics
+                                    :symbols {:hint " "
+                                              :info " "
+                                              :warn " "
+                                              :error " "}}]
                        :lualine_c [:filename]
                        :lualine_x [:encoding :fileformat :filetype]
                        :lualine_y [:progress]
@@ -46,11 +51,6 @@
             :tabline {}
             :winbar {:lualine_a [#" "]
                      :lualine_c [{1 lsp :icon " "}
-                                 {1 :diagnostics
-                                  :symbols {:hint " "
-                                            :info " "
-                                            :warn " "
-                                            :error " "}}
                                  {1 navic.get_location
                                   :cond navic.is_available}]}
             :inactive_winbar {}
