@@ -12,9 +12,7 @@
                     : signature_help
                     : rename
                     : code_action
-                    : range_code_action
-                    : format
-                    : range_formatting}}
+                    : format}}
         :api {: nvim_create_user_command}} vim)
 
 (fn mapping []
@@ -27,11 +25,10 @@
   (map :n :gI implementation {:desc "Go to implementation"})
   ;; (map :n :K hover {:desc "Hover"}) ; ufo
   (map :n :gK signature_help {:desc "Signature help"})
-  (map :n :gp format {:desc "Format file"})
-  (map :v :gp range_formatting {:desc "Format range"})
+  (map [:n :v] :gp format {:desc "Format file"})
   (nvim_create_user_command :Format format {})
   (map :n :<leader>rn rename {:desc :Rename})
-  (map :n :<leader>ca code_action {:desc "Code action"}))
+  (map [:n :v] :<leader>ca code_action {:desc "Code action"}))
 
 (fn get-capabilities []
   (let [capabilities (protocol.make_client_capabilities)

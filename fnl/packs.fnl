@@ -163,7 +163,7 @@
                ;; lsp
                (use! :neovim/nvim-lspconfig
                      {:mod :lsp.lspconfig
-                      :event [:CursorHold :CursorHoldI]
+                      :event :BufRead
                       :config true})
                (use! :williamboman/mason-lspconfig.nvim
                      {:module :mason-lspconfig})
