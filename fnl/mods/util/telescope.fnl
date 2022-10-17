@@ -1,6 +1,6 @@
 (fn mapping []
   (let [{:keymap {:set map}} vim]
-    (map :n :<c-p> "<cmd>Telescope find_files hidden=true<cr>"
+    (map :n :<c-p> "<cmd>Telescope find_files hidden=true no_ignore=true<cr>"
          {:desc "Telescope find files"})
     (map :n :<a-p> "<cmd>Telescope builtin include_extensions=true<cr>"
          {:desc :Telescope})))
@@ -10,7 +10,10 @@
 
 (fn config []
   (let [{: setup : load_extension} (require :telescope)]
-    (setup {:defaults {:file_ignore_patterns [:^.git/]}
+    (setup {:defaults {:file_ignore_patterns [:^.git/
+                                              :/.git/
+                                              :^node_modules/
+                                              :/node_modules/]}
             :extensions {:fzf {:fuzzy true
                                :override_generic_sorter true
                                :override_file_sorter true
