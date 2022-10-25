@@ -111,7 +111,7 @@
   (nvim_create_autocmd :BufWinEnter {:callback auto-indent :group gid}))
 
 ;; Ibus
-(set vim.g.ibus_default_engine :BambooUs)
+(set g.ibus_default_engine :BambooUs)
 
 (fn trigger-ibus [im]
   (vim.cmd (string.format "silent! execute '!ibus engine ' . g:%s" im)))
@@ -122,9 +122,10 @@
   (when (not ibus-on?)
     (set ibus-on? true)
     (let [current-engine (vim.fn.system "ibus engine")]
+      (when (not= current-engine g.ibus_default_engine)
+        (trigger-ibus :ibus_default_engine))
       (when (not= current-engine g.ibus_prev_engine)
-        (set g.ibus_prev_engine current-engine)
-        (trigger-ibus :ibus_default_engine)))))
+        (set g.ibus_prev_engine current-engine)))))
 
 (fn trigger-ibus-on []
   (when ibus-on?
@@ -132,8 +133,7 @@
     (let [current-engine (vim.fn.system "ibus engine")]
       (when (not= current-engine g.ibus_prev_engine)
         (trigger-ibus :ibus_prev_engine)
-        (when (not= current-engine g.ibus_default_engine)
-          (set g.ibus_prev_engine current-engine))))))
+        (set g.ibus_prev_engine current-engine)))))
 
 (let [gid (nvim_create_augroup :smart_ibus {})]
   (nvim_create_autocmd [:InsertEnter :CmdlineEnter]
