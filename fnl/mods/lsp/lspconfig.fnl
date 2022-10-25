@@ -1,43 +1,48 @@
 (local {:fn {: sign_define}
         :keymap {:set map}
-        :diagnostic {: open_float : goto_prev : goto_next :config diag-config}
-        :lsp {: protocol
-              : handlers
-              : with
-              :buf {: references
-                    : definition
-                    : declaration
-                    : implementation
-                    : hover
-                    : signature_help
-                    : rename
-                    : code_action
-                    : format}}
+        :lsp {: protocol : handlers : with}
         :api {: nvim_create_user_command}} vim)
 
+(fn noresilentmap [mode key func opts]
+  (tset opts :noremap true)
+  (tset opts :silent true)
+  (map mode key func opts))
+
 (fn mapping []
-  (map :n :gl open_float {:desc "Float diagnostic"})
-  (map :n "]d" goto_next {:desc "Next diagnostic"})
-  (map :n "[d" goto_prev {:desc "Previous diagnostic"})
-  (map :n :gr references {:desc "Go to references"})
-  (map :n :gD declaration {:desc "Go to declaration"})
-  (map :n :gd definition {:desc "Go to definition"})
-  (map :n :gI implementation {:desc "Go to implementation"})
-  ;; (map :n :K hover {:desc "Hover"}) ; ufo
-  (map :n :gK signature_help {:desc "Signature help"})
-  (map [:n :v] :gp format {:desc "Format file"})
-  (nvim_create_user_command :Format format {})
-  (map :n :<leader>rn rename {:desc :Rename})
-  (map [:n :v] :<leader>ca code_action {:desc "Code action"}))
+  (noresilentmap :n :<space>e vim.diagnostic.open_float
+                 {:desc "Float diagnostic"})
+  (noresilentmap :n "]d" vim.diagnostic.goto_next {:desc "Next diagnostic"})
+  (noresilentmap :n "[d" vim.diagnostic.goto_prev {:desc "Previous diagnostic"})
+  (noresilentmap :n :<space>q vim.diagnostic.setloclist {:desc "Open loclist"})
+  (noresilentmap :n :gr vim.lsp.buf.references {:desc "Go to references"})
+  (noresilentmap :n :gD vim.lsp.buf.declaration {:desc "Go to declaration"})
+  (noresilentmap :n :gd vim.lsp.buf.definition {:desc "Go to definition"})
+  (noresilentmap :n :gI vim.lsp.buf.implementation
+                 {:desc "Go to implementation"})
+  ;noresilentmapmap :n :K vim.lsp.buf.hover {:desc "Hover"}) ; ufo
+  (noresilentmap :n :gK vim.lsp.buf.signature_help {:desc "Signature help"})
+  (noresilentmap :n :<space>wa vim.lsp.buf.add_workspace_folder
+                 {:desc "Add workspace folder"})
+  (noresilentmap :n :<space>wr vim.lsp.buf.remove_workspace_folder
+                 {:desc "Remove workspace folder"})
+  (noresilentmap :n :<space>wl
+                 #(print (vim.inspect (vim.lsp.buf.list_workspace_folders)))
+                 {:desc "Print list workspace folder"})
+  (let [fmt #(vim.lsp.buf.format {:async true})]
+    (noresilentmap [:n :v] :<space>f fmt {:desc "Format file"})
+    (nvim_create_user_command :Format fmt {}))
+  (noresilentmap :n :<space>rn vim.lsp.buf.rename {:desc :Rename})
+  (noresilentmap [:n :v] :<space>ca vim.lsp.buf.code_action
+                 {:desc "Code action"}))
 
 (fn get-capabilities []
-  (let [capabilities (protocol.make_client_capabilities)
-        {: update_capabilities} (require :cmp_nvim_lsp)]
+  (let [{: default_capabilities} (require :cmp_nvim_lsp)
+        capabilities (default_capabilities)]
     (set capabilities.textDocument.completion.completionItem.snippetSupport
          true)
     (set capabilities.textDocument.foldingRange
          {:dynamicRegistration false :lineFoldingOnly true})
-    (update_capabilities capabilities)))
+    capabilities))
 
 (fn on-attach [client bufnr]
   (let [signature (require :lsp_signature)
@@ -88,7 +93,7 @@
       (let [hl (.. :DiagnosticSign typ)]
         (sign_define hl {:text icon :texthl hl :numhl hl})))
     (set windows.default_options.border :rounded)
-    (diag-config config)
+    (vim.diagnostic.config config)
     (tset handlers :textDocument/hover (with handlers.hover {:border :rounded}))
     (tset handlers :textDocument/signatureHelp
           (with handlers.signature_help {:border :rounded})))
