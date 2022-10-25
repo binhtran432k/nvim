@@ -15,6 +15,7 @@
                           :b "Word motion b"
                           :e "Word motion e"
                           :ge "Word motion ge"}
+               :<space> {:name "Lsp Keymaps"}
                :<localleader> {:name "Local action"
                                :e {:name "Conjure Eval"
                                    :c {:name "Eval Comments"}}
