@@ -25,7 +25,7 @@
         ts-name :nvim-treesitter
         notify-name :nvim-notify
         colorscheme-name :dracula.nvim
-        lspconfig-name :nvim-lspconfig
+        mason-name :mason.nvim
         mason-lspconfig-name :mason-lspconfig.nvim
         cmp-name :nvim-cmp
         snip-name :LuaSnip
@@ -134,7 +134,7 @@
                      {:mod :util.conjure :ft [:fennel :lua] :setup true})
                (use! :ahmedkhalf/project.nvim
                      {:mod :util.project
-                      :event [:CursorHold :CursorHoldI]
+                      :event :BufRead
                       :module :telescope._extensions.project
                       :config true})
                (use! :chaoren/vim-wordmotion
@@ -161,18 +161,14 @@
                       :setup true
                       :config true})
                ;; lsp
+               (use! :williamboman/mason.nvim
+                     {:mod :lsp.mason :event :BufRead :config true})
                (use! :neovim/nvim-lspconfig
-                     {:mod :lsp.lspconfig
-                      :event :BufRead
-                      :config true})
+                     {:mod :lsp.lspconfig :event :BufRead :config true})
                (use! :williamboman/mason-lspconfig.nvim
                      {:module :mason-lspconfig})
-               (use! :williamboman/mason.nvim
-                     {:mod :lsp.mason :after lspconfig-name :config true})
                (use! :jose-elias-alvarez/null-ls.nvim
-                     {:mod :lsp.null-ls
-                      :after lspconfig-name
-                      :config true})
+                     {:mod :lsp.null-ls :after mason-name :config true})
                (use! :kosayoda/nvim-lightbulb
                      {:mod :lsp.lightbulb
                       :event [:CursorHold :CursorHoldI]
@@ -190,7 +186,7 @@
                                  (use! :hrsh7th/cmp-path {:after cmp-name})
                                  (use! :hrsh7th/cmp-cmdline {:after cmp-name})
                                  (use! :hrsh7th/cmp-nvim-lsp
-                                       {:after lspconfig-name})
+                                       {:after mason-name})
                                  (use! :PaterJason/cmp-conjure
                                        {:after conjure-name})
                                  (use! :onsails/lspkind-nvim {:module :lspkind})
