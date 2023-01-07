@@ -45,7 +45,7 @@
 ;; Load common options
 (let [options {:termguicolors true
                :background :dark
-               :colorcolumn [80]
+               :colorcolumn [80 100 120]
                :ignorecase true
                :smartcase true
                :cursorline true
@@ -105,6 +105,18 @@
                                       (cmd "silent! loadview")))
                         :group gid}))
 
+(let [gid (nvim_create_augroup :auto_reload {})]
+  (nvim_create_autocmd [:FocusGained :BufEnter]
+                       {:callback (fn []
+                                    (when (not= (vim.fn.mode) :c)
+                                      (cmd :checktime)))
+                        :group gid})
+  (nvim_create_autocmd :FileChangedShellPost
+                       {:callback (fn []
+                                    (vim.notify "File changed on disk. Buffer reloaded."
+                                                vim.log.levels.WARN))
+                        :group gid}))
+
 (let [gid (nvim_create_augroup :smartindent {})
       {: auto-indent} (require :helpers)]
   (nvim_create_user_command :AutoIndent auto-indent {})
@@ -148,7 +160,8 @@
                  (match (pcall require :notify)
                    (true {: dismiss}) (dismiss {:silent true :pending true}))
                  (match (pcall require :indent_blankline)
-                   true (cmd :IndentBlanklineRefresh)))
+                   true (cmd :IndentBlanklineRefresh))
+                 (cmd "TSDisable rainbow|TSEnable rainbow|TSDisable matchup|TSEnable matchup"))
      {:desc "Clear screen"})
 
 (macro noresilent [mode lhs rhs opts]

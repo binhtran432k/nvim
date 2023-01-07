@@ -27,6 +27,7 @@
         colorscheme-name :dracula.nvim
         mason-name :mason.nvim
         mason-lspconfig-name :mason-lspconfig.nvim
+        lspconfig-name :nvim-lspconfig
         cmp-name :nvim-cmp
         snip-name :LuaSnip
         telescope-name :telescope.nvim
@@ -39,12 +40,12 @@
                (use! :Mofiqul/dracula.nvim {:mod :ui.dracula :config true})
                ;(use! :RRethy/nvim-base16 {:mod :ui.base16 :config true})
                (use! :brenoprata10/nvim-highlight-colors
-                     {:mod :ui.colors :event [:BufRead] :config true})
+                     {:mod :ui.colors :event :BufRead :config true})
                (use! :nvim-lualine/lualine.nvim
-                     {:mod :ui.lualine :event [:BufRead] :config true})
+                     {:mod :ui.lualine :event :BufRead :config true})
                (use! :rcarriga/nvim-notify
                      {:mod :ui.notify
-                      :event [:BufRead]
+                      :event :BufRead
                       :module :telescope._extensions.notify
                       :config true})
                (use! :kyazdani42/nvim-web-devicons
@@ -63,7 +64,7 @@
                       :config true})
                (use! :akinsho/bufferline.nvim
                      {:mod :ui.bufferline
-                      :event [:BufRead]
+                      :event :BufRead
                       :setup true
                       :config true})
                (use! :lewis6991/gitsigns.nvim
@@ -138,17 +139,18 @@
                       :module :telescope._extensions.project
                       :config true})
                (use! :chaoren/vim-wordmotion
-                     {:mod :util.wordmotion :event [:BufRead] :setup true})
+                     {:mod :util.wordmotion :event :BufRead :setup true})
                (use! :folke/todo-comments.nvim
                      {:mod :util.todo-comments
                       :event [:CursorHold :CursorHoldI]
                       :module :telescope._extensions.todo-comments
-                      :config true})
+                      :config true
+                      :setup true})
                (use! :tyru/open-browser.vim
                      {:mod :util.open-browser
                       :event [:CursorHold :CursorHoldI]
                       :requires [(use! :itchyny/vim-highlighturl
-                                       {:event [:BufRead]})]
+                                       {:event :BufRead})]
                       :setup true})
                (use! :mizlan/iswap.nvim
                      {:mod :util.iswap
@@ -160,11 +162,31 @@
                       :event [:CursorHold :CursorHoldI]
                       :setup true
                       :config true})
+               (use! :echasnovski/mini.ai
+                     {:mod :util.mini-ai :event :BufRead :config true})
+               ;; (use! :akinsho/git-conflict.nvim
+               ;;       {:mod :util.git-conflict :tag :v1.0.0 :config true})
+               (use! :rhysd/conflict-marker.vim
+                     {:mod :util.conflict-marker :setup true})
+               (use! :dhruvasagar/vim-table-mode
+                     {:mod :util.table-mode :setup true})
+               (use! :folke/trouble.nvim
+                     {:mod :util.trouble
+                      :cmd [:TroubleToggle]
+                      :config true
+                      :setup true})
+               (use! :nvim-pack/nvim-spectre
+                     {:mod :util.spectre
+                      :module [:spectre]
+                      :config true
+                      :setup true})
                ;; lsp
                (use! :williamboman/mason.nvim
-                     {:mod :lsp.mason :event :BufRead :config true})
+                     {:mod :lsp.mason
+                      :event [:BufNewFile :BufRead]
+                      :config true})
                (use! :neovim/nvim-lspconfig
-                     {:mod :lsp.lspconfig :event :BufRead :config true})
+                     {:mod :lsp.lspconfig :after mason-name :config true})
                (use! :williamboman/mason-lspconfig.nvim
                      {:module :mason-lspconfig})
                (use! :jose-elias-alvarez/null-ls.nvim
@@ -176,6 +198,10 @@
                (use! :ray-x/lsp_signature.nvim {:module :lsp_signature})
                (use! :SmiteshP/nvim-navic
                      {:mod :lsp.navic :module :nvim-navic :config true})
+               (use! :folke/neodev.nvim {:module :neodev})
+               (use! :mfussenegger/nvim-jdtls {:module :jdtls})
+               (use! :Hoffs/omnisharp-extended-lsp.nvim
+                     {:module :omnisharp_extended})
                ;; completion
                (use! :hrsh7th/nvim-cmp
                      {:mod :util.cmp
@@ -186,7 +212,7 @@
                                  (use! :hrsh7th/cmp-path {:after cmp-name})
                                  (use! :hrsh7th/cmp-cmdline {:after cmp-name})
                                  (use! :hrsh7th/cmp-nvim-lsp
-                                       {:after mason-name})
+                                       {:after lspconfig-name})
                                  (use! :PaterJason/cmp-conjure
                                        {:after conjure-name})
                                  (use! :onsails/lspkind-nvim {:module :lspkind})
@@ -199,7 +225,7 @@
                (use! :nvim-treesitter/nvim-treesitter
                      {:mod :ui.treesitter
                       :run ":TSUpdate"
-                      :event [:BufRead]
+                      :event :BufRead
                       :setup true
                       :config true
                       :requires [(use! :nvim-treesitter/nvim-treesitter-textobjects
@@ -216,21 +242,12 @@
                                               :TSHighlightCapturesUnderCursor
                                               :TSNodeUnderCursor]})]})
                ;; lang
-               (use! :folke/lua-dev.nvim {:module :lua-dev})
                (use! :b0o/schemastore.nvim {:module :schemastore})
                (use! :iamcco/markdown-preview.nvim
                      {:mod :lang.markdown-preview
                       :run "cd app && npm install"
                       :setup true
-                      :ft [:markdown]})
-               (use! :jose-elias-alvarez/typescript.nvim
-                     {:mod :lang.typescript
-                      :after mason-lspconfig-name
-                      :config true})
-               (use! :mfussenegger/nvim-jdtls
-                     {:mod :lang.jdtls
-                      :after mason-lspconfig-name
-                      :config true})]]
+                      :ft [:markdown]})]]
     (startup {1 (fn [use]
                   (each [_ opts (ipairs packs)]
                     (use opts)))

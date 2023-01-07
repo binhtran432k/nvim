@@ -89,46 +89,23 @@
                    :Visual {:fg colors.black :bg colors.white}
                    :GitSignsCurrentLineBlame {:fg colors.white}
                    :NvimTreeIndentMarker {:fg colors.white}
-                   :TSProperty {:fg colors.green}
-                   ;; Script12
-                   :TSKeyword {:fg colors.pink :bold true :italic true}
-                   :TSKeywordOperator {:fg colors.pink :bold true :italic true}
-                   :TSKeywordFunction {:fg colors.cyan :bold true :italic true}
-                   :TSRepeat {:fg colors.pink :bold true :italic true}
-                   :TSConditional {:fg colors.pink :bold true :italic true}
-                   :TSInclude {:fg colors.pink :bold true :italic true}
-                   :TSFuncBuiltin {:fg colors.cyan :bold true :italic true}
-                   :TSTypeBuiltin {:fg colors.cyan :bold true :italic true}
-                   :TSTagAttribute {:fg colors.green :bold true :italic true}
-                   :cssTSProperty {:fg colors.green :bold true :italic true}
-                   ;; Hop
-                   :HopNextKey {:fg colors.red :bold true}
-                   :HopNextKey1 {:fg colors.green :bold true}
-                   :HopNextKey2 {:fg dark-colors.green}
-                   :HopUnmatched {:fg colors.comment
-                                  :bg colors.bg
-                                  :sp colors.comment}
-                   :HopPreview {:fg colors.yellow :bold true}
-                   :HopCursor {:link :Cursor}
-                   ;; TreeHopper
-                   :TSNodeUnmatched {:link :HopUnmatched}
-                   :TSNodeKey {:link :HopNextKey}
-                   ;; Notify
-                   :NotifyERRORBorder {:fg dark-colors.red}
-                   :NotifyWARNBorder {:fg dark-colors.yellow}
-                   :NotifyINFOBorder {:fg dark-colors.green}
-                   :NotifyDEBUGBorder {:fg dark-colors.white}
-                   :NotifyTRACEBorder {:fg dark-colors.purple}
-                   :NotifyERRORIcon {:link :NotifyERRORTitle}
-                   :NotifyWARNIcon {:link :NotifyWARNTitle}
-                   :NotifyINFOIcon {:link :NotifyINFOTitle}
-                   :NotifyDEBUGIcon {:link :NotifyDEBUGTitle}
-                   :NotifyTRACEIcon {:link :NotifyTRACETitle}
-                   :NotifyERRORTitle {:fg colors.red}
-                   :NotifyWARNTitle {:fg colors.yellow}
-                   :NotifyINFOTitle {:fg colors.green}
-                   :NotifyDEBUGTitle {:fg colors.white}
-                   :NotifyTRACETitle {:fg colors.purple}}
+                   "@property" {:fg colors.green}
+                   ;; Cursive
+                   "@keyword" {:fg colors.pink :italic true}
+                   "@keyword.operator" {:fg colors.pink :italic true}
+                   "@keyword.function" {:fg colors.cyan :italic true}
+                   "@repeat" {:fg colors.pink :italic true}
+                   "@conditional" {:fg colors.pink :italic true}
+                   "@include" {:fg colors.pink :italic true}
+                   "@function.builtin" {:fg colors.cyan :italic true}
+                   "@type.builtin" {:fg colors.cyan :italic true}
+                   "@tag.attribute" {:fg colors.green :italic true}
+                   "@property.css" {:fg colors.green :italic true}
+                   :ConflictMarkerBegin {:bg :#2f7366}
+                   :ConflictMarkerOurs {:bg :#2e5049}
+                   :ConflictMarkerTheirs {:bg :#344f69}
+                   :ConflictMarkerEnd {:bg :#2f628e}
+                   :ConflictMarkerCommonAncestorsHunk {:bg :#754a81}}
         transparent {:Normal {:fg colors.fg}
                      :MoreMsg {:fg colors.purple}
                      :SignColumn {}
@@ -144,6 +121,8 @@
       (values (.. :StartLogo i) {:fg color}))
     (collect [group settings (pairs transparent) :into overrides]
       (values group settings))
+    (when vim.g.neovide
+      (tset overrides :Normal nil))
     (setup {:italic_comment true : overrides})
     (cmd "colorscheme dracula")))
 

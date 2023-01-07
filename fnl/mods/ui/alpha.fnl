@@ -147,8 +147,7 @@
                                          ":Telescope find_files hidden=true<cr>")
                        (dashboard-button :F "  Find text"
                                          ":Telescope live_grep<cr>")
-                       (dashboard-button :n "  New file"
-                                         ":ene<cr>")
+                       (dashboard-button :n "  New file" ":ene<cr>")
                        (dashboard-button :u "  Update plugins"
                                          ":PackerSync<CR>")
                        (dashboard-button :q "  Quit" ":qa<CR>")]

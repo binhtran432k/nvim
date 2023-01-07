@@ -9,7 +9,7 @@
 (fn config []
   (let [{: setup} (require :nvim-tree)]
     (setup {:sync_root_with_cwd true
-            :git {:ignore false}
+            ;; :git {:ignore false}
             :respect_buf_cwd true
             :ignore_ft_on_setup [:startify :dashboard :alpha]
             :renderer {:group_empty true :indent_markers {:enable true}}})))

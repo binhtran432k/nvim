@@ -15,28 +15,29 @@
                         :check_comma true
                         :highlight :Search
                         :highlight_grey :Comment}})
-    (add_rules [(-> (Rule " " " ")
-                    (: :with_pair
-                       (fn [{: col : line}]
-                         (let [pair (line:sub (- col 1) col)]
-                           (vim.tbl_contains ["()" "[]" "{}"] pair)))))
-                (-> (Rule "( " " )")
-                    (: :with_pair #false)
-                    (: :with_move
-                       (fn [opts]
-                         (not= (opts.prev_char:match ".%)") nil)))
-                    (: :use_key ")"))
-                (-> (Rule "[ " " ]")
-                    (: :with_pair #false)
-                    (: :with_move
-                       (fn [opts]
-                         (not= (opts.prev_char:match ".%]") nil)))
-                    (: :use_key "]"))
-                (-> (Rule "{ " " }")
-                    (: :with_pair #false)
-                    (: :with_move
-                       (fn [opts]
-                         (not= (opts.prev_char:match ".%}") nil)))
-                    (: :use_key "}"))])))
+    ;; (add_rules [(-> (Rule " " " ")
+    ;;                 (: :with_pair
+    ;;                    (fn [{: col : line}]
+    ;;                      (let [pair (line:sub (- col 1) col)]
+    ;;                        (vim.tbl_contains ["()" "[]" "{}"] pair)))))
+    ;;             (-> (Rule "( " " )")
+    ;;                 (: :with_pair #false)
+    ;;                 (: :with_move
+    ;;                    (fn [opts]
+    ;;                      (not= (opts.prev_char:match ".%)") nil)))
+    ;;                 (: :use_key ")"))
+    ;;             (-> (Rule "[ " " ]")
+    ;;                 (: :with_pair #false)
+    ;;                 (: :with_move
+    ;;                    (fn [opts]
+    ;;                      (not= (opts.prev_char:match ".%]") nil)))
+    ;;                 (: :use_key "]"))
+    ;;             (-> (Rule "{ " " }")
+    ;;                 (: :with_pair #false)
+    ;;                 (: :with_move
+    ;;                    (fn [opts]
+    ;;                      (not= (opts.prev_char:match ".%}") nil)))
+    ;;                 (: :use_key "}"))])
+    ))
 
 {: config}

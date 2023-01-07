@@ -10,12 +10,11 @@
   (let [{: setup : register} (require :which-key)]
     (setup {:window {:border ["" "─" "" "" "" "─" "" ""]}})
     (register {:<leader> {:name :Action
-                          :rr "TS Smart rename"
                           :w "Word motion w"
                           :b "Word motion b"
                           :e "Word motion e"
                           :ge "Word motion ge"}
-               :<space> {:name "Lsp Keymaps"}
+               :<space> {:name "Lsp Keymaps" :rr "TS Smart rename"}
                :<localleader> {:name "Local action"
                                :e {:name "Conjure Eval"
                                    :c {:name "Eval Comments"}}

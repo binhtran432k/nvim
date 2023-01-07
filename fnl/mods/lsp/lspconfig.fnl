@@ -14,11 +14,11 @@
   (noresilentmap :n "]d" vim.diagnostic.goto_next {:desc "Next diagnostic"})
   (noresilentmap :n "[d" vim.diagnostic.goto_prev {:desc "Previous diagnostic"})
   (noresilentmap :n :<space>q vim.diagnostic.setloclist {:desc "Open loclist"})
-  (noresilentmap :n :gr vim.lsp.buf.references {:desc "Go to references"})
   (noresilentmap :n :gD vim.lsp.buf.declaration {:desc "Go to declaration"})
   (noresilentmap :n :gd vim.lsp.buf.definition {:desc "Go to definition"})
-  (noresilentmap :n :gI vim.lsp.buf.implementation
-                 {:desc "Go to implementation"})
+  ;; (noresilentmap :n :gr vim.lsp.buf.references {:desc "Go to references"})
+  ;; (noresilentmap :n :gI vim.lsp.buf.implementation
+  ;;                {:desc "Go to implementation"})
   ;noresilentmapmap :n :K vim.lsp.buf.hover {:desc "Hover"}) ; ufo
   (noresilentmap :n :gK vim.lsp.buf.signature_help {:desc "Signature help"})
   (noresilentmap :n :<space>wa vim.lsp.buf.add_workspace_folder
@@ -35,47 +35,82 @@
   (noresilentmap [:n :v] :<space>ca vim.lsp.buf.code_action
                  {:desc "Code action"}))
 
-(fn get-capabilities []
+(fn get-capabilities [local-capabilities]
   (let [{: default_capabilities} (require :cmp_nvim_lsp)
-        capabilities (default_capabilities)]
+        capabilities (default_capabilities)
+        local-capabilities (or local-capabilities {})]
     (set capabilities.textDocument.completion.completionItem.snippetSupport
          true)
     (set capabilities.textDocument.foldingRange
          {:dynamicRegistration false :lineFoldingOnly true})
-    capabilities))
+    (vim.tbl_extend :force capabilities local-capabilities)))
 
 (fn on-attach [client bufnr]
+  (set vim.opt_local.formatexpr " ")
   (let [signature (require :lsp_signature)
         navic (require :nvim-navic)]
     (signature.on_attach {:floating_window false :hint_prefix "💪 "} bufnr)
     (if client.server_capabilities.documentSymbolProvider
         (navic.attach client bufnr))))
 
+(fn config-neodev []
+  (let [{: setup} (require :neodev)]
+    (setup {})))
+
 (fn call-servers []
-  (let [servers [:clangd
-                 :cssls
-                 :emmet_ls
-                 :html
-                 :jsonls
-                 :marksman
-                 :pyright
-                 :sqlls
-                 :sumneko_lua
-                 :yamlls]
-        sv-configs {:jsonls true :sumneko_lua true}
-        lspconfig (require :lspconfig)]
-    (set lspconfig.util.default_config
-         (vim.tbl_extend :force lspconfig.util.default_config
-                         {:on_attach on-attach
-                          :capabilities (get-capabilities)}))
-    (each [_ sv-name (ipairs servers)]
-      (let [sv (. lspconfig sv-name)]
-        (if (. sv-configs sv-name)
-            (sv.setup (require (.. :mods.lsp.configs. sv-name)))
-            (sv.setup {}))))))
+  (when (not= vim.g.readonly_mode 1)
+    (let [servers [:clangd
+                   :cssls
+                   :cucumber_language_server
+                   :emmet_ls
+                   :html
+                   :jsonls
+                   :marksman
+                   :omnisharp
+                   :pyright
+                   :lemminx
+                   :sqlls
+                   :sumneko_lua
+                   :tsserver
+                   :yamlls]
+          sv-configs {:cucumber_language_server true
+                      :emmet_ls true
+                      :jsonls true
+                      :marksman true
+                      :omnisharp true
+                      :sumneko_lua true}
+          lspconfig (require :lspconfig)]
+      ;; (set lspconfig.util.default_config
+      ;;      (vim.tbl_extend :force lspconfig.util.default_config
+      ;;                      {:on_attach on-attach
+      ;;                       :capabilities (get-capabilities)}))
+      (each [_ sv-name (ipairs servers)]
+        (let [sv (. lspconfig sv-name)
+              custom-lsp-config (if (. sv-configs sv-name)
+                                    (require (.. :mods.lsp.configs. sv-name))
+                                    {})]
+          (set custom-lsp-config.on_attach on-attach)
+          (set custom-lsp-config.capabilities
+               (get-capabilities custom-lsp-config.capabilities))
+          (sv.setup custom-lsp-config))))))
+
+(fn call-lsp-utils []
+  (let [lsp-fts {:jdtls [:java]}
+        ft vim.bo.filetype]
+    (each [lsp fts (pairs lsp-fts)]
+      (each [_ lspft (ipairs fts)]
+        (when (= ft lspft)
+          ((. (require (string.format "mods.lsp.%s" lsp)) :config)))))))
+
+(fn autocmd []
+  (let [{:api {: nvim_create_autocmd
+               : nvim_buf_get_name
+               : nvim_set_current_dir
+               : nvim_get_current_buf
+               : nvim_buf_delete}} vim]
+    (nvim_create_autocmd :BufEnter {:callback call-lsp-utils})))
 
 (fn config []
-  (set vim.opt_local.formatexpr " ")
   (let [signs {:Error "" :Warn "" :Hint "" :Info ""}
         config {:virtual_text true
                 :signs {:active signs}
@@ -97,7 +132,9 @@
     (tset handlers :textDocument/hover (with handlers.hover {:border :rounded}))
     (tset handlers :textDocument/signatureHelp
           (with handlers.signature_help {:border :rounded})))
+  (autocmd)
   (mapping)
+  (config-neodev)
   (call-servers))
 
 {: config : on-attach : get-capabilities}

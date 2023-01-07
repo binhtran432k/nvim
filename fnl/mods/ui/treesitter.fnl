@@ -6,8 +6,7 @@
          {:desc "View TS Capture"})
     (map :n :<localleader>sh :<cmd>TSHighlightCapturesUnderCursor<cr>
          {:desc "View TS Highlight Capture"})
-    (map :n :<localleader>sn :<cmd>TSNodeUnderCursor<cr>
-         {:desc "View TS Node"})))
+    (map :n :<localleader>sn :<cmd>TSNodeUnderCursor<cr> {:desc "View TS Node"})))
 
 (fn setup []
   (mapping))
@@ -56,8 +55,10 @@
         ensures (icollect [parser enable? (pairs parsers)]
                   (if enable? parser))
         {: setup} (require :nvim-treesitter.configs)
+        {: filetype_to_parsername} (require :nvim-treesitter.parsers)
         disable? (fn [lang bufnr]
                    (and bufnr (< 5000 (vim.api.nvim_buf_line_count bufnr))))]
+    (set filetype_to_parsername.xml :html)
     (setup {:ensure_installed ensures
             :sync_install false
             :ignore_install {}
@@ -79,7 +80,7 @@
             :rainbow {:enable true :disable disable?}
             :playground {:enable true :disable disable?}
             :matchup {:enable true :disable disable?}
-            :textobjects {:select {:enable true
+            :textobjects {:select {:enable false
                                    :disable disable?
                                    :lookahead true
                                    :keymaps {:af "@function.outer"
@@ -104,6 +105,6 @@
                                                :clear_on_cursor_move false}
                        :smart_rename {:enable true
                                       :disable disable?
-                                      :keymaps {:smart_rename :<leader>rr}}}})))
+                                      :keymaps {:smart_rename :<space>rs}}}})))
 
 {: config : setup}
