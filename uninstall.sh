@@ -2,8 +2,7 @@
 
 echo "Removing Plugins"
 
-pack_dir=~/.local/share/nvim/site/pack/packer
+pack_dir=~/.local/share/nvim/lazy/lazy.nvim
 
 rm -f ./init.lua
-rm -rf ./lua
 rm -rf $pack_dir
