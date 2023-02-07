@@ -316,7 +316,7 @@ return {
       dashboard.section.footer.opts.hl = "Type"
       dashboard.section.header.opts.hl = "AlphaHeader"
       dashboard.section.buttons.opts.hl = "AlphaButtons"
-      dashboard.opts.layout[1].val = 8
+      dashboard.config.layout[1].val = 8
 
       -- close Lazy and re-open when the dashboard is ready
       if vim.o.filetype == "lazy" then
@@ -339,9 +339,9 @@ return {
         end,
       })
 
-      dashboard.opts.opts.autostart = false
+      dashboard.config.opts.autostart = false
 
-      return dashboard.opts
+      return dashboard.config
     end,
     config = function(_, opts)
       require("alpha").setup(opts)
@@ -351,13 +351,10 @@ return {
         if helper.is_directory() then
           vim.api.nvim_set_current_dir(vim.api.nvim_buf_get_name(buf))
         end
-        require("alpha").start()
+        require("alpha").start(false, opts)
         vim.api.nvim_buf_delete(buf, {})
       end
 
-      vim.api.nvim_create_autocmd("VimEnter", {
-        callback = run_alpha,
-      })
       run_alpha()
     end,
   },
