@@ -66,7 +66,7 @@ return {
       { "<leader>st", "<cmd>Telescope builtin include_extensions=true<cr>", desc = "Telescope" },
       { "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Goto Symbol" },
       { "<leader>/", "<leader>sg", desc = "Find in Files (Grep)", remap = true },
-      { "<leader>:", "<leader>sc", desc = "Command History", remap = true },
+      { "<leader>:", "<leader>sc", desc = "Commands", remap = true },
       { "<leader><space>", "<leader>ff", desc = "Find Files", remap = true },
     },
     opts = {
@@ -260,6 +260,7 @@ return {
   {
     "akinsho/toggleterm.nvim",
     keys = {
+      { "<c-w>", "<c-\\><c-n>", desc = "Normal in Terminal", mode = "t" },
       { "<a-1>", "<cmd>1ToggleTerm<cr>", desc = "Toggle Term 1", mode = { "n", "t" } },
       { "<a-2>", "<cmd>2ToggleTerm<cr>", desc = "Toggle Term 2", mode = { "n", "t" } },
       { "<a-3>", "<cmd>3ToggleTerm<cr>", desc = "Toggle Term 3", mode = { "n", "t" } },
