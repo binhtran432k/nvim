@@ -208,7 +208,7 @@ return {
   -- surround
   {
     "kylechui/nvim-surround",
-    event = "VeryLazy",
+    event = "BufReadPre",
     config = function(_, opts)
       require("nvim-surround").setup(opts)
     end,
@@ -235,6 +235,7 @@ return {
   -- better text-objects
   {
     "echasnovski/mini.ai",
+    event = "VeryLazy",
     keys = {
       { "a", mode = { "x", "o" } },
       { "i", mode = { "x", "o" } },
