@@ -49,4 +49,30 @@ return {
       },
     },
   },
+
+  -- java
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = { "mfussenegger/nvim-jdtls" },
+    opts = {
+      servers = {
+        jdtls = {},
+      },
+      setup = {
+        jdtls = function(_, user_config)
+          local lspgroup = vim.api.nvim_create_augroup("lspconfig", { clear = false })
+          local default_config = require("lspconfig.server_configurations.jdtls").default_config
+          local config = vim.tbl_extend("keep", user_config, default_config)
+          config.root_dir = default_config.root_dir(vim.loop.cwd())
+          vim.api.nvim_create_autocmd("FileType", {
+            pattern = "java",
+            callback = function()
+              require("jdtls").start_or_attach(config)
+            end,
+            group = lspgroup,
+          })
+        end,
+      },
+    },
+  },
 }
