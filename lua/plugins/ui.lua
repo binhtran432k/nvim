@@ -399,7 +399,6 @@ return {
         vim = "indent",
         python = "indent",
         git = "",
-        markdown = ts_indent,
       }
       local handler = function(virtText, lnum, endLnum, width, truncate)
         local newVirtText = {}
@@ -443,7 +442,7 @@ return {
           },
         },
         provider_selector = function(_, filetype, _)
-          return ft_map[filetype] or { "lsp", "indent" }
+          return ft_map[filetype] or ts_indent
         end,
         fold_virt_text_handler = handler,
       }
