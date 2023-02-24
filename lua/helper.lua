@@ -139,4 +139,17 @@ function M.toggle_diagnostics()
   vim.notify(msg, vim.log.levels.INFO, { title = "Diagnostics" })
 end
 
+
+function M.setup_filetype_column(opts)
+  vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function(event)
+      local length = opts[vim.bo[event.buf].filetype]
+      if not length then
+        length = 80
+      end
+      vim.wo.colorcolumn = tostring(length)
+      vim.bo[event.buf].textwidth = length - 1
+    end,
+  })
+end
 return M
