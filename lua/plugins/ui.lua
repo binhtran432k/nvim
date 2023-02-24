@@ -92,7 +92,6 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     opts = function()
-      local navic = require("nvim-navic")
       local symbols = settings.icons
       local winbar_opt = {
         lualine_b = {
@@ -119,11 +118,10 @@ return {
             end,
             icon = " ",
           },
+          -- stylua: ignore
           {
-            navic.get_location,
-            cond = function()
-              return package.loaded["nvim-navic"] and navic.is_available()
-            end,
+            function (...) return require("nvim-navic").get_location(...) end,
+            cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
           },
         },
       }
