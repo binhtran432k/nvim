@@ -6,6 +6,11 @@ vim.filetype.add {
   pattern = { [".*/test/corpus/.*%.txt"] = "query" },
 }
 
+-- Extend keyword for css, fennel, ...
+helper.setup_filetype({ "css", "scss", "fennel" }, function()
+  vim.opt_local.iskeyword:append("-")
+end)
+
 helper.setup_filetype_column({
   lua = 120,
 })

@@ -139,6 +139,14 @@ function M.toggle_diagnostics()
   vim.notify(msg, vim.log.levels.INFO, { title = "Diagnostics" })
 end
 
+---@param pattern string|string[]
+---@param callback function
+function M.setup_filetype(pattern, callback)
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = pattern,
+    callback = callback,
+  })
+end
 
 function M.setup_filetype_column(opts)
   vim.api.nvim_create_autocmd("BufEnter", {
@@ -152,4 +160,5 @@ function M.setup_filetype_column(opts)
     end,
   })
 end
+
 return M

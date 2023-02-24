@@ -93,18 +93,6 @@ vim.api.nvim_create_autocmd({ "BufAdd" }, {
   end,
 })
 
--- Extend keyword for css, fennel, ...
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = {
-    "css",
-    "scss",
-    "fennel",
-  },
-  callback = function()
-    vim.opt_local.iskeyword:append("-")
-  end,
-})
-
 -- HACK: load these funciton because this file is VeryLazy
 trigger_ibus_off()
 load_last_position()
