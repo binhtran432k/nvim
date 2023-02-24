@@ -1,5 +1,3 @@
-vim.g.relativenumber = true
-
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -30,7 +28,7 @@ vim.opt.nrformats = "alpha,bin,hex"
 vim.opt.number = true -- Print line number
 vim.opt.pumblend = 0 -- Popup blend
 vim.opt.pumheight = 0 -- Maximum number of entries in a popup
-vim.opt.relativenumber = vim.g.relativenumber -- Relative line numbers
+vim.opt.relativenumber = false -- Relative line numbers
 vim.opt.scrolloff = 3 -- Lines of context
 vim.opt.sessionoptions = { "buffers", "curdir", "folds", "help", "winpos", "winsize", "tabpages" }
 vim.opt.sidescrolloff = 8

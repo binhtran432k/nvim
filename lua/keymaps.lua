@@ -70,8 +70,9 @@ vim.keymap.set("n", "<leader>tw", helper.toggle("wrap"), { desc = "Toggle Word W
 vim.keymap.set("n", "<leader>tn", function()
   helper.toggle("number")()
   if vim.opt_local.number:get() then
-    vim.opt_local.relativenumber = vim.g.relativenumber
+    vim.opt_local.relativenumber = vim.b.relativenumber
   else
+    vim.b.relativenumber = vim.opt_local.relativenumber:get()
     vim.opt_local.relativenumber = false
   end
 end, { desc = "Toggle Line Numbers" })
