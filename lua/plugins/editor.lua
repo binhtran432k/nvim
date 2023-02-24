@@ -94,18 +94,58 @@ return {
 
   -- easily jump to any location and enhanced f/t motions for Leap
   {
-    "ggandor/leap.nvim",
+    "phaazon/hop.nvim",
     keys = {
-      { "s", "<plug>(leap-forward-to)", desc = "Leap forward to", mode = { "n", "x" } },
-      { "S", "<plug>(leap-backward-to)", desc = "Leap backward to", mode = { "n", "x" } },
-      { "gs", "<plug>(leap-cross-window)", desc = "Leap cross window", mode = { "n", "x" } },
+      { "s", "<cmd>HopChar1<cr>", desc = "Hop Char 1" },
+      { "S", "<cmd>HopWord<cr>", desc = "Hop Word" },
+      { "x", "<cmd>HopChar1<cr>", desc = "Hop Char 1", mode = { "x", "o" } },
+      { "X", "<cmd>HopWord<cr>", desc = "Hop Word", mode = { "x", "o" } },
+      {
+        "f",
+        function()
+          require("hop").hint_char1({
+            direction = require("hop.hint").HintDirection.AFTER_CURSOR,
+            current_line_only = true,
+          })
+        end,
+        mode = { "n", "x", "o" },
+      },
+      {
+        "F",
+        function()
+          require("hop").hint_char1({
+            direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
+            current_line_only = true,
+          })
+        end,
+        mode = { "n", "x", "o" },
+      },
+      {
+        "t",
+        function()
+          require("hop").hint_char1({
+            direction = require("hop.hint").HintDirection.AFTER_CURSOR,
+            current_line_only = true,
+            hint_offset = -1,
+          })
+        end,
+        mode = { "n", "x", "o" },
+      },
+      {
+        "T",
+        function()
+          require("hop").hint_char1({
+            direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
+            current_line_only = true,
+            hint_offset = -1,
+          })
+        end,
+        mode = { "n", "x", "o" },
+      },
     },
-    config = function(_, opts)
-      local leap = require("leap")
-      for k, v in pairs(opts) do
-        leap.opts[k] = v
-      end
-    end,
+    opts = {
+      keys = "etovxqpdygfblzhckisuran",
+    },
   },
 
   -- which-key
