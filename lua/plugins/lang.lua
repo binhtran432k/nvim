@@ -1,4 +1,121 @@
 return {
+  -- lua
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      { "folke/neodev.nvim", opts = { lspconfig = false } },
+    },
+    opts = {
+      servers = {
+        lua_ls = {
+          before_init = function(...)
+            require("neodev.lsp").before_init(...)
+          end,
+          settings = {
+            Lua = {
+              workspace = {
+                checkThirdParty = false,
+              },
+              completion = {
+                callSnippet = "Replace",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
+  -- python
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                -- diagnosticMode = 'workspace', -- ["openFilesOnly", "workspace"]
+                -- typeCheckingMode = 'off', -- ["off", "basic", "strict"]
+                useLibraryCodeForTypes = true,
+                completeFunctionParens = true,
+              },
+            },
+          },
+          on_init = function(client)
+            local path = require("lspconfig/util").path
+
+            local function get_python_dir(workspace)
+              if vim.env.VIRTUAL_ENV then
+                return vim.env.VIRTUAL_ENV
+              end
+
+              local poetry_match = vim.fn.glob(path.join(workspace, "poetry.lock"))
+              if poetry_match ~= "" then
+                return vim.fn.trim(vim.fn.system("poetry env info -p"))
+              end
+
+              local pipenv_match = vim.fn.glob(path.join(workspace, "Pipfile.lock"))
+              if pipenv_match ~= "" then
+                return vim.fn.trim(vim.fn.system("pipenv --venv"))
+              end
+
+              -- Find and use virtualenv in workspace directory.
+              for _, pattern in ipairs({ "*", ".*" }) do
+                local match = vim.fn.glob(path.join(workspace, pattern, "pyvenv.cfg"))
+                if match ~= "" then
+                  return tostring(path.dirname(match))
+                end
+              end
+
+              return ""
+            end
+
+            local function get_pdm_extras_path(workspace)
+              local pdm_match = vim.fn.glob(path.join(workspace, "pdm.lock"))
+              if pdm_match ~= "" then
+                local package = vim.fn.trim(vim.fn.system("pdm info --packages"))
+                if package ~= "" then
+                  return path.join(package, "lib")
+                end
+              end
+
+              return ""
+            end
+
+            local function py_bin_dir(venv)
+              if _G.is_windows then
+                return path.join(venv, "Scripts;")
+              else
+                return path.join(venv, "bin:")
+              end
+            end
+
+            local root_dir = client.config.root_dir
+            local venv = ""
+
+            if not vim.env.VIRTUAL_ENV or vim.env.VIRTUAL_ENV == "" then
+              venv = get_python_dir(root_dir)
+            end
+
+            if venv ~= "" then
+              vim.env.VIRTUAL_ENV = venv
+              vim.env.PATH = py_bin_dir(venv) .. vim.env.PATH
+
+              if vim.env.PYTHONHOME then
+                vim.env.old_PYTHONHOME = vim.env.PYTHONHOME
+                vim.env.PYTHONHOME = ""
+              end
+            end
+
+            client.config.settings.python.pythonPath = vim.fn.exepath("python")
+            client.config.settings.python.analysis.extraPaths = { get_pdm_extras_path(root_dir) }
+          end,
+        },
+      },
+    },
+  },
+
   -- typescript
   {
     "neovim/nvim-lspconfig",
@@ -9,15 +126,20 @@ return {
         tsserver = {},
       },
       setup = {
-        tsserver = function(_, opts)
+        tsserver = function(_, config)
           require("helper").on_lsp_attach(function(client, buffer)
             if client.name == "tsserver" then
               -- stylua: ignore
-              vim.keymap.set("n", "<leader>co", "TypescriptOrganizeImports", { desc = "Organize Imports", buffer = buffer })
-              vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
+              vim.keymap.set("n", "<leader>co", "<cmd>TypescriptOrganizeImports<cr>", { desc = "Organize Imports", buffer = buffer })
+              vim.keymap.set(
+                "n",
+                "<leader>cR",
+                "<cmd>TypescriptRenameFile<cr>",
+                { desc = "Rename File", buffer = buffer }
+              )
             end
           end)
-          require("typescript").setup({ server = opts })
+          require("typescript").setup({ server = config })
           return true
         end,
       },
@@ -56,13 +178,50 @@ return {
     dependencies = { "mfussenegger/nvim-jdtls" },
     opts = {
       servers = {
-        jdtls = {},
+        jdtls = {
+          settings = {
+            java = {
+              configuration = {
+                -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+                -- And search for `interface RuntimeOption`
+                -- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
+                runtimes = {
+                  {
+                    name = "JavaSE-1.8",
+                    path = "/usr/lib/jvm/java-8-openjdk/",
+                  },
+                  {
+                    name = "JavaSE-11",
+                    path = "/usr/lib/jvm/java-11-openjdk/",
+                  },
+                  {
+                    name = "JavaSE-17",
+                    path = "/usr/lib/jvm/java-17-openjdk/",
+                  },
+                  {
+                    name = "JavaSE-19",
+                    path = "/usr/lib/jvm/java-19-openjdk/",
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       setup = {
         jdtls = function(_, user_config)
           local lspgroup = vim.api.nvim_create_augroup("lspconfig", { clear = false })
           local default_config = require("lspconfig.server_configurations.jdtls").default_config
-          local config = vim.tbl_extend("keep", user_config, default_config)
+          local config = vim.tbl_extend("keep", user_config, {
+            cmd = default_config.cmd,
+            root_dir = default_config.root_dir(vim.loop.cwd()),
+            filetypes = default_config.filetypes,
+            single_file_support = default_config.single_file_support,
+            init_options = default_config.init_options,
+            on_attach = function()
+              require("jdtls.setup").add_commands()
+            end,
+          })
           config.root_dir = default_config.root_dir(vim.loop.cwd())
           vim.api.nvim_create_autocmd("FileType", {
             pattern = "java",

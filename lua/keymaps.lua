@@ -14,10 +14,8 @@ vim.keymap.set({ "n", "t" }, "<a-l>", "<cmd>vertical resize +2<cr>", { desc = "I
 
 -- buffers
 if not helper.has("nvim-bufferline.lua") then
-  vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-  vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
-  vim.keymap.set("n", "<leader>b[", "<cmd>bprevious<cr>", { desc = "Previous" })
-  vim.keymap.set("n", "<leader>b]", "<cmd>bnext<cr>", { desc = "Next" })
+  vim.keymap.set({ "i", "n" }, "<c-,>", "<esc><cmd>bprevious<cr>", { desc = "Previous Buffer" })
+  vim.keymap.set({ "i", "n" }, "<c-.>", "<esc><cmd>bnext<cr>", { desc = "Next Buffer" })
 end
 vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
@@ -54,8 +52,8 @@ vim.keymap.set("i", ";", ";<c-g>u")
 vim.keymap.set({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 
 -- better indenting
-vim.keymap.set("v", "<", "<gv")
-vim.keymap.set("v", ">", ">gv")
+-- vim.keymap.set("v", "<", "<gv")
+-- vim.keymap.set("v", ">", ">gv")
 
 -- new file
 vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
@@ -86,7 +84,8 @@ vim.keymap.set(
 )
 
 -- quit
-vim.keymap.set("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
+vim.keymap.set("n", "<leader>qq", "<cmd>q<cr>", { desc = "Quit" })
+vim.keymap.set("n", "<leader>qa", "<cmd>qa<cr>", { desc = "Quit all" })
 
 -- highlights under cursor
 if vim.fn.has("nvim-0.9.0") == 1 then
