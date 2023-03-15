@@ -2,10 +2,18 @@ return {
   -- file explorer
   {
     "kyazdani42/nvim-tree.lua",
+    dependencies = {
+      {
+        "antosha417/nvim-lsp-file-operations",
+        config = function()
+          require("lsp-file-operations").setup()
+        end,
+      },
+    },
     keys = {
       { "<leader>fo", "<cmd>NvimTreeToggle<cr>", desc = "Toggle Tree" },
       { "<leader>fO", "<cmd>NvimTreeFindFileToggle<cr>", desc = "Toggle Tree Focus" },
-      { "<leader>e", "<leader>fo", desc = "Toggle Tree", remap = true },
+      { "<c-n>", "<leader>fo", desc = "Toggle Tree", remap = true },
     },
     opts = {
       sync_root_with_cwd = true,
@@ -67,9 +75,14 @@ return {
       { "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Goto Symbol" },
       { "<leader>/", "<leader>sg", desc = "Find in Files (Grep)", remap = true },
       { "<leader>:", "<leader>sc", desc = "Commands", remap = true },
-      { "<leader><space>", "<leader>ff", desc = "Find Files", remap = true },
+      { "<c-p>", "<leader>ff", desc = "Find Files", remap = true },
     },
     opts = {
+      pickers = {
+        find_files = {
+          hidden = true,
+        },
+      },
       defaults = {
         prompt_prefix = " ",
         selection_caret = " ",
@@ -94,18 +107,58 @@ return {
 
   -- easily jump to any location and enhanced f/t motions for Leap
   {
-    "ggandor/leap.nvim",
+    "phaazon/hop.nvim",
     keys = {
-      { "s", "<plug>(leap-forward-to)", desc = "Leap forward to", mode = { "n", "x" } },
-      { "S", "<plug>(leap-backward-to)", desc = "Leap backward to", mode = { "n", "x" } },
-      { "gs", "<plug>(leap-cross-window)", desc = "Leap cross window", mode = { "n", "x" } },
+      { "s", "<cmd>HopChar1<cr>", desc = "Hop Char 1" },
+      { "S", "<cmd>HopWord<cr>", desc = "Hop Word" },
+      { "x", "<cmd>HopChar1<cr>", desc = "Hop Char 1", mode = { "x", "o" } },
+      { "X", "<cmd>HopWord<cr>", desc = "Hop Word", mode = { "x", "o" } },
+      {
+        "f",
+        function()
+          require("hop").hint_char1({
+            direction = require("hop.hint").HintDirection.AFTER_CURSOR,
+            current_line_only = true,
+          })
+        end,
+        mode = { "n", "x", "o" },
+      },
+      {
+        "F",
+        function()
+          require("hop").hint_char1({
+            direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
+            current_line_only = true,
+          })
+        end,
+        mode = { "n", "x", "o" },
+      },
+      {
+        "t",
+        function()
+          require("hop").hint_char1({
+            direction = require("hop.hint").HintDirection.AFTER_CURSOR,
+            current_line_only = true,
+            hint_offset = -1,
+          })
+        end,
+        mode = { "n", "x", "o" },
+      },
+      {
+        "T",
+        function()
+          require("hop").hint_char1({
+            direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
+            current_line_only = true,
+            hint_offset = -1,
+          })
+        end,
+        mode = { "n", "x", "o" },
+      },
     },
-    config = function(_, opts)
-      local leap = require("leap")
-      for k, v in pairs(opts) do
-        leap.opts[k] = v
-      end
-    end,
+    opts = {
+      keys = "etovxqpdygfblzhckisuran",
+    },
   },
 
   -- which-key
@@ -115,6 +168,7 @@ return {
     opts = {
       plugins = { spelling = true },
       key_labels = { ["<leader>"] = "SPC" },
+      window = { border = "rounded" },
     },
     config = function(_, opts)
       local wk = require("which-key")
@@ -136,6 +190,10 @@ return {
         ["<leader>t"] = { name = "+toggle" },
         ["<leader>w"] = { name = "+windows" },
         ["<leader>x"] = { name = "+diagnostics/quickfix" },
+      })
+      wk.register({
+        mode = { "n", "v", "i" },
+        ["<C-y>"] = { name = "+emmet" },
       })
     end,
   },
@@ -180,16 +238,24 @@ return {
   -- references
   {
     "RRethy/vim-illuminate",
+    dependencies = {
+      {
+        "nvim-treesitter/nvim-treesitter",
+        opts = {
+          illuminate = { disable = "default" },
+        },
+      },
+    },
     event = "BufReadPost",
+    -- -- stylua: ignore
+    -- keys = {
+    --   { "]]", function() require("illuminate").goto_next_reference(false) end, desc = "Next Reference", },
+    --   { "[[", function() require("illuminate").goto_prev_reference(false) end, desc = "Prev Reference" },
+    -- },
     opts = { delay = 200 },
     config = function(_, opts)
       require("illuminate").configure(opts)
     end,
-    -- stylua: ignore
-    keys = {
-      { "]]", function() require("illuminate").goto_next_reference(false) end, desc = "Next Reference", },
-      { "[[", function() require("illuminate").goto_prev_reference(false) end, desc = "Prev Reference" },
-    },
   },
 
   -- buffer remove
@@ -236,12 +302,19 @@ return {
       { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo Trouble" },
       { "<leader>xT", "<cmd>TodoTelescope<cr>", desc = "Todo Telescope" },
     },
+    config = true,
   },
 
   -- match parenthesis and tag
   {
     "andymass/vim-matchup",
-    event = { "BufReadPost", "BufNewfile" },
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      opts = {
+        matchup = { enable = true, disable = "default" },
+      },
+    },
     init = function()
       vim.g.matchup_delim_noskips = 1
       vim.g.matchup_enabled = 1
@@ -287,5 +360,34 @@ return {
       open_mapping = "<c-\\>",
       shade_terminals = false,
     },
+  },
+
+  -- automatic detect indent
+  {
+    "Darazaki/indent-o-matic",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      -- Number of lines without indentation before giving up (use -1 for infinite)
+      max_lines = 2048,
+      -- Space indentations that should be detected
+      standard_widths = { 2, 4, 8 },
+      -- Skip multi-line comments and strings (more accurate detection but less performant)
+      skip_multiline = true,
+    },
+    config = function(_, opts)
+      require("indent-o-matic").setup(opts)
+      vim.cmd("autocmd! indent_o_matic")
+      local function smart_indent()
+        if not vim.b["editorconfig"] or not vim.b["editorconfig"].indent_size then
+          -- vim.notify("Indent O Matic")
+          vim.cmd.IndentOMatic()
+        end
+      end
+      local smart_indent_augroup = vim.api.nvim_create_augroup("smart_indent", {})
+      vim.api.nvim_create_autocmd("BufReadPost", {
+        callback = smart_indent,
+        group = smart_indent_augroup,
+      })
+    end,
   },
 }

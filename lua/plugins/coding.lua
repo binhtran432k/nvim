@@ -50,6 +50,7 @@ return {
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
       "saadparwaiz1/cmp_luasnip",
+      "lukas-reineke/cmp-under-comparator",
     },
     opts = function()
       local cmp = require("cmp")
@@ -69,10 +70,16 @@ return {
           cmp.complete()
         end
       end
+      local function close_and_fallback(fallback)
+        if cmp.visible() then
+          cmp.close()
+        end
+        fallback()
+      end
       return {
         preselect = cmp.PreselectMode.None,
         completion = {
-          completeopt = "menu,menuone,noinsert",
+          completeopt = "menu,menuone,noselect",
         },
         snippet = {
           expand = function(args)
@@ -84,11 +91,11 @@ return {
           ["<C-d>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = { i = toggle_cmp, c = toggle_cmp },
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<c-y>"] = {
-            i = cmp.mapping.confirm({ select = true }),
-            c = cmp.mapping.confirm({ select = true }),
+          ["<C-y>"] = {
+            i = close_and_fallback,
+            c = close_and_fallback,
           },
-          ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }),
         sources = {
           { name = "nvim_lsp", group_index = 1 },
@@ -111,6 +118,27 @@ return {
             return item
           end,
         },
+        window = {
+          -- completion = { border = "rounded" },
+          -- documentation = { border = "rounded" },
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+        sorting = {
+          comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            -- cmp.config.compare.scopes,
+            cmp.config.compare.score,
+            require("cmp-under-comparator").under,
+            cmp.config.compare.recently_used,
+            cmp.config.compare.locality,
+            cmp.config.compare.kind,
+            -- cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+          },
+        },
         experimental = {
           ghost_text = {
             hl_group = "LspCodeLens",
@@ -126,6 +154,7 @@ return {
         sources = {
           { name = "path", group_index = 1 },
           { name = "cmdline", group_index = 2 },
+          { name = "buffer", group_index = 3 },
         },
       })
       for _, cmd_type in ipairs({ "/", "?" }) do
@@ -136,6 +165,15 @@ return {
           },
         })
       end
+
+      require("cmp-editorconfig").setup()
+      -- Set configuration for specific filetype.
+      cmp.setup.filetype("editorconfig", {
+        sources = {
+          { name = "editorconfig", group_index = 1 },
+          { name = "buffer", group_index = 2 },
+        },
+      })
     end,
   },
 
@@ -143,6 +181,12 @@ return {
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      opts = {
+        autopairs = { enable = true, disable = "default" },
+      },
+    },
     opts = {
       check_ts = true,
       ts_config = {
@@ -169,6 +213,7 @@ return {
       local Rule = require("nvim-autopairs.rule")
       local cond = require("nvim-autopairs.conds")
 
+      -- auto add space
       local brackets = { { "(", ")" }, { "[", "]" }, { "{", "}" } }
       npairs.add_rules({
         Rule(" ", " ")
@@ -202,6 +247,22 @@ return {
           :with_del(cond.none())
           :use_key(bracket[2])
       end
+
+      -- javascript arrow key
+      npairs.add_rules({
+        Rule("%(.*%)%s*%=>$", " {  }", { "typescript", "typescriptreact", "javascript", "javascriptreact" })
+          :use_regex(true)
+          :set_end_pair_length(2),
+      })
+
+      -- c style comment block
+      npairs.add_rules({
+        Rule(
+          "%s*/%*%*$",
+          "*/",
+          { "typescript", "typescriptreact", "javascript", "javascriptreact", "c", "cpp", "csharp", "java" }
+        ):use_regex(true),
+      })
     end,
   },
 
@@ -215,7 +276,15 @@ return {
   },
 
   -- comments
-  { "JoosepAlviste/nvim-ts-context-commentstring" },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      opts = {
+        context_commentstring = { enable = true, enable_autocmd = false, disable = "default" },
+      },
+    },
+  },
   {
     "numToStr/Comment.nvim",
     keys = {
@@ -243,10 +312,38 @@ return {
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter-textobjects",
-        init = function()
-          -- no need to load the plugin, since we only need its queries
-          require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
-        end,
+        dependencies = {
+          "nvim-treesitter/nvim-treesitter",
+          opts = {
+            textobjects = {
+              move = {
+                enable = true,
+                disable = "default",
+                set_jumps = true, -- whether to set jumps in the jumplist
+                goto_next_start = {
+                  ["]m"] = "@function.outer",
+                  ["]]"] = "@class.outer",
+                },
+                goto_next_end = {
+                  ["]M"] = "@function.outer",
+                  ["]["] = "@class.outer",
+                },
+                goto_previous_start = {
+                  ["[m"] = "@function.outer",
+                  ["[["] = "@class.outer",
+                },
+                goto_previous_end = {
+                  ["[M"] = "@function.outer",
+                  ["[]"] = "@class.outer",
+                },
+              },
+            },
+          },
+        },
+        -- init = function()
+        --   -- no need to load the plugin, since we only need its queries
+        --   require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
+        -- end,
       },
     },
     opts = function()
@@ -282,6 +379,29 @@ return {
     end,
     config = function(_, opts)
       require("mini.ai").setup(opts)
+    end,
+  },
+  -- bracket
+  {
+    "echasnovski/mini.bracketed",
+    event = "VeryLazy",
+    version = false,
+    opts = {
+      buffer = { suffix = "" },
+      treesitter = { suffix = "n" },
+    },
+    config = function(_, opts)
+      require("mini.bracketed").setup(opts)
+    end,
+  },
+
+  -- emmet
+  {
+    "mattn/emmet-vim",
+    event = "VeryLazy",
+    init = function()
+      -- vim.g.user_emmet_mode = "nv"
+      -- vim.g.user_emmet_leader_key = "<C-y>"
     end,
   },
 }

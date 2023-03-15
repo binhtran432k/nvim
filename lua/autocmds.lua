@@ -65,25 +65,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   callback = load_last_position,
 })
 
--- Close some filetypes with <q>
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = {
-    "qf",
-    "help",
-    "man",
-    "notify",
-    "lspinfo",
-    "spectre_panel",
-    "startuptime",
-    "tsplayground",
-    "PlenaryTestPopup",
-  },
-  callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
-  end,
-})
-
 -- fix directory buffer is view in buf list
 vim.api.nvim_create_autocmd({ "BufAdd" }, {
   callback = function(event)
@@ -93,18 +74,6 @@ vim.api.nvim_create_autocmd({ "BufAdd" }, {
   end,
 })
 
--- Extend keyword for css, fennel, ...
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = {
-    "css",
-    "scss",
-    "fennel",
-  },
-  callback = function()
-    vim.opt_local.iskeyword:append("-")
-  end,
-})
-
--- HACK: load these funciton because this file is VeryLazy
+-- HACK: load these function because this file is VeryLazy
 trigger_ibus_off()
 load_last_position()

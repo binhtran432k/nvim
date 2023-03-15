@@ -22,6 +22,14 @@ function M.on_lsp_attach(on_attach)
   })
 end
 
+---@param callback fun(agrs)
+function M.on_clean(callback)
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "UserClean",
+    callback = callback,
+  })
+end
+
 ---@param plugin string
 function M.has(plugin)
   return require("lazy.core.config").plugins[plugin] ~= nil
@@ -137,6 +145,31 @@ function M.toggle_diagnostics()
     msg = "Disabled diagnostics"
   end
   vim.notify(msg, vim.log.levels.INFO, { title = "Diagnostics" })
+end
+
+---@param pattern string|string[]
+---@param callback function
+function M.setup_filetype(pattern, callback)
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = pattern,
+    callback = callback,
+  })
+end
+
+function M.setup_filetype_column(opts)
+  vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function(event)
+      if vim.bo[event.buf].modifiable then
+        local length = opts[vim.bo[event.buf].filetype]
+        if not length then
+          length = 80
+        end
+        vim.bo[event.buf].textwidth = length - 1
+      else
+        vim.bo[event.buf].textwidth = 0
+      end
+    end,
+  })
 end
 
 return M

@@ -45,7 +45,7 @@ return {
         return vim.ui.input(...)
       end
     end,
-    opts = { input = { insert_only = false } },
+    opts = { input = { insert_only = false, win_options = { winblend = 0 } } },
     config = function(_, opts)
       require("dressing").setup(opts)
     end,
@@ -56,18 +56,17 @@ return {
     "akinsho/nvim-bufferline.lua",
     event = "VeryLazy",
     keys = {
-      { "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous" },
-      { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next" },
-      { "[B", "<cmd>BufferLineMovePrev<cr>", desc = "Previous" },
-      { "]B", "<cmd>BufferLineMoveNext<cr>", desc = "Next" },
+      { "[b", "<esc><cmd>BufferLineCyclePrev<cr>", desc = "Previous Buffer" },
+      { "]b", "<esc><cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
+      { "<c-,>", "<esc><cmd>BufferLineCyclePrev<cr>", desc = "Previous Buffer", mode = { "n", "i" } },
+      { "<c-.>", "<esc><cmd>BufferLineCycleNext<cr>", desc = "Next Buffer", mode = { "n", "i" } },
+      { "<a-,>", "<esc><cmd>BufferLineMovePrev<cr>", desc = "Previous", mode = { "n", "i" } },
+      { "<a-.>", "<esc><cmd>BufferLineMoveNext<cr>", desc = "Next", mode = { "n", "i" } },
       { "<leader>bp", "<cmd>BufferLinePick<cr>", desc = "Pick" },
       { "<leader>ba", "<cmd>BufferLineCloseLeft<cr><cmd>BufferLineCloseRight<cr>", desc = "Only" },
-      { "<s-h>", "[b", desc = "Prev Buffer", remap = true },
-      { "<s-l>", "]b", desc = "Next Buffer", remap = true },
     },
     opts = {
       options = {
-        always_show_bufferline = false,
         diagnostics = "nvim_lsp",
         diagnostics_indicator = function(_, _, diag)
           local icons = settings.icons.diagnostics
@@ -75,6 +74,9 @@ return {
             .. (diag.warning and icons.Warn .. diag.warning or "")
           return vim.trim(ret)
         end,
+        indicator = {
+          -- style = "underline",
+        },
         offsets = {
           {
             filetype = "NvimTree",
@@ -91,8 +93,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
-    opts = function()
-      local navic = require("nvim-navic")
+    opts = function(_, opts)
       local symbols = settings.icons
       local winbar_opt = {
         lualine_b = {
@@ -119,18 +120,16 @@ return {
             end,
             icon = " ",
           },
+          -- stylua: ignore
           {
-            navic.get_location,
-            cond = function()
-              return package.loaded["nvim-navic"] and navic.is_available()
-            end,
+            function (...) return require("nvim-navic").get_location(...) end,
+            cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
           },
         },
       }
-      return {
+      local local_opts = {
         options = {
           globalstatus = true,
-          theme = "dracula-nvim",
           disabled_filetypes = {
             statusline = { "lazy", "alpha" },
             winbar = { "lazy", "alpha", "toggleterm", "NvimTree", "Trouble", "neo-tree" },
@@ -198,6 +197,8 @@ return {
         inactive_winbar = winbar_opt,
         extensions = { "nvim-tree" },
       }
+
+      return vim.tbl_deep_extend("force", local_opts, opts)
     end,
     config = function(_, opts)
       require("lualine").setup(opts)
@@ -248,10 +249,21 @@ return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
+    ---@type NoiceConfig
     opts = {
       lsp = {
         progress = {
           throttle = 1000 / 3,
+        },
+        documentation = {
+          ---@type NoiceViewOptions
+          opts = {
+            border = "rounded",
+            relative = "cursor",
+            position = {
+              row = 2,
+            },
+          },
         },
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -263,7 +275,13 @@ return {
         bottom_search = true,
         command_palette = true,
         long_message_to_split = true,
+        inc_rename = true,
+        lsp_doc_border = false,
       },
+      ---@type NoiceConfigViews
+      views = {
+        -- mini = { win_options = { winblend = 0 } },
+      }, ---@see section on views
     },
     -- stylua: ignore
     keys = {
@@ -401,7 +419,6 @@ return {
         vim = "indent",
         python = "indent",
         git = "",
-        markdown = ts_indent,
       }
       local handler = function(virtText, lnum, endLnum, width, truncate)
         local newVirtText = {}
@@ -445,7 +462,7 @@ return {
           },
         },
         provider_selector = function(_, filetype, _)
-          return ft_map[filetype] or { "lsp", "indent" }
+          return ft_map[filetype] or ts_indent
         end,
         fold_virt_text_handler = handler,
       }

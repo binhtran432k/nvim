@@ -10,7 +10,6 @@ return {
     event = "BufReadPre",
     dependencies = {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
-      { "folke/neodev.nvim", config = true },
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
@@ -23,6 +22,7 @@ return {
         update_in_insert = false,
         virtual_text = { spacing = 4, prefix = "●" },
         severity_sort = true,
+        float = { border = "rounded" },
       },
       -- options for vim.lsp.buf.format
       -- `bufnr` and `filter` is handled by the LazyVim formatter,
@@ -37,16 +37,13 @@ return {
         clangd = {},
         cssls = {},
         html = {},
-        pyright = {},
-        yamlls = {},
-        sumneko_lua = {
+        lemminx = {},
+        marksman = {},
+        yamlls = {
           settings = {
-            Lua = {
-              workspace = {
-                checkThirdParty = false,
-              },
-              completion = {
-                callSnippet = "Replace",
+            yaml = {
+              schemaStore = {
+                enable = true,
               },
             },
           },
@@ -68,6 +65,7 @@ return {
     ---@param opts PluginLspOpts
     config = function(_, opts)
       -- setup formatting and keymaps
+      keymaps.always_attach()
       helper.on_lsp_attach(function(client, buffer)
         format.on_attach(client, buffer)
         keymaps.on_attach(client, buffer)
@@ -83,24 +81,19 @@ return {
       local servers = opts.servers
       local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
       capabilities = vim.tbl_deep_extend("force", opts.capabilities, capabilities)
+      require("lspconfig.ui.windows").default_options.border = "rounded"
 
-      require("mason-lspconfig").setup({ ensure_installed = vim.tbl_keys(servers) })
-      require("mason-lspconfig").setup_handlers({
-        function(server)
-          local server_opts = servers[server] or {}
-          server_opts = vim.tbl_deep_extend("force", {
-            capabilities = capabilities,
-          }, server_opts)
+      for server, server_opts in pairs(servers) do
+        server_opts = vim.tbl_deep_extend("force", {
+          capabilities = capabilities,
+        }, server_opts)
 
-          if opts.setup[server] then
-            if opts.setup[server](server, server_opts) then
-              return
-            end
-          end
-
+        if type(opts.setup[server]) == "function" then
+          opts.setup[server](server, server_opts)
+        else
           require("lspconfig")[server].setup(server_opts)
-        end,
-      })
+        end
+      end
     end,
   },
 
@@ -113,13 +106,14 @@ return {
       local nls = require("null-ls")
       nls.setup({
         sources = {
-          -- nls.builtins.formatting.prettierd,
+          nls.builtins.formatting.yapf,
+          nls.builtins.formatting.prettierd,
+          nls.builtins.formatting.sql_formatter,
           nls.builtins.formatting.stylua.with({
             condition = function(utils)
               return utils.root_has_file({ ".stylua.toml", "stylua.toml" })
             end,
           }),
-          nls.builtins.diagnostics.flake8,
         },
       })
     end,
@@ -130,25 +124,12 @@ return {
     "williamboman/mason.nvim",
     cmd = "Mason",
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+    ---@type MasonSettings
     opts = {
-      ensure_installed = {
-        "stylua",
-        "shellcheck",
-        "shfmt",
-        "flake8",
+      ui = {
+        border = "rounded",
       },
     },
-    ---@param opts MasonSettings | {ensure_installed: string[]}
-    config = function(_, opts)
-      require("mason").setup(opts)
-      local mr = require("mason-registry")
-      for _, tool in ipairs(opts.ensure_installed) do
-        local p = mr.get_package(tool)
-        if not p:is_installed() then
-          p:install()
-        end
-      end
-    end,
   },
 
   -- lightbulb
