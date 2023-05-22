@@ -1,6 +1,6 @@
 local M = {}
 
-M.root_patterns = { ".git", "/lua" }
+M.root_patterns = { ".git", "/lua", "Makefile", "src/" }
 
 function M.is_directory()
   return vim.fn.isdirectory(vim.api.nvim_buf_get_name(0)) == 1
@@ -49,7 +49,7 @@ end
 function M.get_fg(name)
   return function()
     ---@type {foreground?:number}?
-    local hl = vim.api.nvim_get_hl_by_name(name, true)
+    local hl = vim.api.nvim_get_hl(0, { name = name })
     return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
   end
 end
@@ -74,7 +74,7 @@ function M.get_root()
       end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
       for _, p in ipairs(paths) do
         local r = vim.loop.fs_realpath(p)
-        if path:find(r, 1, true) then
+        if r and path:find(r, 1, true) then
           roots[#roots + 1] = r
         end
       end
@@ -167,14 +167,16 @@ end
 function M.setup_filetype_column(opts)
   vim.api.nvim_create_autocmd("BufEnter", {
     callback = function(event)
-      if vim.bo[event.buf].modifiable then
-        local length = opts[vim.bo[event.buf].filetype]
-        if not length then
-          length = 80
+      if not vim.b["editorconfig"] or not vim.b["editorconfig"].max_line_length then
+        if vim.bo[event.buf].modifiable then
+          local length = opts[vim.bo[event.buf].filetype]
+          if not length then
+            length = 80
+          end
+          vim.bo[event.buf].textwidth = length
+        else
+          vim.bo[event.buf].textwidth = 0
         end
-        vim.bo[event.buf].textwidth = length - 1
-      else
-        vim.bo[event.buf].textwidth = 0
       end
     end,
   })
