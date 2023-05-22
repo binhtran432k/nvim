@@ -75,16 +75,14 @@ vim.keymap.set("n", "<leader>tn", function()
 end, { desc = "Toggle Line Numbers" })
 vim.keymap.set("n", "<leader>td", helper.toggle_diagnostics, { desc = "Toggle Diagnostics" })
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
-vim.keymap.set(
-  "n",
-  "<leader>tc",
-  helper.toggle("conceallevel", false, { 0, conceallevel }),
-  { desc = "Toggle Conceal" }
-)
+-- stylua: ignore
+vim.keymap.set("n", "<leader>tc", helper.toggle("conceallevel", false, { 0, conceallevel }), { desc = "Toggle Conceal" })
 
 -- quit
-vim.keymap.set("n", "<leader>qq", "<cmd>q<cr>", { desc = "Quit" })
-vim.keymap.set("n", "<leader>qa", "<cmd>qa<cr>", { desc = "Quit all" })
+vim.keymap.set("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit" })
+vim.keymap.set("n", "<leader>qcc", "<cmd>cd %:p:h<cr>", { desc = "Cd to current directory" })
+vim.keymap.set("n", "<leader>qcp", "<cmd>cd ..<cr>", { desc = "Cd to parent directory" })
+vim.keymap.set("n", "<leader>qco", "<cmd>cd -<cr>", { desc = "Cd to previous directory" })
 
 -- highlights under cursor
 if vim.fn.has("nvim-0.9.0") == 1 then
