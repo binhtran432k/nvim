@@ -177,22 +177,19 @@ return {
     opts = {
       -- make sure mason installs the server
       servers = {
-        tsserver = {},
+        tsserver = {
+          on_attach = function(_, bufnr)
+            -- stylua: ignore
+            vim.keymap.set("n", "<leader>co", "<cmd>TypescriptOrganizeImports<cr>", { desc = "Organize Imports", buffer = bufnr })
+            -- stylua: ignore
+            vim.keymap.set("n", "<leader>cu", "<cmd>TypescriptRemoveUnused<cr>", { desc = "Remove Unused", buffer = bufnr })
+            -- stylua: ignore
+            vim.keymap.set("n", "<leader>cR", "<cmd>TypescriptRenameFile<cr>", { desc = "Rename File", buffer = bufnr })
+          end,
+        },
       },
       setup = {
         tsserver = function(_, config)
-          require("helper").on_lsp_attach(function(client, buffer)
-            if client.name == "tsserver" then
-              -- stylua: ignore
-              vim.keymap.set("n", "<leader>co", "<cmd>TypescriptOrganizeImports<cr>", { desc = "Organize Imports", buffer = buffer })
-              vim.keymap.set(
-                "n",
-                "<leader>cR",
-                "<cmd>TypescriptRenameFile<cr>",
-                { desc = "Rename File", buffer = buffer }
-              )
-            end
-          end)
           require("typescript").setup({ server = config })
           return true
         end,
