@@ -26,8 +26,7 @@ vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and 
 -- Clear search, diff update and redraw
 vim.keymap.set("n", "<leader>r", function()
   vim.cmd("nohlsearch|diffupdate")
-  vim.cmd("silent! IndentBlanklineRefresh")
-  vim.cmd("silent! TSDisable rainbow|TSEnable rainbow|TSDisable matchup|TSEnable matchup")
+  helper.do_clean()
   vim.cmd("normal! <c-l>")
 end, { desc = "Redraw and clear hlsearch" })
 

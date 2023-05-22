@@ -22,12 +22,20 @@ function M.on_lsp_attach(on_attach)
   })
 end
 
+function M.do_clean()
+  vim.cmd("doautocmd User Clean")
+end
+
 ---@param callback fun(agrs)
 function M.on_clean(callback)
   vim.api.nvim_create_autocmd("User", {
-    pattern = "UserClean",
+    pattern = "Clean",
     callback = callback,
   })
+end
+
+function M.refreshTSPlugin(tsPlug)
+  vim.cmd(string.format("TSDisable %s|TSEnable %s", tsPlug, tsPlug))
 end
 
 ---@param plugin string

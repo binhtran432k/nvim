@@ -1,3 +1,5 @@
+local helper = require("helper")
+
 return {
   {
     "nvim-treesitter/playground",
@@ -28,6 +30,11 @@ return {
         autotag = { enable = true, disable = "default" },
       },
     },
+    config = function()
+      helper.on_clean(function()
+        helper.refreshTSPlugin("autotag")
+      end)
+    end,
   },
 
   {
@@ -148,6 +155,10 @@ return {
 
       vim.treesitter.language.register("html", "xml")
       require("nvim-treesitter.configs").setup(opts)
+
+      helper.on_clean(function()
+        helper.refreshTSPlugin("rainbow")
+      end)
     end,
   },
 }

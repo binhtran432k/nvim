@@ -1,3 +1,5 @@
+local helper = require("helper")
+
 return {
   -- file explorer
   {
@@ -327,6 +329,11 @@ return {
       vim.g.matchup_motion_enabled = 1
       vim.g.matchup_text_obj_enabled = 1
     end,
+    config = function()
+      helper.on_clean(function()
+        helper.refreshTSPlugin("matchup")
+      end)
+    end,
   },
 
   -- toggle terminal
@@ -388,6 +395,7 @@ return {
         callback = smart_indent,
         group = smart_indent_augroup,
       })
+      helper.on_clean(smart_indent)
     end,
   },
 }
