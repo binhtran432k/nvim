@@ -229,51 +229,51 @@ return {
     dependencies = { "mfussenegger/nvim-jdtls" },
     opts = {
       servers = {
-        jdtls = {
-          settings = {
-            java = {
-              configuration = {
-                -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
-                -- And search for `interface RuntimeOption`
-                -- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
-                runtimes = {
-                  {
-                    name = "JavaSE-1.8",
-                    path = "/usr/lib/jvm/java-8-openjdk/",
-                  },
-                  {
-                    name = "JavaSE-11",
-                    path = "/usr/lib/jvm/java-11-openjdk/",
-                  },
-                  {
-                    name = "JavaSE-17",
-                    path = "/usr/lib/jvm/java-17-openjdk/",
-                  },
-                  {
-                    name = "JavaSE-19",
-                    path = "/usr/lib/jvm/java-19-openjdk/",
-                  },
-                },
-              },
-            },
-          },
-        },
+        jdtls = {},
       },
       setup = {
         jdtls = function(_, user_config)
+          local function get_java_path(name, path)
+            local path_match = vim.fn.glob(path)
+            if path_match ~= "" then
+              return { name = name, path = path }
+            else
+              return nil
+            end
+          end
+
           local lspgroup = vim.api.nvim_create_augroup("lspconfig", { clear = false })
           local default_config = require("lspconfig.server_configurations.jdtls").default_config
           local config = vim.tbl_extend("keep", user_config, {
-            cmd = default_config.cmd,
+            cmd = {
+              "jdtls",
+              "--jvm-arg=" .. string.format("-javaagent:%s", vim.fn.expand("$MASON/share/jdtls/lombok.jar")),
+            },
             root_dir = default_config.root_dir(vim.loop.cwd()),
             filetypes = default_config.filetypes,
             single_file_support = default_config.single_file_support,
             init_options = default_config.init_options,
-            on_attach = function()
+            on_attach = function(_, bufnr)
               require("jdtls.setup").add_commands()
+              -- stylua: ignore
+              vim.keymap.set("n", "<leader>co", "<cmd>lua require'jdtls'.organize_imports()<cr>", { desc = "Organize Imports", buffer = bufnr })
             end,
+            settings = {
+              java = {
+                configuration = {
+                  -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+                  -- And search for `interface RuntimeOption`
+                  -- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
+                  runtimes = {
+                    get_java_path("JavaSE-1.8", "/usr/lib/jvm/java-8-openjdk/"),
+                    get_java_path("JavaSE-11", "/usr/lib/jvm/java-11-openjdk/"),
+                    get_java_path("JavaSE-17", "/usr/lib/jvm/java-17-openjdk/"),
+                    get_java_path("JavaSE-19", "/usr/lib/jvm/java-19-openjdk/"),
+                  },
+                },
+              },
+            },
           })
-          config.root_dir = default_config.root_dir(vim.loop.cwd())
           vim.api.nvim_create_autocmd("FileType", {
             pattern = "java",
             callback = function()
