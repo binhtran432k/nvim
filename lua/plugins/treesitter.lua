@@ -39,7 +39,8 @@ return {
 
   {
     "mfussenegger/nvim-treehopper",
-    keys = { { "m", mode = { "o", "x" } } },
+    --stylua: ignore
+    keys = { { "m", mode = { "o", "x" }, desc = "Treehopper", } },
     config = function()
       vim.cmd([[
         omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>
@@ -64,6 +65,21 @@ return {
       { "<leader>ap", "<cmd>ISwapNodeWithLeft<cr>", desc = "ISwap node with left" },
     },
     config = true,
+  },
+
+  {
+    "danymat/neogen",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    keys = {
+      {
+        "<Leader>cc",
+        function()
+          require("neogen").generate({})
+        end,
+        desc = "Neogen Generate",
+      },
+    },
+    opts = { snippet_engine = "luasnip" },
   },
 
   {
