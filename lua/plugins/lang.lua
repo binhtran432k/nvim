@@ -82,6 +82,10 @@ return {
     opts = {
       servers = {
         pyright = {
+          on_attach = function(_, bufnr)
+            -- stylua: ignore
+            vim.keymap.set("n", "<leader>co", "<cmd>PyrightOrganizeImports<cr>", { desc = "Organize Imports", buffer = bufnr })
+          end,
           settings = {
             python = {
               analysis = {
@@ -102,12 +106,12 @@ return {
 
               local poetry_match = vim.fn.glob(path.join(workspace, "poetry.lock"))
               if poetry_match ~= "" then
-                return vim.fn.trim(vim.fn.system("poetry env info -p"))
+                return vim.fn.trim(vim.fn.system(string.format("cd %s && poetry env info -p", workspace)))
               end
 
               local pipenv_match = vim.fn.glob(path.join(workspace, "Pipfile.lock"))
               if pipenv_match ~= "" then
-                return vim.fn.trim(vim.fn.system("pipenv --venv"))
+                return vim.fn.trim(vim.fn.system(string.format("cd %s && pipenv --venv", workspace)))
               end
 
               -- Find and use virtualenv in workspace directory.
@@ -124,7 +128,7 @@ return {
             local function get_pdm_extras_path(workspace)
               local pdm_match = vim.fn.glob(path.join(workspace, "pdm.lock"))
               if pdm_match ~= "" then
-                local package = vim.fn.trim(vim.fn.system("pdm info --packages"))
+                local package = vim.fn.trim(vim.fn.system(string.format("cd %s && pdm info --packages", workspace)))
                 if package ~= "" then
                   return path.join(package, "lib")
                 end
