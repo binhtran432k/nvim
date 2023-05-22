@@ -20,7 +20,6 @@ return {
     opts = {
       sync_root_with_cwd = true,
       respect_buf_cwd = true,
-      ignore_ft_on_setup = { "alpha", "dashboard", "startify" },
       renderer = {
         group_empty = true,
         indent_markers = {
@@ -57,12 +56,12 @@ return {
     keys = {
       { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
+      { "<leader>ff", helper.telescope("find_files"), desc = "Find Files" },
       { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
       { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
       { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
-      { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
-      { "<leader>sC", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+      { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
       { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
       { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
@@ -76,13 +75,25 @@ return {
       { "<leader>st", "<cmd>Telescope builtin include_extensions=true<cr>", desc = "Telescope" },
       { "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Goto Symbol" },
       { "<leader>/", "<leader>sg", desc = "Find in Files (Grep)", remap = true },
-      { "<leader>:", "<leader>sc", desc = "Commands", remap = true },
+      { "<leader>:", "<leader>sC", desc = "Commands", remap = true },
       { "<c-p>", "<leader>ff", desc = "Find Files", remap = true },
     },
     opts = {
       pickers = {
         find_files = {
           hidden = true,
+          mappings = {
+            i = {
+              ["<C-i>"] = function(prompt_bufnr)
+                local current_picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+                helper.telescope("find_files", { cwd = current_picker.cwd, no_ignore = true })()
+              end,
+              ["<C-h>"] = function(prompt_bufnr)
+                local current_picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+                helper.telescope("find_files", { cwd = current_picker.cwd, hidden = false })()
+              end,
+            },
+          },
         },
       },
       defaults = {
@@ -93,8 +104,6 @@ return {
             ["<c-t>"] = function(...)
               return require("trouble.providers.telescope").open_with_trouble(...)
             end,
-            ["<C-i>"] = { "<cmd>Telescope find_files no_ignore=true<cr>", type = "command" },
-            ["<C-h>"] = { "<cmd>Telescope find_files hidden=true<cr>", type = "command" },
             ["<C-Down>"] = function(...)
               return require("telescope.actions").cycle_history_next(...)
             end,
