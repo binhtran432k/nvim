@@ -96,14 +96,6 @@ return {
         NvimTreeIndentMarker = { link = "FoldColumn" },
         LspCodeLens = { fg = colors.comment },
         MiniIndentscopeSymbol = { fg = colors.purple },
-        AlphaShortcut = { fg = colors.pink, italic = true },
-        -- TelescopeTitle = { fg = colors.black, bg = colors.purple },
-        -- TelescopePromptBorder = { fg = colors.menu, bg = colors.menu },
-        -- TelescopePromptNormal = { bg = colors.menu },
-        -- TelescopeResultsBorder = { fg = colors.black, bg = colors.black },
-        -- TelescopeResultsNormal = { bg = colors.black },
-        -- TelescopePreviewBorder = { fg = colors.nontext, bg = colors.black },
-        -- TelescopePreviewNormal = { bg = colors.black },
         Folded = { bg = dark_colors.purple },
         MoreMsg = { fg = colors.bright_green },
         TreesitterContextLineNumber = { fg = colors.purple, bg = colors.visual },
@@ -119,6 +111,9 @@ return {
         ["@tag.css"] = { fg = colors.pink },
         ["@attribute.css"] = { fg = colors.green },
         ["@property.css"] = { fg = colors.cyan, italic = true },
+        ["@tag.scss"] = { fg = colors.pink },
+        ["@attribute.scss"] = { fg = colors.green },
+        ["@property.scss"] = { fg = colors.cyan, italic = true },
         ["@text.underline"] = { fg = colors.orange, underline = true },
         -- semantic
         -- ["@lsp.type.enum"] = { link = "@type" },
@@ -152,6 +147,8 @@ return {
         Include = { fg = colors.pink },
         Structure = { fg = colors.purple },
         Underlined = { fg = colors.orange, underline = true },
+
+        DiagnosticUnnecessary = { undercurl = true, sp = colors.comment },
       }
       local transparent = {
         "Normal",
