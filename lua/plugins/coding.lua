@@ -71,22 +71,6 @@ return {
           :with_del(cond.none())
           :use_key(bracket[2])
       end
-
-      -- javascript arrow key
-      npairs.add_rules({
-        Rule("%(.*%)%s*%=>$", " {  }", { "typescript", "typescriptreact", "javascript", "javascriptreact" })
-          :use_regex(true)
-          :set_end_pair_length(2),
-      })
-
-      -- c style comment block
-      npairs.add_rules({
-        Rule(
-          "%s*/%*%*$",
-          "*/",
-          { "typescript", "typescriptreact", "javascript", "javascriptreact", "c", "cpp", "csharp", "java" }
-        ):use_regex(true),
-      })
     end,
   },
 
