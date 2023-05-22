@@ -1,5 +1,5 @@
 -- toggle ibus when insert and search mode
-vim.g.ibus_default_engine = "BambooUs"
+vim.g.ibus_default_engine = vim.env.DEFAULT_IBUS_INPUT_METHOD or "xkb:us::eng"
 local is_ibus_on = false
 
 ---Trigger ibus by global name
