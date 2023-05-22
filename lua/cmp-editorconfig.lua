@@ -19,6 +19,7 @@ local editorconfig_table = {
   { label = "indent_style" }, { label = "tab" }, { label = "space" },
   { label = "indent_size" },
   { label = "tab_width" },
+  { label = "max_line_length" },
   { label = "end_of_line" }, { label = "lf" }, { label = "cr" }, { label = "crlf" },
   { label = "charset" }, { label = "latin1" }, { label = "utf-8" }, { label = "utf-8-bom" }, { label = "utf-16be" }, { label = "utf-16le" },
   { label = "trim_trailing_whitespace" }, { label = "true" }, { label = "false" },

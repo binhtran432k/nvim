@@ -12,7 +12,6 @@ return {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp",
     },
     ---@class PluginLspOpts
     opts = {
@@ -31,6 +30,7 @@ return {
         formatting_options = nil,
         timeout_ms = nil,
       },
+      get_cmp_capabilities = nil,
       capabilities = {},
       servers = {
         bashls = {},
@@ -140,7 +140,7 @@ return {
       vim.diagnostic.config(opts.diagnostics)
       -- lspconfig
       local servers = opts.servers
-      local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      local capabilities = type(opts.get_cmp_capabilities) == "function" and opts.get_cmp_capabilities() or {}
       capabilities = vim.tbl_deep_extend("force", opts.capabilities, capabilities)
       require("lspconfig.ui.windows").default_options.border = "rounded"
 
