@@ -108,3 +108,13 @@ vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous
 -- clipboard
 vim.keymap.set({ "n", "x" }, "<leader>y", '"+y', { desc = "Yank clipboard" })
 vim.keymap.set({ "n", "x" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
+
+-- readonly mode
+if not helper.is_not_readonly_mode() then
+  vim.keymap.set({ "n", "x" }, "q", "<cmd>q<cr>", { desc = "Quit" })
+  vim.keymap.set({ "n", "x" }, "i", "<nop>")
+  vim.keymap.set({ "n", "x" }, "o", "<nop>")
+  vim.keymap.set({ "n", "x" }, "a", "<nop>")
+  vim.keymap.set("x", "s", "<nop>")
+  vim.keymap.set("x", "S", "<nop>")
+end

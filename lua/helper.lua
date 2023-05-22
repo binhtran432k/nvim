@@ -182,4 +182,8 @@ function M.setup_filetype_column(opts)
   })
 end
 
+function M.is_not_readonly_mode()
+  return not vim.env.NEOVIM_READ_MODE
+end
+
 return M

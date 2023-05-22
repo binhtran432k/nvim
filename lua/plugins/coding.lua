@@ -1,3 +1,4 @@
+local helper = require("helper")
 
 return {
   -- auto pairs
@@ -93,6 +94,7 @@ return {
   {
     "kylechui/nvim-surround",
     event = "BufReadPre",
+    cond = helper.is_not_readonly_mode,
     config = function(_, opts)
       require("nvim-surround").setup(opts)
     end,
@@ -110,6 +112,7 @@ return {
   },
   {
     "numToStr/Comment.nvim",
+    cond = helper.is_not_readonly_mode,
     keys = {
       { "gc", desc = "+comment line", mode = { "n", "x" } },
       { "gb", desc = "+comment block", mode = { "n", "x" } },
@@ -222,6 +225,7 @@ return {
   {
     "mattn/emmet-vim",
     event = "VeryLazy",
+    cond = helper.is_not_readonly_mode,
     init = function()
       -- vim.g.user_emmet_mode = "nv"
       -- vim.g.user_emmet_leader_key = "<C-y>"

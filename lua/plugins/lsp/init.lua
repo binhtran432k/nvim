@@ -144,6 +144,10 @@ return {
       capabilities = vim.tbl_deep_extend("force", opts.capabilities, capabilities)
       require("lspconfig.ui.windows").default_options.border = "rounded"
 
+      if not helper.is_not_readonly_mode() then
+        vim.notify("Lsp Server is disabled in NEOVIM READ MODE")
+        return
+      end
       for server, server_opts in pairs(servers) do
         server_opts = vim.tbl_deep_extend("force", {
           capabilities = capabilities,

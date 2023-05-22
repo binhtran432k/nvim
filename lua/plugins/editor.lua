@@ -355,7 +355,9 @@ return {
       {
         "<a-o>",
         function()
-          require("toggleterm.terminal").Terminal:new({ cmd = "ranger", direction = "float", id = 1001 }):toggle()
+          require("toggleterm.terminal").Terminal
+            :new({ cmd = "NEOVIM_READ_MODE=true ranger", direction = "float", id = 1001 })
+            :toggle()
         end,
         desc = "Toggle ranger",
         mode = { "n", "t" },
