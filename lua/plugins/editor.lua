@@ -377,6 +377,9 @@ return {
       size = 15,
       open_mapping = "<c-\\>",
       shade_terminals = false,
+      on_open = function()
+        vim.wo.sidescrolloff = 0
+      end,
     },
   },
 
