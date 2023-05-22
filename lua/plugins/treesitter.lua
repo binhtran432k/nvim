@@ -71,7 +71,6 @@ return {
     },
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
-    ---@type TSConfig
     opts = {
       sync_install = false,
       ensure_installed = {

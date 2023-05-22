@@ -79,8 +79,6 @@ return {
         pink = "#894766",
       }
       local groups = require("dracula.groups").setup(dracula.configs())
-      ---@param key string
-      ---@return Highlight|unknown|nil
       local function get_group(key)
         local group = groups[key]
         if group then

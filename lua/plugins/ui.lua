@@ -249,14 +249,12 @@ return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
-    ---@type NoiceConfig
     opts = {
       lsp = {
         progress = {
           throttle = 1000 / 3,
         },
         documentation = {
-          ---@type NoiceViewOptions
           opts = {
             border = "rounded",
             relative = "cursor",
@@ -278,7 +276,6 @@ return {
         inc_rename = true,
         lsp_doc_border = false,
       },
-      ---@type NoiceConfigViews
       views = {
         -- mini = { win_options = { winblend = 0 } },
       }, ---@see section on views
