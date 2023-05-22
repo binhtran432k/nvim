@@ -285,4 +285,10 @@ return {
       },
     },
   },
+
+  -- http
+  {
+    "binhtran432k/vim-restclient-syntax",
+    lazy = false,
+  },
 }
