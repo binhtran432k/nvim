@@ -1,7 +1,7 @@
 local settings = require("settings")
 local helper = require("helper")
 
-local indent_exclude_fts = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason", "NvimTree" }
+local indent_exclude_fts = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason", "NvimTree", "noice" }
 
 return {
   -- better vim.notify
@@ -55,6 +55,7 @@ return {
   {
     "akinsho/nvim-bufferline.lua",
     event = "VeryLazy",
+    --stylua: ignore
     keys = {
       { "[b", "<esc><cmd>BufferLineCyclePrev<cr>", desc = "Previous Buffer" },
       { "]b", "<esc><cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
@@ -95,43 +96,11 @@ return {
     event = "VeryLazy",
     opts = function(_, opts)
       local symbols = settings.icons
-      local winbar_opt = {
-        lualine_b = {
-          { "filename", file_status = false },
-        },
-        lualine_c = {
-          {
-            function()
-              local msg = "No Active Lsp"
-              local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-              local clients = vim.lsp.get_active_clients()
-              local ignore_sv = { ["null-ls"] = true, emmet_ls = true }
-              for _, client in ipairs(clients) do
-                local filetypes = client.config.filetypes
-                if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                  if ignore_sv[client.name] then
-                    msg = client.name
-                  else
-                    return client.name
-                  end
-                end
-              end
-              return msg
-            end,
-            icon = " ",
-          },
-          -- stylua: ignore
-          {
-            function (...) return require("nvim-navic").get_location(...) end,
-            cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
-          },
-        },
-      }
       local local_opts = {
         options = {
           globalstatus = true,
           disabled_filetypes = {
-            statusline = { "lazy", "alpha" },
+            statusline = { "lazy", "alpha", "mason", "lspinfo" },
             winbar = { "lazy", "alpha", "toggleterm", "NvimTree", "Trouble", "neo-tree" },
           },
         },
@@ -140,8 +109,25 @@ return {
           lualine_b = {
             -- { "branch" },
             { "b:gitsigns_head", icon = "" },
-          },
-          lualine_c = {
+            {
+              "diff",
+              source = function()
+                ---@diagnostic disable-next-line: undefined-field
+                local gitsigns = vim.b.gitsigns_status_dict
+                if gitsigns then
+                  return {
+                    added = gitsigns.added,
+                    modified = gitsigns.changed,
+                    removed = gitsigns.removed,
+                  }
+                end
+              end,
+              symbols = {
+                added = symbols.git.added,
+                modified = symbols.git.modified,
+                removed = symbols.git.removed,
+              }, -- changes diff symbols
+            },
             {
               "diagnostics",
               symbols = {
@@ -151,7 +137,8 @@ return {
                 hint = symbols.diagnostics.Hint,
               },
             },
-            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+          },
+          lualine_c = {
             { "filename", path = 1, symbols = { modified = " ", readonly = " ", unnamed = " " } },
           },
           lualine_x = {
@@ -172,30 +159,37 @@ return {
               cond = require("lazy.status").has_updates,
               color = helper.get_fg("Special"),
             },
+            "filetype",
+          },
+          lualine_y = {
             {
-              "diff",
-              source = function()
-                ---@diagnostic disable-next-line: undefined-field
-                local gitsigns = vim.b.gitsigns_status_dict
-                if gitsigns then
-                  return {
-                    added = gitsigns.added,
-                    modified = gitsigns.changed,
-                    removed = gitsigns.removed,
-                  }
+              function()
+                local msg = ""
+                local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+                local clients = vim.lsp.get_active_clients()
+                local ignore_sv = { ["null-ls"] = true, emmet_ls = true }
+                for _, client in ipairs(clients) do
+                  local filetypes = client.config.filetypes
+                  if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                    if ignore_sv[client.name] then
+                      msg = client.name
+                    else
+                      return client.name
+                    end
+                  end
                 end
+                return msg
               end,
-              symbols = {
-                added = symbols.git.added,
-                modified = symbols.git.modified,
-                removed = symbols.git.removed,
-              }, -- changes diff symbols
+              icon = " ",
             },
           },
+          lualine_z = {
+            function()
+              return "%P ☰ %3l/%L:%3c"
+            end,
+          },
         },
-        winbar = winbar_opt,
-        inactive_winbar = winbar_opt,
-        extensions = { "nvim-tree" },
+        extensions = { "nvim-tree", "trouble", "quickfix", "man", "toggleterm" },
       }
 
       return vim.tbl_deep_extend("force", local_opts, opts)
@@ -288,7 +282,7 @@ return {
     },
     -- stylua: ignore
     keys = {
-      { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "Redirect Cmdline" },
+      { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, desc = "Redirect Cmdline", mode = "c" },
       { "<leader>snl", function() require("noice").cmd("last") end, desc = "Noice Last Message" },
       { "<leader>snh", function() require("noice").cmd("history") end, desc = "Noice History" },
       { "<leader>sna", function() require("noice").cmd("all") end, desc = "Noice All" },
@@ -470,25 +464,6 @@ return {
         fold_virt_text_handler = handler,
       }
     end,
-  },
-
-  -- lsp symbol navigation for lualine
-  {
-    "SmiteshP/nvim-navic",
-    init = function()
-      vim.g.navic_silence = true
-      helper.on_lsp_attach(function(client, buffer)
-        if client.server_capabilities.documentSymbolProvider == true then
-          require("nvim-navic").attach(client, buffer)
-        end
-      end)
-    end,
-    opts = {
-      icons = settings.icons.kinds,
-      separator = " ",
-      highlight = true,
-      depth_limit = 5,
-    },
   },
 
   -- icons
