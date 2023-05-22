@@ -135,7 +135,7 @@ return {
         yaml = true,
       },
       highlight = { enable = true, disable = "default" },
-      indent = { enable = false, disable = "default" },
+      indent = { enable = true, disable = "default" },
       rainbow = { enable = true, disable = "default" },
       incremental_selection = {
         enable = true,
