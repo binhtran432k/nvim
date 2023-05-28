@@ -109,6 +109,7 @@ return {
         haskell = true,
         html = true,
         hurl = true,
+        ini = true,
         java = true,
         javascript = true,
         jsdoc = true,
@@ -172,6 +173,7 @@ return {
       opts.ensure_installed = vim.tbl_keys(opts.ensure_installed)
 
       vim.treesitter.language.register("html", "xml")
+      vim.treesitter.language.register("ini", "editorconfig")
       require("nvim-treesitter.configs").setup(opts)
 
       helper.on_clean(function()
