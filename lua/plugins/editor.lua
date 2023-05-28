@@ -412,4 +412,14 @@ return {
       helper.on_clean(smart_indent)
     end,
   },
+
+  -- lastplace
+  {
+    "ethanholz/nvim-lastplace",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+    config = function(_, opts)
+      require("nvim-lastplace").setup(opts)
+    end,
+  },
 }

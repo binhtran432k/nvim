@@ -32,14 +32,6 @@ local function trigger_ibus_off()
   end
 end
 
-local function load_last_position()
-  local mark = vim.api.nvim_buf_get_mark(0, '"')
-  local lcount = vim.api.nvim_buf_line_count(0)
-  if mark[1] > 0 and mark[1] <= lcount then
-    pcall(vim.api.nvim_win_set_cursor, 0, mark)
-  end
-end
-
 local smart_ibus_gid = vim.api.nvim_create_augroup("smart_ibus", {})
 vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
   callback = trigger_ibus_on,
@@ -60,11 +52,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
--- Go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
-  callback = load_last_position,
-})
-
 -- fix directory buffer is view in buf list
 vim.api.nvim_create_autocmd({ "BufAdd" }, {
   callback = function(event)
@@ -76,4 +63,3 @@ vim.api.nvim_create_autocmd({ "BufAdd" }, {
 
 -- HACK: load these function because this file is VeryLazy
 trigger_ibus_off()
-load_last_position()
