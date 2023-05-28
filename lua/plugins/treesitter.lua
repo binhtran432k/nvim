@@ -125,6 +125,7 @@ return {
         python = true,
         query = true,
         regex = true,
+        rust = true,
         scss = true,
         teal = true,
         toml = true,
