@@ -101,6 +101,7 @@ return {
         html = {},
         kotlin_language_server = {},
         lemminx = {},
+        taplo = {},
         yamlls = {
           settings = {
             yaml = {
