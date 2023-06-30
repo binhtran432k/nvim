@@ -186,6 +186,11 @@ return {
             -- stylua: ignore
             vim.keymap.set("n", "<leader>cR", "<cmd>TypescriptRenameFile<cr>", { desc = "Rename File", buffer = bufnr })
           end,
+          settings = {
+            diagnostics = {
+              ignoredCodes = { 80001 },
+            },
+          },
         },
       },
       setup = {
