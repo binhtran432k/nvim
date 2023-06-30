@@ -68,7 +68,6 @@ return {
     priority = 1000,
     opts = function()
       local dracula = require("dracula")
-      local colors = dracula.colors()
       local dark_colors = {
         red = "#773333",
         orange = "#996E40",
@@ -89,111 +88,115 @@ return {
         end
         return nil
       end
-      local overrides = {
-        FoldColumn = { fg = colors.white },
-        Visual = { fg = colors.black, bg = colors.white },
-        GitSignsCurrentLineBlame = { link = "FoldColumn" },
-        NvimTreeIndentMarker = { link = "FoldColumn" },
-        LspCodeLens = { fg = colors.comment },
-        MiniIndentscopeSymbol = { fg = colors.purple },
-        Folded = { bg = dark_colors.purple },
-        MoreMsg = { fg = colors.bright_green },
-        TreesitterContextLineNumber = { fg = colors.purple, bg = colors.visual },
-        TreesitterContext = { bg = colors.visual },
-        TSRainbowRed = { fg = colors.red },
-        TSRainbowYellow = { fg = colors.yellow },
-        TSRainbowBlue = { fg = colors.purple },
-        TSRainbowOrange = { fg = colors.orange },
-        TSRainbowGreen = { fg = colors.green },
-        TSRainbowViolet = { fg = colors.pink },
-        TSRainbowCyan = { fg = colors.cyan },
-        ["@field.lua"] = { link = "@property" },
-        ["@tag.css"] = { fg = colors.pink },
-        ["@attribute.css"] = { fg = colors.green },
-        ["@property.css"] = { fg = colors.cyan, italic = true },
-        ["@tag.scss"] = { fg = colors.pink },
-        ["@attribute.scss"] = { fg = colors.green },
-        ["@property.scss"] = { fg = colors.cyan, italic = true },
-        ["@text.underline"] = { fg = colors.orange, underline = true },
-        -- semantic
-        -- ["@lsp.type.enum"] = { link = "@type" },
-        -- ["@lsp.type.interface"] = { link = "@interface" },
-        ["@lsp.type.keyword"] = { link = "@keyword" },
-        ["@lsp.type.namespace"] = { link = "@namespace" },
-        ["@lsp.type.parameter"] = { link = "@parameter" },
-        ["@lsp.type.property"] = { link = "@property" },
-        ["@lsp.type.variable"] = {}, -- use treesitter styles for regular variables
-        ["@lsp.typemod.function.defaultLibrary"] = { link = "Special" },
-        ["@lsp.typemod.variable.defaultLibrary"] = { link = "@variable.builtin" },
-        ["@lsp.type.annotation"] = { link = "@annotation" },
-        ["@lsp.type.class"] = { fg = colors.cyan },
-        ["@lsp.type.struct"] = { fg = colors.cyan },
-        ["@lsp.type.enum"] = { fg = colors.cyan },
-        ["@lsp.type.enumMember"] = { fg = colors.purple },
-        ["@lsp.type.event"] = { fg = colors.cyan },
-        ["@lsp.type.interface"] = { fg = colors.cyan },
-        ["@lsp.type.modifier"] = { fg = colors.pink },
-        ["@lsp.type.regexp"] = { fg = colors.yellow },
-        ["@lsp.type.typeParameter"] = { fg = colors.cyan },
-        ["@lsp.type.decorator"] = { fg = colors.green },
+      local overrides = function(colors)
+        local local_overrides = {
+          FoldColumn = { fg = colors.white },
+          Visual = { fg = colors.black, bg = colors.white },
+          GitSignsCurrentLineBlame = { link = "FoldColumn" },
+          NvimTreeIndentMarker = { link = "FoldColumn" },
+          LspCodeLens = { fg = colors.comment },
+          MiniIndentscopeSymbol = { fg = colors.purple },
+          Folded = { bg = dark_colors.purple },
+          MoreMsg = { fg = colors.bright_green },
+          TreesitterContextLineNumber = { fg = colors.purple, bg = colors.visual },
+          TreesitterContext = { bg = colors.visual },
+          TSRainbowRed = { fg = colors.red },
+          TSRainbowYellow = { fg = colors.yellow },
+          TSRainbowBlue = { fg = colors.purple },
+          TSRainbowOrange = { fg = colors.orange },
+          TSRainbowGreen = { fg = colors.green },
+          TSRainbowViolet = { fg = colors.pink },
+          TSRainbowCyan = { fg = colors.cyan },
+          ["@field.lua"] = { link = "@property" },
+          ["@tag.css"] = { fg = colors.pink },
+          ["@attribute.css"] = { fg = colors.green },
+          ["@property.css"] = { fg = colors.cyan, italic = true },
+          ["@tag.scss"] = { fg = colors.pink },
+          ["@attribute.scss"] = { fg = colors.green },
+          ["@property.scss"] = { fg = colors.cyan, italic = true },
+          ["@text.underline"] = { fg = colors.orange, underline = true },
+          -- semantic
+          -- ["@lsp.type.enum"] = { link = "@type" },
+          -- ["@lsp.type.interface"] = { link = "@interface" },
+          ["@lsp.type.keyword"] = { link = "@keyword" },
+          ["@lsp.type.namespace"] = { link = "@namespace" },
+          ["@lsp.type.parameter"] = { link = "@parameter" },
+          ["@lsp.type.property"] = { link = "@property" },
+          ["@lsp.type.variable"] = {}, -- use treesitter styles for regular variables
+          ["@lsp.typemod.function.defaultLibrary"] = { link = "Special" },
+          ["@lsp.typemod.variable.defaultLibrary"] = { link = "@variable.builtin" },
+          ["@lsp.type.annotation"] = { link = "@annotation" },
+          ["@lsp.type.class"] = { fg = colors.cyan },
+          ["@lsp.type.struct"] = { fg = colors.cyan },
+          ["@lsp.type.enum"] = { fg = colors.cyan },
+          ["@lsp.type.enumMember"] = { fg = colors.purple },
+          ["@lsp.type.event"] = { fg = colors.cyan },
+          ["@lsp.type.interface"] = { fg = colors.cyan },
+          ["@lsp.type.modifier"] = { fg = colors.pink },
+          ["@lsp.type.regexp"] = { fg = colors.yellow },
+          ["@lsp.type.typeParameter"] = { fg = colors.cyan },
+          ["@lsp.type.decorator"] = { fg = colors.green },
 
-        Constant = { fg = colors.purple },
-        Number = { fg = colors.purple },
-        Boolean = { fg = colors.purple },
-        Float = { fg = colors.green },
-        Operator = { fg = colors.pink },
-        Identifier = { fg = colors.fg },
-        Function = { fg = colors.green },
-        Include = { fg = colors.pink },
-        Structure = { fg = colors.purple },
-        Underlined = { fg = colors.orange, underline = true },
+          Constant = { fg = colors.purple },
+          Number = { fg = colors.purple },
+          Boolean = { fg = colors.purple },
+          Float = { fg = colors.green },
+          Operator = { fg = colors.pink },
+          Identifier = { fg = colors.fg },
+          Function = { fg = colors.green },
+          Include = { fg = colors.pink },
+          Structure = { fg = colors.purple },
+          Underlined = { fg = colors.orange, underline = true },
 
-        DiagnosticUnnecessary = { undercurl = true, sp = colors.comment },
-      }
-      local transparent = {
-        "Normal",
-        "NormalFloat",
-        "MoreMsg",
-        "SignColumn",
-        "NvimTreeNormal",
-        "NeoTreeNormal",
-        "Pmenu",
-        "BufferLineFill",
-        "CmpItemAbbrDeprecated",
-        "CmpItemAbbrMatch",
-      }
-      local cursive = {
-        "@keyword",
-        "@keyword.operator",
-        "@keyword.function",
-        "@repeat",
-        "@conditional",
-        "@include",
-        "@function.builtin",
-        "@tag.attribute",
-        "Keyword",
-        "Keywords",
-        "Repeat",
-        "Conditional",
-        "Include",
-      }
-      local logo_colors = get_gradients(colors.purple, colors.pink, 8)
-      for _, key in ipairs(transparent) do
-        local highlight = get_group(key)
-        if highlight then
-          highlight.bg = colors.bg
-          overrides[key] = highlight
+          DiagnosticUnnecessary = { undercurl = true, sp = colors.comment },
+        }
+        local transparent = {
+          "Normal",
+          "NormalFloat",
+          "MoreMsg",
+          "SignColumn",
+          "NvimTreeNormal",
+          "NeoTreeNormal",
+          "Pmenu",
+          "BufferLineFill",
+          "CmpItemAbbrDeprecated",
+          "CmpItemAbbrMatch",
+        }
+        local cursive = {
+          "@keyword",
+          "@keyword.operator",
+          "@keyword.function",
+          "@repeat",
+          "@conditional",
+          "@include",
+          "@function.builtin",
+          "@tag.attribute",
+          "Keyword",
+          "Keywords",
+          "Repeat",
+          "Conditional",
+          "Include",
+        }
+        local logo_colors = get_gradients(colors.purple, colors.pink, 8)
+        for _, key in ipairs(transparent) do
+          local highlight = get_group(key)
+          if highlight then
+            highlight.bg = colors.bg
+            local_overrides[key] = highlight
+          end
         end
-      end
-      for _, key in ipairs(cursive) do
-        local highlight = get_group(key)
-        if highlight then
-          highlight.italic = true
-          overrides[key] = highlight
+        for _, key in ipairs(cursive) do
+          local highlight = get_group(key)
+          if highlight then
+            highlight.italic = true
+            local_overrides[key] = highlight
+          end
         end
-      end
-      for i, key in ipairs(logo_colors) do
-        overrides["StartLogo" .. i] = { fg = key }
+        for i, key in ipairs(logo_colors) do
+          local_overrides["StartLogo" .. i] = { fg = key }
+        end
+
+        return local_overrides
       end
       return {
         italic_comment = true,
