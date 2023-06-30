@@ -80,6 +80,7 @@ vim.keymap.set("n", "<leader>tc", helper.toggle("conceallevel", false, { 0, conc
 
 -- quit
 vim.keymap.set("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit" })
+vim.keymap.set("n", "<leader>qa", "<cmd>%argd<cr>", { desc = "Clear Session Arguments" })
 vim.keymap.set("n", "<leader>qcc", "<cmd>cd %:p:h<cr>", { desc = "Cd to current directory" })
 vim.keymap.set("n", "<leader>qcp", "<cmd>cd ..<cr>", { desc = "Cd to parent directory" })
 vim.keymap.set("n", "<leader>qco", "<cmd>cd -<cr>", { desc = "Cd to previous directory" })
