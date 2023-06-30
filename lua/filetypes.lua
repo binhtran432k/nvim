@@ -34,4 +34,5 @@ end)
 helper.setup_filetype_column({
   lua = 120,
   java = 100,
+  rust = 100,
 })
