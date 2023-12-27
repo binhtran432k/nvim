@@ -1,194 +1,156 @@
-local settings = require("settings")
+local cmp_keys = {
+  next = "<tab>",
+  prev = "<s-tab>",
+}
 
-local cmp_plugins = {
-  {
-    "L3MON4D3/LuaSnip",
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
-      end,
-    },
-    opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-      region_check_events = "CursorMoved",
-    },
-    keys = {
-      {
-        "<tab>",
-        function()
-          return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-        end,
-        expr = true,
-        silent = true,
-        mode = "i",
-      },
-      {
-        "<tab>",
-        function()
-          require("luasnip").jump(1)
-        end,
-        mode = "s",
-      },
-      {
-        "<s-tab>",
-        function()
-          require("luasnip").jump(-1)
-        end,
-        mode = { "i", "s" },
-      },
-    },
-  },
+local function has_words_before()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
 
-  -- auto completion
+local function get_supertab_next(cmp, luasnip)
+  return function(fallback)
+    if cmp.visible() then
+      -- You could replace select_next_item() with confirm({ select = true }) to get VS Code autocompletion behavior
+      cmp.select_next_item()
+      -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+      -- this way you will only jump inside the snippet region
+    elseif luasnip.expand_or_jumpable() then
+      luasnip.expand_or_jump()
+    elseif has_words_before() then
+      cmp.complete()
+    else
+      fallback()
+    end
+  end
+end
+
+local function get_supertab_prev(cmp, luasnip)
+  return function(fallback)
+    if cmp.visible() then
+      cmp.select_prev_item()
+    elseif luasnip.jumpable(-1) then
+      luasnip.jump(-1)
+    else
+      fallback()
+    end
+  end
+end
+
+local function get_toggle_cmp(cmp)
+  return function()
+    if cmp.visible() then
+      cmp.close()
+    else
+      cmp.complete()
+    end
+  end
+end
+
+return {
   {
     "hrsh7th/nvim-cmp",
-    event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-emoji",
       "hrsh7th/cmp-cmdline",
-      "saadparwaiz1/cmp_luasnip",
-      "lukas-reineke/cmp-under-comparator",
-      {
-        "neovim/nvim-lspconfig",
-        ---@type PluginLspOpts
-        opts = {
-          get_cmp_capabilities = function()
-            return require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-          end,
-        },
-      },
+      "hrsh7th/cmp-calc",
+      "nat-418/cmp-color-names.nvim",
+      "windwp/nvim-autopairs",
     },
-    opts = function()
+    ---@param opts cmp.ConfigSchema
+    opts = function(_, opts)
+      local luasnip = require("luasnip")
       local cmp = require("cmp")
-      local maxline = 50
-      local ellipsis = "..."
-      local menu = {
-        luasnip = "Snip",
-        nvim_lsp = "Lsp",
-        buffer = "Buf",
-        path = "Path",
-        cmdline = "Cmd",
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+
+      opts.sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+      }, {
+        { name = "path" },
+        { name = "buffer" },
+        { name = "emoji" },
+        { name = "calc" },
+        { name = "color_names" },
+      })
+
+      local cmp_window_opts = {
+        winhighlight = "CursorLine:Visual,Search:None",
       }
-      local function toggle_cmp()
-        if cmp.visible() then
-          cmp.close()
-        else
-          cmp.complete()
-        end
-      end
-      local function close_and_fallback(fallback)
-        if cmp.visible() then
-          cmp.close()
-        end
-        fallback()
-      end
-      return {
-        preselect = cmp.PreselectMode.None,
-        completion = {
-          completeopt = "menu,menuone,noselect",
-        },
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ["<C-u>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-d>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = { i = toggle_cmp, c = toggle_cmp },
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<C-y>"] = {
-            i = close_and_fallback,
-            c = close_and_fallback,
-          },
-          ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        }),
-        sources = {
-          { name = "nvim_lsp", group_index = 1 },
-          { name = "luasnip", group_index = 1 },
-          { name = "path", group_index = 1 },
-          { name = "buffer", group_index = 1 },
-        },
-        formatting = {
-          format = function(entry, item)
-            local source_name = menu[entry.source.name]
-            if source_name then
-              item.menu = "⎧" .. source_name .. "⎭"
-            end
-            local icons = settings.icons.kinds[item.kind]
-            if icons then
-              item.kind = icons .. item.kind
-            end
-            local label = item.abbr
-            local truncated_label = vim.fn.strcharpart(label, 0, maxline)
-            if truncated_label ~= label then
-              item.abbr = truncated_label .. ellipsis
-            end
-            return item
-          end,
-        },
-        window = {
-          -- completion = { border = "rounded" },
-          -- documentation = { border = "rounded" },
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
-        },
-        sorting = {
-          comparators = {
-            cmp.config.compare.offset,
-            cmp.config.compare.exact,
-            -- cmp.config.compare.scopes,
-            cmp.config.compare.score,
-            require("cmp-under-comparator").under,
-            cmp.config.compare.recently_used,
-            cmp.config.compare.locality,
-            cmp.config.compare.kind,
-            -- cmp.config.compare.sort_text,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
-          },
-        },
-        experimental = {
-          ghost_text = {
-            hl_group = "LspCodeLens",
-          },
-        },
+
+      opts.window = {
+        completion = cmp.config.window.bordered(cmp_window_opts),
+        documentation = cmp.config.window.bordered(cmp_window_opts),
       }
+
+      opts.mapping = vim.tbl_extend("force", opts.mapping, {
+        [cmp_keys.next] = cmp.mapping(get_supertab_next(cmp, luasnip), { "i", "s" }),
+        [cmp_keys.prev] = cmp.mapping(get_supertab_prev(cmp, luasnip), { "i", "s" }),
+
+        ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-d>"] = cmp.mapping.scroll_docs(4),
+
+        ["<C-Space>"] = get_toggle_cmp(cmp),
+      })
+
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end,
-    config = function(_, opts)
+  },
+  {
+    "hrsh7th/cmp-cmdline",
+    config = function()
       local cmp = require("cmp")
-      cmp.setup(opts)
+
+      local mapping = vim.tbl_extend("force", cmp.mapping.preset.cmdline(), {
+        [cmp_keys.next] = { c = cmp.mapping.select_next_item() },
+        [cmp_keys.prev] = { c = cmp.mapping.select_prev_item() },
+
+        ["<C-Space>"] = { c = get_toggle_cmp(cmp) },
+      })
+
+      ---@diagnostic disable-next-line: missing-fields
       cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = mapping,
         sources = {
-          { name = "path", group_index = 1 },
-          { name = "cmdline", group_index = 2 },
-          { name = "buffer", group_index = 3 },
+          { name = "cmdline", group_index = 1 },
+          { name = "buffer", group_index = 2 },
         },
       })
       for _, cmd_type in ipairs({ "/", "?" }) do
+        ---@diagnostic disable-next-line: missing-fields
         cmp.setup.cmdline(cmd_type, {
-          mapping = cmp.mapping.preset.cmdline(),
+          mapping = mapping,
           sources = {
             { name = "buffer", group_index = 1 },
           },
         })
       end
+    end,
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    keys = function()
+      return {}
+    end,
+    config = function(_, opts)
+      if opts then
+        require("luasnip").config.setup(opts)
+      end
 
-      require("cmp-editorconfig").setup()
-      -- Set configuration for specific filetype.
-      cmp.setup.filetype("editorconfig", {
-        sources = {
-          { name = "editorconfig", group_index = 1 },
-          { name = "buffer", group_index = 2 },
+      -- friendly-snippets - enable standardized comments snippets
+      require("luasnip").filetype_extend("javascript", { "javascriptreact" })
+
+      require("luasnip.loaders.from_vscode").lazy_load()
+
+      require("luasnip.loaders.from_lua").lazy_load({
+        paths = {
+          -- Load local snippets if present.
+          vim.fn.getcwd() .. "/.luasnippets",
+          -- Global snippets.
+          vim.fn.stdpath("config") .. "/luasnippets",
         },
       })
     end,
   },
 }
-
-return cmp_plugins
