@@ -23,3 +23,9 @@ eslint
 vscode
 toml
 zig
+config
+neovim
+todo
+nvim
+treesitter
+lua
