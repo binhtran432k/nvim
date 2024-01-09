@@ -5,5 +5,11 @@ return {
     presets = {
       lsp_doc_border = true,
     },
+    lsp = {
+      progress = {
+        throttle = 300,
+      },
+    },
+    throttle = 300,
   },
 }
