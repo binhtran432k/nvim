@@ -64,6 +64,8 @@ return {
       local cmp = require("cmp")
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
+      opts.preselect = cmp.PreselectMode.None
+
       opts.sources = cmp.config.sources({
         { name = "nvim_lsp" },
         { name = "luasnip" },
