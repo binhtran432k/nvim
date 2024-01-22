@@ -64,11 +64,15 @@ return {
       local cmp = require("cmp")
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
-      opts.preselect = cmp.PreselectMode.None
+      opts.performance = vim.tbl_extend("force", opts.performance or {}, {
+        debounce = 300,
+        throttle = 60,
+        fetching_timeout = 200,
+      })
 
       opts.sources = cmp.config.sources({
-        { name = "nvim_lsp" },
         { name = "luasnip" },
+        { name = "nvim_lsp" },
       }, {
         { name = "path" },
         { name = "buffer" },

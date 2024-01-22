@@ -42,6 +42,7 @@ return {
     "echasnovski/mini.indentscope",
     opts = function(_, opts)
       opts.draw = vim.tbl_deep_extend("force", opts.draw or {}, {
+        delay = 300,
         animation = require("mini.indentscope").gen_animation.none(),
       })
     end,

@@ -11,7 +11,7 @@ return {
     vim.g.matchup_delim_noskips = 1
     vim.g.matchup_enabled = 1
     vim.g.matchup_matchparen_deferred = 1
-    vim.g.matchup_matchparen_deferred_show_delay = 100
+    vim.g.matchup_matchparen_deferred_show_delay = 200
     vim.g.matchup_matchparen_offscreen = { method = nil }
     vim.g.matchup_matchparen_stopline = 100
     vim.g.matchup_matchparen_timeout = 100
