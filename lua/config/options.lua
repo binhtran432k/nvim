@@ -8,6 +8,7 @@ local root_pattern = {
   "Makefile",
   "makefile",
   "package.json",
+  "pom.xml",
   "Cargo.toml",
   ".git",
 }
