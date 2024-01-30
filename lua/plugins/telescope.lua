@@ -7,8 +7,11 @@ return {
   "nvim-telescope/telescope.nvim",
   dependencies = {
     { "nvim-telescope/telescope-symbols.nvim" },
+    { "benfowler/telescope-luasnip.nvim" },
   },
   opts = function(_, opts)
+    require('telescope').load_extension('luasnip')
+
     local actions = require("telescope.actions")
     opts.defaults.mappings = vim.tbl_extend("force", opts.defaults.mappings, {
       n = {
