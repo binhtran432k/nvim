@@ -18,3 +18,9 @@ vim.g.root_spec = { root_pattern, "lsp", "cwd" }
 vim.opt.clipboard = ""
 
 vim.opt.formatexpr = "1"
+
+vim.filetype.add({
+  pattern = {
+    ["%.env%..*"] = "sh",
+  },
+})
