@@ -6,6 +6,9 @@ return {
       lsp_doc_border = true,
     },
     lsp = {
+      hover = {
+        silent = true,
+      },
       progress = {
         throttle = 300,
       },
