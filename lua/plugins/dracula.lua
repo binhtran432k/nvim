@@ -16,9 +16,7 @@ return {
     ---@type DraculaConfig
     opts = {
       on_highlights = function(highlights, colors)
-        highlights.Statement = { fg = colors.pink, style = { italic = true } }
-        highlights.PreProc = { fg = colors.pink, style = { italic = true } }
-        highlights["@tag.attribute"] = { fg = colors.green, style = { italic = true } }
+        highlights["@tag.attribute"] = { fg = colors.bright_green, style = { italic = true } }
       end,
     },
   },
