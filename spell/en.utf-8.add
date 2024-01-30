@@ -29,3 +29,7 @@ todo
 nvim
 treesitter
 lua
+preact
+lefthook
+commitlint
+axios
