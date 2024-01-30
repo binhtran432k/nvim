@@ -3,6 +3,9 @@ return {
   event = { "LazyFile" },
   config = function()
     vim.g.rainbow_delimiters = {
+      blacklist = {
+        "zig",
+      },
       query = {
         javascript = "rainbow-delimiters-react",
         query = "rainbow-blocks",
