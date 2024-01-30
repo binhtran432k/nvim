@@ -6,10 +6,6 @@ return {
     ---@type PluginLspOpts
     opts = {
       servers = {
-        emmet_language_server = {},
-        eslint = {},
-        html = {},
-        cssls = {},
         --- @type lspconfig.options.tsserver
         tsserver = {
           ---@diagnostic disable-next-line: missing-fields
