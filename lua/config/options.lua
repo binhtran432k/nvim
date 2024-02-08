@@ -10,6 +10,8 @@ local root_pattern = {
   "package.json",
   "pom.xml",
   "Cargo.toml",
+  "CMakeLists.txt",
+  "build.gradle",
   ".git",
 }
 
