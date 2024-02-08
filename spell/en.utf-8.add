@@ -33,3 +33,7 @@ preact
 lefthook
 commitlint
 axios
+backend
+frontend
+dotfiles
+fullstack
