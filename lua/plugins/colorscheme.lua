@@ -1,5 +1,6 @@
 return {
-  -- Configure LazyVim to load gruvbox
+  { "folke/tokyonight.nvim" },
+  { "catppuccin/nvim", name = "catppuccin", enabled = false },
   {
     "LazyVim/LazyVim",
     opts = {
@@ -13,7 +14,6 @@ return {
     "binhtran432k/dracula.nvim",
     lazy = false,
     priority = 1000,
-    ---@type DraculaConfig
     opts = {
       on_highlights = function(highlights, colors)
         highlights["@tag.attribute"] = { fg = colors.bright_green, style = { italic = true } }

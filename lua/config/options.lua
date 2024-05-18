@@ -22,7 +22,11 @@ vim.opt.clipboard = ""
 vim.opt.formatexpr = "1"
 
 vim.filetype.add({
+  filename = {
+    ["language-configuration.json"] = "jsonc",
+  },
   pattern = {
     ["%.env%..*"] = "sh",
+    [".*%.vscode/.*%.json"] = "jsonc",
   },
 })
