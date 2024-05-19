@@ -1,7 +1,6 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    ---@type PluginLspOpts
     opts = {
       servers = {
         zls = {},
