@@ -1,5 +1,4 @@
 return {
-  { import = "plugins.lang.cobol" },
   { import = "plugins.lang.langium" },
   { import = "plugins.lang.zig" },
   {
