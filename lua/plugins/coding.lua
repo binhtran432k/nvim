@@ -7,6 +7,7 @@ return {
   -- auto completion
   {
     "hrsh7th/nvim-cmp",
+    event = {"InsertEnter", "CmdlineEnter"},
     dependencies = { "hrsh7th/cmp-cmdline", "hrsh7th/cmp-calc", "windwp/nvim-autopairs" },
     opts = function(_, opts)
       local cmp = require("cmp")
