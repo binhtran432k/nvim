@@ -22,3 +22,7 @@ vim.api.nvim_create_user_command("IndentSpace", function(opts)
 end, {
   nargs = "?",
 })
+
+vim.keymap.set("n", "<leader>y", '"+yy', { desc = "Yank to clipboard" })
+vim.keymap.set({ "x", "o" }, "<leader>y", '"+y', { desc = "Yank to clipboard" })
+vim.keymap.set("n", "<leader>p", '"+p', { desc = "Paste to clipboard" })
