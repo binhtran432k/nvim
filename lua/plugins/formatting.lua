@@ -1,10 +1,12 @@
+local prettier = "prettierd"
+
 local function biome_lsp_or_prettier(bufnr)
   local has_biome_lsp = vim.lsp.get_clients({
     bufnr = bufnr,
     name = "biome",
   })[1]
   if has_biome_lsp then
-    return {}
+    return { "biome" }
   end
   local has_prettier = vim.fs.find({
     -- https://prettier.io/docs/en/configuration.html
@@ -20,9 +22,9 @@ local function biome_lsp_or_prettier(bufnr)
     "prettier.config.cjs",
   }, { upward = true })[1]
   if has_prettier then
-    return { "prettier" }
+    return { prettier }
   end
-  return {}
+  return { "biome" }
 end
 
 return {
@@ -30,6 +32,9 @@ return {
     "stevearc/conform.nvim",
     ---@class ConformOpts
     opts = {
+      default_format_opts = {
+        timeout_ms = 10000,
+      },
       formatters_by_ft = {
         javascript = biome_lsp_or_prettier,
         typescript = biome_lsp_or_prettier,
@@ -37,12 +42,12 @@ return {
         typescriptreact = biome_lsp_or_prettier,
         json = biome_lsp_or_prettier,
         jsonc = biome_lsp_or_prettier,
-        svelte = { "prettier" },
-        css = { "prettier" },
-        html = { "prettier" },
-        yaml = { "prettier" },
-        markdown = { "prettier" },
-        graphql = { "prettier" },
+        svelte = { prettier },
+        css = { prettier },
+        html = { prettier },
+        yaml = { prettier },
+        markdown = { prettier },
+        graphql = { prettier },
         python = { "ruff_format" },
       },
     },
