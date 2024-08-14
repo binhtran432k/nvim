@@ -1,5 +1,6 @@
 return {
   { import = "plugins.lang.langium" },
+  { import = "plugins.lang.ungrammar" },
   { import = "plugins.lang.zig" },
   {
     "neovim/nvim-lspconfig",
