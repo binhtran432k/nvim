@@ -38,10 +38,11 @@ return {
     end,
   },
   {
-    "numToStr/Comment.nvim",
-    opts = function()
-      local ft = require("Comment.ft")
-      ft.langium = { "//%s", "/*%s*/" }
-    end,
+    "folke/ts-comments.nvim",
+    opts = {
+      lang = {
+        langium = { "// %s", "/* %s */" },
+      },
+    },
   },
 }

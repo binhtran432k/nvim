@@ -16,7 +16,7 @@ return {
     priority = 1000,
     opts = {
       on_highlights = function(highlights, colors)
-        highlights["@tag.attribute"] = { fg = colors.bright_green, style = { italic = true } }
+        highlights["@tag.attribute"] = { fg = colors.bright_green, italic = true }
       end,
     },
   },
