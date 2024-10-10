@@ -17,6 +17,8 @@ local root_pattern = {
 
 vim.g.root_spec = { root_pattern, "lsp", "cwd" }
 
+vim.o.spelloptions = "camel,noplainbuffer"
+
 vim.opt.clipboard = ""
 
 vim.opt.formatexpr = "1"
