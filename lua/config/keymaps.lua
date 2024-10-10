@@ -24,5 +24,5 @@ end, {
 })
 
 vim.keymap.set("n", "<leader>y", '"+yy', { desc = "Yank to clipboard" })
-vim.keymap.set({ "x", "o" }, "<leader>y", '"+y', { desc = "Yank to clipboard" })
-vim.keymap.set("n", "<leader>p", '"+p', { desc = "Paste to clipboard" })
+vim.keymap.set({ "x", "o", "v" }, "<leader>y", '"+y', { desc = "Yank to clipboard" })
+vim.keymap.set({ "n", "x", "o", "v" }, "<leader>p", '"+p', { desc = "Paste to clipboard" })
