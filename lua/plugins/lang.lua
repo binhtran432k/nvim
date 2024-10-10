@@ -1,5 +1,6 @@
 return {
   { import = "plugins.lang.langium" },
+  { import = "plugins.lang.typst" },
   { import = "plugins.lang.ungrammar" },
   { import = "plugins.lang.zig" },
   {
