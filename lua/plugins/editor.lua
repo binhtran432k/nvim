@@ -11,6 +11,11 @@ return {
       use_popups_for_input = false,
     },
   },
+  {
+    "stevearc/oil.nvim",
+    cmd = { "Oil" },
+    opts = {},
+  },
   -- telescope
   {
     "nvim-telescope/telescope.nvim",
