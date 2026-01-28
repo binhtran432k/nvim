@@ -2,6 +2,7 @@ return {
   -- { import = "plugins.lang.gherkin" },
   { import = "plugins.lang.json" },
   { import = "plugins.lang.rust" },
+  { import = "plugins.lang.moonbit" },
   {
     "nvim-treesitter",
     opts = {
